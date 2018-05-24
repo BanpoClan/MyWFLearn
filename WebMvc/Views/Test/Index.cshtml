@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Page.CheckApp = false;
+
+    List<string> tables = new List<string>();
+    //tables.Add("AppLibrary");
+    //tables.Add("Dictionary");
+    //tables.Add("Log");
+    //tables.Add("Organize");
+    //tables.Add("Role");
+    //tables.Add("RoleApp");
+    //tables.Add("TempTest");
+    //tables.Add("TempTest_CustomForm");
+    //tables.Add("TempTest_News");
+    //tables.Add("TempTest_Purchase");
+    //tables.Add("TempTest_PurchaseList");
+    //tables.Add("Users");
+    //tables.Add("UsersApp");
+    //tables.Add("UsersInfo");
+    //tables.Add("UsersRelation");
+    //tables.Add("UsersRole");
+    //tables.Add("WorkFlow");
+    //tables.Add("WorkFlowArchives");
+    //tables.Add("WorkFlowButtons");
+    //tables.Add("WorkFlowComment");
+    //tables.Add("WorkFlowDelegation");
+    //tables.Add("WorkFlowForm");
+    //tables.Add("WorkFlowTask");
+    //tables.Add("WorkGroup");
+
+   
+    
+    foreach (string table in tables)
+    {
+       //try
+      // {
+            new RoadFlow.Data.ORACLE.DBHelper().Execute("truncate table " + table);
+            System.Data.DataTable dt = new RoadFlow.Data.MSSQL.DBHelper().GetDataTable("select * from " + table);
+            System.Data.DataTable dt1 = new RoadFlow.Data.ORACLE.DBHelper().GetDataTable("select * from " + table);
+            dt1.TableName = table;
+            foreach (System.Data.DataRow dr in dt.Rows)
+            {
+                System.Data.DataRow dr1 = dt1.NewRow();
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    dr1[i] = dr[i];
+                }
+                dt1.Rows.Add(dr1);
+
+            }
+            new RoadFlow.Data.ORACLE.DBHelper().BulkCopy(dt1);
+       //}
+      // catch(Exception err)
+      // {
+          // Response.Write(table + "--" + err.Message + "<br/>");
+      // }
+    }
+    
+    Response.Write("导入完成");
+}
+
+

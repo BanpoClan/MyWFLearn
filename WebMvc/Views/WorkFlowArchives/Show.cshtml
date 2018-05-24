@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Show";
+}
+@model RoadFlow.Data.Model.WorkFlowArchives
+
+    @Html.Raw(Model.Contents.Trim())
+    <div style="margin-top:-10px;">
+    @Html.Raw(Model.Comments.Trim())
+    </div>

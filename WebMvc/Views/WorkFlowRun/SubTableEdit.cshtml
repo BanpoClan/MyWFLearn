@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "SubTableEdit";
+}
+    <script type="text/javascript">
+        var win = new RoadUI.Window();
+    </script>
+@{
+    if ("1" == Request.Form["issave"])
+    {
+        RoadFlow.Data.Model.WorkFlowCustomEventParams parmas = new RoadFlow.Data.Model.WorkFlowCustomEventParams();
+        string instanceid1 = new RoadFlow.Platform.WorkFlow().SaveFromData(Request.QueryString["instanceid"], parmas);
+        <script>
+            alert('保存成功!');
+            new RoadUI.Window().reloadOpener();
+            new RoadUI.Window().close();
+        </script>
+    }    
+}
+    <form id="form1" method="post">
+    <input type="hidden" name="issave" value="1" />
+    <div class="toolbar" style="margin-top:0; border-top:none 0; position:fixed; top:0; left:0; right:0; margin-left:auto; z-index:999; width:100%; margin-right:auto; height:26px;">
+        <div>
+            <a href="#" onclick="if(save()){document.forms[0].submit();}" title="">
+                <span style="background:url(/Images/ico/save.gif) no-repeat left center;">确认保存</span>
+            </a>
+            <span class="toolbarsplit">&nbsp;</span>
+            <a href="#" onclick="new RoadUI.Window().close();return false;" title="">
+                <span style="background:url(/Images/ico/cancel.gif) no-repeat left center;">取消关闭</span>
+            </a>
+        </div>
+    </div>
+    @{ 
+        string secondtableeditform = Request.QueryString["secondtableeditform"];
+        string secondtablerelationfield = Request.QueryString["secondtablerelationfield"];
+    }
+    <div style="padding-top:10px;">
+        <input type="hidden" name="@secondtablerelationfield" id="@secondtablerelationfield" value="@Request.QueryString["primarytableid"]" />
+         @{
+             var form = new RoadFlow.Platform.AppLibrary().Get(secondtableeditform.ToGuid());
+             if (form != null)
+             {
+                 string src = form.Address;
+                 if (!src.IsNullOrEmpty())
+                 {
+                        var extName = System.IO.Path.GetExtension(src).ToLower();
+                        if (extName == ".cshtml")
+                        {
+                            @RenderPage(src)
+                        }
+                        else
+                        {
+                            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                            System.IO.TextWriter tw = new System.IO.StringWriter(sb);
+                            Server.Execute(src, tw);
+                            @Html.Raw(sb.ToString().RemovePageTag())
+                        }
+                 }
+             }
+        }
+    </div>
+    </form>
+    <script type="text/javascript">
+        function save()
+        {
+            var validateAlertType = $("#Form_ValidateAlertType").size() > 0 && !isNaN($("#Form_ValidateAlertType").val()) ? parseInt($("#Form_ValidateAlertType").val()) : 1;
+            var v = new RoadUI.Validate().validateForm(document.forms[0], validateAlertType);
+            return v;
+        }
+    </script>

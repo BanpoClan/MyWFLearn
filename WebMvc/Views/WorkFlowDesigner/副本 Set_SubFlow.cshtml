@@ -1,0 +1,219 @@
+﻿@{
+    ViewBag.Title = "Set_SubFlow";
+    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+    RoadFlow.Platform.DBConnection bdbConn = new RoadFlow.Platform.DBConnection();
+    RoadFlow.Platform.WorkFlowButtons bworkFlowButtons = new RoadFlow.Platform.WorkFlowButtons();
+    RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
+
+    string appLibraryTypes = bappLibrary.GetTypeOptions();
+    string stepID = Request.QueryString["id"];
+    string stepX = Request.QueryString["x"];
+    string stepY = Request.QueryString["y"];
+    string stepWidth = Request.QueryString["width"];
+    string stepHeight = Request.QueryString["height"];
+    string flowOptions = bworkFlow.GetOptions("");
+}
+<form method="post">
+    <div class="mytab" id="mytab">
+        <ul>
+	        <li class="mytabli2" for="div_base">基本</li>
+	        <li class="mytabli1" for="div_events">事件</li>
+        </ul>
+        <div style="clear:both;"></div>
+    </div>
+    <div id="div_base" class="mytab_div" style="display:block;">
+    <table cellpadding="0" cellspacing="1" border="0" width="99%" class="formtable">
+        <tr>
+            <th style="width:80px;">步骤ID：</th>
+            <td><input type="text" id="Step_ID" value="@stepID" class="mytext" readonly="readonly" style="width:75%"/></td>
+        </tr>
+        <tr>
+            <th>步骤名称：</th>
+            <td><input type="text" id="Step_Name" class="mytext" style="width:75%"/></td>
+        </tr>
+        <tr>
+            <th>子流程：</th>
+            <td><select id="Step_Flow" class="myselect" style="width:311px"><option value=""></option>@Html.Raw(flowOptions)</select></td>
+        </tr>
+        <tr>
+            <th>处理者类型：</th>
+            <td>
+                <select class="myselect" style="width:311px" id="Step_HandlerType" onchange="handlerChange(this.value);">
+                    <option value="0">指定成员</option>
+                    <option value="1">发起者</option>
+                    <option value="2">前一步骤处理者</option>
+                    <option value="3">某一步骤处理者</option>
+                    <option value="4">字段值</option>
+                    <option value="5">发起者领导</option>
+                    <option value="6">发起者分管领导</option>
+                    <option value="7">前一步处理者领导</option>
+                    <option value="8">前一步处理者分管领导</option>
+                    <option value="9">依据子流程设置</option>
+                </select>
+            </td>
+        </tr>
+        <tr id="Step_HandlerTR_0">
+            <th>处理者：</th>
+            <td><input type="text" class="mymember" id="Step_Handler_0" style="width:75%"/></td>
+        </tr>
+        <tr id="Step_HandlerTR_3" style="display:none;">
+            <th>步骤：</th>
+            <td><select class="myselect" style="width:311px;" id="Step_Handler_3"></select></td>
+        </tr>
+        <tr id="Step_HandlerTR_4" style="display:none;">
+            <th>字段：</th>
+            <td><select class="myselect" style="width:311px;" id="Step_Handler_4"></select></td>
+        </tr>
+        <tr>
+            <th>处理策略：</th>
+            <td><select id="Step_Strategy" class="myselect" style="width:200px">
+                <option value="0">子流程完成才能提交</option>
+                <option value="1">子流程发起即可提交</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    </div>
+    <div id="div_events" class="mytab_div" style="display:none;">
+        <table cellpadding="0" cellspacing="1" border="0" width="99%" class="formtable">
+            <tr>
+                <th style="width:130px;">子流程激活前事件：</th>
+                <td><input type="text" id="event_ActivationBefore" class="mytext" style="width:75%" /></td>
+            </tr>
+            <tr>
+                <th style="width:130px;">步骤提交前事件：</th>
+                <td><input type="text" id="event_SubmitBefore" class="mytext" style="width:75%" /></td>
+            </tr>
+            <tr>
+                <th>步骤提交后事件：</th>
+                <td><input type="text" id="event_SubmitAfter" class="mytext" style="width:75%" /></td>
+            </tr>
+            <tr>
+                <th>步骤退回前事件：</th>
+                <td><input type="text" id="event_BackBefore" class="mytext" style="width:75%" /></td>
+            </tr>
+            <tr>
+                <th>步骤退回后事件：</th>
+                <td><input type="text" id="event_BackAfter" class="mytext" style="width:75%" /></td>
+            </tr>
+        </table>
+    </div>
+    <div style="width:100%; margin:10px auto 10px auto; text-align:center;">
+        <input type="button" class="mybutton" value=" 确 定 " onclick="confirm1();" />
+        <input type="button" class="mybutton" value=" 取 消 " onclick="new RoadUI.Window().close();" />
+    </div>
+</form>
+<script type="text/javascript">
+    var frame = null;
+    var openerid = '@Request.QueryString["openerid"]';
+    var stepid = '@stepID';
+    var stepOptions='<option value=""></option>';//初始化行为里面的处理者步骤和退回步骤选择
+    var valueFieldOptions='<option value=""></option>';
+    $(function ()
+    {
+        var iframes = top.frames;
+        for (var i = 0; i < iframes.length; i++)
+        {
+            if (iframes[i].name == openerid + "_iframe")
+            {
+                frame = iframes[i]; break;
+            }
+        }
+        if (frame == null) return;
+        var json = frame.wf_json;
+        var step = null;
+        var fields = frame.links_tables_fields;
+        if(fields && fields.length>0)
+        {
+            for(var i=0;i<fields.length;i++)
+            {
+                valueFieldOptions+='<option value="'+fields[i].link+'.'+fields[i].table+'.'+fields[i].field+'">'+fields[i].linkName+'.'+fields[i].table+'.'+fields[i].field+(fields[i].fieldNote?'('+fields[i].fieldNote+')':'')+'</option>';
+            }
+            $("#Step_Handler_4").html(valueFieldOptions);
+        }
+        if (json && json.steps && json.steps.length > 0)
+        {
+            for (var i = 0; i < json.steps.length; i++)
+            {
+                if (json.steps[i].id == stepid)
+                {
+                    step = json.steps[i];
+                }
+                else
+                {
+                    stepOptions+='<option value="'+json.steps[i].id+'">'+json.steps[i].name+'</option>';
+                }
+            }
+            $("#Step_Handler_3").html(stepOptions);
+        }
+        if (step == null) return;
+        $("#Step_Name").val(step.name);
+        $("#Step_Flow").val(step.flowid);
+        $("#Step_Strategy").val(step.strategy || 0);
+        $("#Step_HandlerType").val(step.handlertype);
+        $("#Step_Handler_0").val(step.handlermember);
+        $("#Step_Handler_3").val(step.handlerstepid);
+        $("#Step_Handler_4").val(step.handlerfield);
+
+        $("#event_ActivationBefore").val(step.eventsactivationbefore);
+        $("#event_SubmitBefore").val(step.eventssubmitbefore);
+        $("#event_SubmitAfter").val(step.eventssubmitafter);
+        $("#event_BackBefore").val(step.eventsbackbefore);
+        $("#event_BackAfter").val(step.eventsbackafter);
+        
+        new RoadUI.Member().setValue($("#Step_Handler_0"));
+
+        //删除子流程选择项中的当前流程选项（子流程不能是当前流程）
+        var $flows=$("#Step_Flow option");
+        for(var i=0;i<$flows.size();i++)
+        {
+            if($flows.eq(i).val().length>0 && $flows.eq(i).val()==json.id)
+            {
+                $flows.eq(i).remove();
+            }
+        }
+
+        //初始化处理者类型对应的选项值
+        $("#Step_HandlerType").change();
+    });
+
+    function handlerChange(value)
+    {
+        var $opts=$("#Step_HandlerType option");
+        for(var i=0;i<$opts.size();i++)
+        {
+            if($opts.eq(i).val()==value)
+            {
+                $("#Step_HandlerTR_"+value).show();
+            }
+            else
+            {
+                $("#Step_HandlerTR_"+$opts.eq(i).val()).hide();
+            }
+        }
+    }
+
+    function confirm1()
+    {
+        var step = {};
+        step.id = stepid;
+        step.type = "subflow";
+        step.position = {x:@stepX, y:@stepY, width:@stepWidth, height:@stepHeight};
+        step.name = $("#Step_Name").val() || "";
+        step.flowid = $("#Step_Flow").val() || "";
+        step.handlertype = $("#Step_HandlerType").val() || "";
+        step.handlermember = $("#Step_Handler_0").val() || "";
+        step.handlerstepid = $("#Step_Handler_3").val() || "";
+        step.handlerfield = $("#Step_Handler_4").val() || "";
+        step.strategy = $("#Step_Strategy").val() || 0;
+        step.eventsactivationbefore = $("#event_ActivationBefore").val() || 0;
+        step.eventssubmitbefore = $("#event_SubmitBefore").val() || 0;
+        step.eventssubmitafter = $("#event_SubmitAfter").val() || 0;
+        step.eventsbackbefore = $("#event_BackBefore").val() || 0;
+        step.eventsbackafter = $("#event_BackAfter").val() || 0;
+
+        frame.addStep1(step);
+        frame.setStepText(step.id, step.name);
+        new RoadUI.Window().close();
+    }
+</script>
