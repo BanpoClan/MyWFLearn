@@ -13,7 +13,7 @@ namespace WebMvc.Controllers
 
         public ActionResult Index()
         {
-            return View(); 的点点滴滴多多多多多多多多XXXXXXXXXXXXXXXXXX
+            return View(); 
         }
 
     }
