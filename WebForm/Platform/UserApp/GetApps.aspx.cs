@@ -13,7 +13,7 @@ namespace WebForm.Platform.UserApp
         {
             string type = Request.Form["type"];
             string appid = Request.Form["value"];
-            Response.Write(new RoadFlow.Platform.AppLibrary().GetAppsOptions(type.ToGuid(), appid));
+            Response.Write(new MyCreek.Platform.AppLibrary().GetAppsOptions(type.ToGuid(), appid));
         }
     }
 }

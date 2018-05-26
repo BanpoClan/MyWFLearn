@@ -11,9 +11,9 @@ namespace WebForm.Platform.RoleApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
-            RoadFlow.Platform.RoleApp broleApp = new RoadFlow.Platform.RoleApp();
-            RoadFlow.Data.Model.RoleApp roleApp = null;
+            MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
+            MyCreek.Platform.RoleApp broleApp = new MyCreek.Platform.RoleApp();
+            MyCreek.Data.Model.RoleApp roleApp = null;
 
             string id = Request.QueryString["id"];
             if (IsPostBack)
@@ -27,7 +27,7 @@ namespace WebForm.Platform.RoleApp
                     string params1 = Request.Form["Params"];
                     string ico = Request.Form["Ico"];
 
-                    RoadFlow.Data.Model.RoleApp roleApp1 = new RoadFlow.Data.Model.RoleApp();
+                    MyCreek.Data.Model.RoleApp roleApp1 = new MyCreek.Data.Model.RoleApp();
 
                     roleApp1.ID = Guid.NewGuid();
                     roleApp1.ParentID = id.ToGuid();
@@ -52,7 +52,7 @@ namespace WebForm.Platform.RoleApp
 
                     broleApp.Add(roleApp1);
                     broleApp.ClearAllDataTableCache();
-                    RoadFlow.Platform.Log.Add("添加了应用模板", roleApp1.Serialize(), RoadFlow.Platform.Log.Types.角色应用);
+                    MyCreek.Platform.Log.Add("添加了应用模板", roleApp1.Serialize(), MyCreek.Platform.Log.Types.角色应用);
                     string refreshID = id;
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('添加成功');parent.frames[0].reLoad('" + refreshID + "');", true);
                 }

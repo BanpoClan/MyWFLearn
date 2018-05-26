@@ -16,7 +16,7 @@ namespace WebForm.Platform.Members
             context.Response.ContentType = "text/plain";
             string name = context.Request.Form["name"];
             string account = name.ToChineseSpell();
-            context.Response.Write(account.IsNullOrEmpty() ? "" : new RoadFlow.Platform.Users().GetAccount(account.Trim()));
+            context.Response.Write(account.IsNullOrEmpty() ? "" : new MyCreek.Platform.Users().GetAccount(account.Trim()));
         }
 
         public bool IsReusable

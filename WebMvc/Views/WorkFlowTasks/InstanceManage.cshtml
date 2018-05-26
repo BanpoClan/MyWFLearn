@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "InstanceManage";
-    RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+    MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+    MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
     string flowid = Request.QueryString["flowid1"];
     string groupid = Request.QueryString["groupid"];
     var wfInstall = bworkFlow.GetWorkFlowRunModel(flowid);

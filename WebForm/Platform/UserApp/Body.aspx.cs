@@ -10,9 +10,9 @@ namespace WebForm.Platform.UserApp
     public partial class Body : Common.BasePage
     {
         protected string query = string.Empty;
-        protected RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
-        protected RoadFlow.Platform.RoleApp broleApp = new RoadFlow.Platform.RoleApp();
-        protected RoadFlow.Data.Model.RoleApp roleApp = null;
+        protected MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
+        protected MyCreek.Platform.RoleApp broleApp = new MyCreek.Platform.RoleApp();
+        protected MyCreek.Data.Model.RoleApp roleApp = null;
         protected string name = string.Empty;
         protected string type = string.Empty;
         protected string appid = string.Empty;

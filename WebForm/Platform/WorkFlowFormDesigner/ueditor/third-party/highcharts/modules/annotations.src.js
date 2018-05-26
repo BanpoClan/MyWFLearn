@@ -1,4 +1,4 @@
-(function (Highcharts, HighchartsAdapter) {
+﻿(function (Highcharts, HighchartsAdapter) {
 
 var UNDEFINED,
 	ALIGN_FACTOR,

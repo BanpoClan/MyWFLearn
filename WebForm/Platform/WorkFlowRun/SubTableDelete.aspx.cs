@@ -15,7 +15,7 @@ namespace WebForm.Platform.WorkFlowRun
             string secondtable = Request.QueryString["secondtable"];
             string secondtableprimarykey = Request.QueryString["secondtableprimarykey"];
             string secondtablepkvalue = Request.QueryString["secondtablepkvalue"];
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
 
             int i = bdbconn.DeleteData(secondtableconnid.ToGuid(), secondtable, secondtableprimarykey, secondtablepkvalue);
             if (i > 0)

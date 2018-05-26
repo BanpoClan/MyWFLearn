@@ -25,12 +25,12 @@ namespace WebMvc.Controllers
         {
             string rootid = Request.QueryString["rootid"];
             string showtype = Request.QueryString["showtype"];
-            RoadFlow.Platform.Organize BOrganize = new RoadFlow.Platform.Organize();
+            MyCreek.Platform.Organize BOrganize = new MyCreek.Platform.Organize();
             System.Text.StringBuilder json = new System.Text.StringBuilder("[", 1000);
 
             if ("1" == showtype)//显示工作组
             {
-                RoadFlow.Platform.WorkGroup BWorkGroup = new RoadFlow.Platform.WorkGroup();
+                MyCreek.Platform.WorkGroup BWorkGroup = new MyCreek.Platform.WorkGroup();
                 var workGroups = BWorkGroup.GetAll();
 
                 json.Append("{");
@@ -73,7 +73,7 @@ namespace WebMvc.Controllers
 
 
             Guid rootID;
-            RoadFlow.Data.Model.Organize root;
+            MyCreek.Data.Model.Organize root;
             if (rootid.IsGuid(out rootID))
             {
                 root = BOrganize.Get(rootID);
@@ -83,9 +83,9 @@ namespace WebMvc.Controllers
                 root = BOrganize.GetRoot();
             }
 
-            List<RoadFlow.Data.Model.Users> users = new List<RoadFlow.Data.Model.Users>();
+            List<MyCreek.Data.Model.Users> users = new List<MyCreek.Data.Model.Users>();
 
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
             users = busers.GetAllByOrganizeID(root.ID);
 
             json.Append("{");
@@ -123,7 +123,7 @@ namespace WebMvc.Controllers
 
             if (users.Count > 0)
             {
-                var userRelations = new RoadFlow.Platform.UsersRelation().GetAllByOrganizeID(root.ID);
+                var userRelations = new MyCreek.Platform.UsersRelation().GetAllByOrganizeID(root.ID);
                 int count1 = users.Count;
                 int j = 0;
                 foreach (var user in users)
@@ -164,7 +164,7 @@ namespace WebMvc.Controllers
 
             if ("1" == showtype)//显示工作组
             {
-                RoadFlow.Platform.WorkGroup BWorkGroup = new RoadFlow.Platform.WorkGroup();
+                MyCreek.Platform.WorkGroup BWorkGroup = new MyCreek.Platform.WorkGroup();
                 var workGroups = BWorkGroup.GetAll();
 
                 int countwg = workGroups.Count;
@@ -202,7 +202,7 @@ namespace WebMvc.Controllers
                 Response.Write(json.ToString());
             }
 
-            RoadFlow.Platform.Organize BOrganize = new RoadFlow.Platform.Organize();
+            MyCreek.Platform.Organize BOrganize = new MyCreek.Platform.Organize();
             var childOrgs = BOrganize.GetChilds(orgID);
 
             int count = childOrgs.Count;
@@ -226,8 +226,8 @@ namespace WebMvc.Controllers
                 }
             }
 
-            var userRelations = new RoadFlow.Platform.UsersRelation().GetAllByOrganizeID(orgID);
-            var users = new RoadFlow.Platform.Users().GetAllByOrganizeID(orgID);
+            var userRelations = new MyCreek.Platform.UsersRelation().GetAllByOrganizeID(orgID);
+            var users = new MyCreek.Platform.Users().GetAllByOrganizeID(orgID);
             int count1 = users.Count;
             if (count1 > 0 && count > 0)
             {
@@ -271,8 +271,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Body(FormCollection collection)
         {
-            RoadFlow.Data.Model.Organize org = null;
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
+            MyCreek.Data.Model.Organize org = null;
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
             string id = Request.QueryString["id"];
             if (id.IsGuid())
             {
@@ -297,7 +297,7 @@ namespace WebMvc.Controllers
                 org.Note = note.IsNullOrEmpty() ? null : note.Trim();
 
                 borganize.Update(org);
-                RoadFlow.Platform.Log.Add("修改了组织机构", "", RoadFlow.Platform.Log.Types.组织机构, oldXML, org.Serialize());
+                MyCreek.Platform.Log.Add("修改了组织机构", "", MyCreek.Platform.Log.Types.组织机构, oldXML, org.Serialize());
                 string rid = org.ParentID == Guid.Empty ? org.ID.ToString() : org.ParentID.ToString();
                 ViewBag.Script = "alert('保存成功!');parent.frames[0].reLoad('" + rid + "');";
             }
@@ -309,7 +309,7 @@ namespace WebMvc.Controllers
                 Guid toID;
                 if (toOrgID.IsGuid(out toID) && borganize.Move(org.ID, toID))
                 {
-                    RoadFlow.Platform.Log.Add("移动了组织机构", "将机构：" + org.ID + "移动到了：" + toID, RoadFlow.Platform.Log.Types.组织机构);
+                    MyCreek.Platform.Log.Add("移动了组织机构", "将机构：" + org.ID + "移动到了：" + toID, MyCreek.Platform.Log.Types.组织机构);
                     string refreshID = org.ParentID == Guid.Empty ? org.ID.ToString() : org.ParentID.ToString();
                     ViewBag.Script = "alert('移动成功!');parent.frames[0].reLoad('" + refreshID + "');parent.frames[0].reLoad('" + toOrgID + "')";
                 }
@@ -323,14 +323,14 @@ namespace WebMvc.Controllers
             if (!Request.Form["Delete"].IsNullOrEmpty())
             {
                 int i = borganize.DeleteAndAllChilds(org.ID);
-                RoadFlow.Platform.Log.Add("删除了组织机构及其所有下级共" + i.ToString() + "项", org.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                MyCreek.Platform.Log.Add("删除了组织机构及其所有下级共" + i.ToString() + "项", org.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                 string refreshID = org.ParentID == Guid.Empty ? org.ID.ToString() : org.ParentID.ToString();
                 ViewBag.Script = "alert('共删除了" + i.ToString() + "项!');parent.frames[0].reLoad('" + refreshID + "');";
             }
 
             if (org == null)
             {
-                org = new RoadFlow.Data.Model.Organize();
+                org = new MyCreek.Data.Model.Organize();
             }
             ViewBag.TypeRadios = borganize.GetTypeRadio("Type", org.Type.ToString(), "validate=\"radio\"");
             ViewBag.StatusRadios = borganize.GetStatusRadio("Status", org.Status.ToString(), "validate=\"radio\"");
@@ -347,8 +347,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BodyAdd(FormCollection collection)
         {
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            RoadFlow.Data.Model.Organize org = null;
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            MyCreek.Data.Model.Organize org = null;
             string id = Request.QueryString["id"];
             string name = string.Empty;
             string type = string.Empty;
@@ -368,7 +368,7 @@ namespace WebMvc.Controllers
                 status = Request.Form["Status"];
                 note = Request.Form["note"];
 
-                RoadFlow.Data.Model.Organize org1 = new RoadFlow.Data.Model.Organize();
+                MyCreek.Data.Model.Organize org1 = new MyCreek.Data.Model.Organize();
                 Guid org1ID = Guid.NewGuid();
                 org1.ID = org1ID;
                 org1.Name = name.Trim();
@@ -388,7 +388,7 @@ namespace WebMvc.Controllers
                     scope.Complete();
                 }
 
-                RoadFlow.Platform.Log.Add("添加了组织机构", org1.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                MyCreek.Platform.Log.Add("添加了组织机构", org1.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                 ViewBag.Script = "alert('添加成功!');parent.frames[0].reLoad('" + id + "');window.location=window.location;";
             }
             ViewBag.TypeRadios = borganize.GetTypeRadio("Type", type, "validate=\"radio\"");
@@ -405,8 +405,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UserAdd(FormCollection collection)
         {
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
 
             string id = Request.QueryString["id"];
 
@@ -428,7 +428,7 @@ namespace WebMvc.Controllers
                 using (System.Transactions.TransactionScope scope = new System.Transactions.TransactionScope())
                 {
                     //添加人员
-                    RoadFlow.Data.Model.Users user = new RoadFlow.Data.Model.Users();
+                    MyCreek.Data.Model.Users user = new MyCreek.Data.Model.Users();
                     user.Account = account.Trim();
                     user.Name = name.Trim();
                     user.Note = note.IsNullOrEmpty() ? null : note;
@@ -439,24 +439,24 @@ namespace WebMvc.Controllers
                     busers.Add(user);
 
                     //添加关系
-                    RoadFlow.Data.Model.UsersRelation userRelation = new RoadFlow.Data.Model.UsersRelation();
+                    MyCreek.Data.Model.UsersRelation userRelation = new MyCreek.Data.Model.UsersRelation();
                     userRelation.IsMain = 1;
                     userRelation.OrganizeID = parentID;
-                    userRelation.Sort = new RoadFlow.Platform.UsersRelation().GetMaxSort(parentID);
+                    userRelation.Sort = new MyCreek.Platform.UsersRelation().GetMaxSort(parentID);
                     userRelation.UserID = userID;
-                    new RoadFlow.Platform.UsersRelation().Add(userRelation);
+                    new MyCreek.Platform.UsersRelation().Add(userRelation);
 
                     //更新父级[ChildsLength]字段
                     borganize.UpdateChildsLength(parentID);
 
                     //更新角色
-                    new RoadFlow.Platform.UsersRole().UpdateByUserID(userID);
+                    new MyCreek.Platform.UsersRole().UpdateByUserID(userID);
 
                     userXML = user.Serialize();
                     scope.Complete();
                 }
 
-                RoadFlow.Platform.Log.Add("添加了人员", userXML, RoadFlow.Platform.Log.Types.组织机构);
+                MyCreek.Platform.Log.Add("添加了人员", userXML, MyCreek.Platform.Log.Types.组织机构);
                 ViewBag.Script = "alert('添加成功!');parent.frames[0].reLoad('" + id + "');window.location=window.location;";
             }
             ViewBag.StatusRadios = borganize.GetStatusRadio("Status", "0", "validate=\"radio\"");
@@ -472,11 +472,11 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult User(FormCollection collection)
         {
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-            RoadFlow.Platform.UsersRelation buserRelation = new RoadFlow.Platform.UsersRelation();
-            RoadFlow.Data.Model.Users user = null;
-            RoadFlow.Data.Model.Organize organize = null;
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+            MyCreek.Platform.UsersRelation buserRelation = new MyCreek.Platform.UsersRelation();
+            MyCreek.Data.Model.Users user = null;
+            MyCreek.Data.Model.Organize organize = null;
             string id = Request.QueryString["id"];
             string parentID = Request.QueryString["parentid"];
 
@@ -513,8 +513,8 @@ namespace WebMvc.Controllers
 
                     }
                     ViewBag.ParentString = sb.ToString();
-                    var roles = new RoadFlow.Platform.UsersRole().GetByUserIDFromCache(userID);
-                    RoadFlow.Platform.Role brole=new RoadFlow.Platform.Role();
+                    var roles = new MyCreek.Platform.UsersRole().GetByUserIDFromCache(userID);
+                    MyCreek.Platform.Role brole=new MyCreek.Platform.Role();
                     System.Text.StringBuilder rolesb = new System.Text.StringBuilder();
                     foreach (var role in roles)
                     { 
@@ -549,7 +549,7 @@ namespace WebMvc.Controllers
                     user.Note = note.IsNullOrEmpty() ? null : note.Trim();
 
                     busers.Update(user);
-                    RoadFlow.Platform.Log.Add("修改了用户", "", RoadFlow.Platform.Log.Types.组织机构, oldXML, user.Serialize());
+                    MyCreek.Platform.Log.Add("修改了用户", "", MyCreek.Platform.Log.Types.组织机构, oldXML, user.Serialize());
                     ViewBag.Script = "alert('保存成功!');parent.frames[0].reLoad('" + parentID + "');";
                 }
 
@@ -564,8 +564,8 @@ namespace WebMvc.Controllers
 
                         buserRelation.DeleteByUserID(user.ID);
 
-                        new RoadFlow.Platform.UsersInfo().Delete(user.ID);
-                        new RoadFlow.Platform.UsersRole().DeleteByUserID(user.ID);
+                        new MyCreek.Platform.UsersInfo().Delete(user.ID);
+                        new MyCreek.Platform.UsersRole().DeleteByUserID(user.ID);
 
                         //更新父级[ChildsLength]字段
                         foreach (var ur in urs)
@@ -588,9 +588,9 @@ namespace WebMvc.Controllers
                         refreshID = organize.ParentID == Guid.Empty ? organize.ID.ToString() : organize.ParentID.ToString();
                         url = "Body?id=" + parentID + "&appid=" + Request.QueryString["appid"] + "&tabid=" + Request.QueryString["tabid"] + "&parentid=" + organize.ParentID;
                     }
-                    RoadFlow.Platform.Log.Add("删除了用户", user.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                    MyCreek.Platform.Log.Add("删除了用户", user.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                     ViewBag.Script = "alert('删除成功');parent.frames[0].reLoad('" + refreshID + "');window.location='" + url + "'";
-                    new RoadFlow.Platform.AppLibrary().ClearUseMemberCache();
+                    new MyCreek.Platform.AppLibrary().ClearUseMemberCache();
                 }
 
                 //初始化密码
@@ -598,7 +598,7 @@ namespace WebMvc.Controllers
                 {
                     string initpass = busers.GetInitPassword();
                     busers.InitPassword(user.ID);
-                    RoadFlow.Platform.Log.Add("初始化了用户密码", user.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                    MyCreek.Platform.Log.Add("初始化了用户密码", user.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                     ViewBag.Script = "alert('密码已初始化为：" + initpass + "');";
                 }
 
@@ -618,7 +618,7 @@ namespace WebMvc.Controllers
                                 buserRelation.DeleteByUserID(user.ID);
                             }
 
-                            RoadFlow.Data.Model.UsersRelation ur = new RoadFlow.Data.Model.UsersRelation();
+                            MyCreek.Data.Model.UsersRelation ur = new MyCreek.Data.Model.UsersRelation();
                             ur.UserID = user.ID;
                             ur.OrganizeID = moveToID;
                             ur.IsMain = "1" == movetostationjz ? 0 : 1;
@@ -637,8 +637,8 @@ namespace WebMvc.Controllers
                             ViewBag.Script = "alert('调动成功!');parent.frames[0].reLoad('" + parentID + "');parent.frames[0].reLoad('" + moveto + "')";
                         }
 
-                        RoadFlow.Platform.Log.Add(("1" == movetostationjz ? "兼职" : "全职") + "调动了人员的岗位", "将人员调往岗位(" + moveto + ")", RoadFlow.Platform.Log.Types.组织机构);
-                        new RoadFlow.Platform.AppLibrary().ClearUseMemberCache();
+                        MyCreek.Platform.Log.Add(("1" == movetostationjz ? "兼职" : "全职") + "调动了人员的岗位", "将人员调往岗位(" + moveto + ")", MyCreek.Platform.Log.Types.组织机构);
+                        new MyCreek.Platform.AppLibrary().ClearUseMemberCache();
                     }
                 }
             }
@@ -660,7 +660,7 @@ namespace WebMvc.Controllers
             {
                 string sort = Request.Form["sort"] ?? "";
                 string[] sortArray = sort.Split(',');
-                RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
+                MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
                 for (int i = 0; i < sortArray.Length; i++)
                 {
                     Guid gid;
@@ -672,7 +672,7 @@ namespace WebMvc.Controllers
                 }
                 ViewBag.Script = "parent.frames[0].reLoad('" + parentid + "');";
             }
-            var orgs = new RoadFlow.Platform.Organize().GetChilds(parentid.ToGuid());
+            var orgs = new MyCreek.Platform.Organize().GetChilds(parentid.ToGuid());
             return View(orgs);
         }
 
@@ -690,7 +690,7 @@ namespace WebMvc.Controllers
             {
                 string sort = Request.Form["sort"] ?? "";
                 string[] sortArray = sort.Split(',');
-                RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
+                MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
                 for (int i = 0; i < sortArray.Length; i++)
                 {
                     Guid gid;
@@ -702,7 +702,7 @@ namespace WebMvc.Controllers
                 }
                 ViewBag.Script = "parent.frames[0].reLoad('" + parentID + "');";
             }
-            var users = new RoadFlow.Platform.Organize().GetAllUsers(parentID.ToGuid());
+            var users = new MyCreek.Platform.Organize().GetAllUsers(parentID.ToGuid());
             return View(users);
         }
 
@@ -710,20 +710,20 @@ namespace WebMvc.Controllers
         {
             string name = Request.Form["name"];
             string account = name.ToChineseSpell();
-            return account.IsNullOrEmpty() ? "" : new RoadFlow.Platform.Users().GetAccount(account.Trim());
+            return account.IsNullOrEmpty() ? "" : new MyCreek.Platform.Users().GetAccount(account.Trim());
         }
 
         public string CheckAccount()
         {
             string account = Request.Form["value"];
             string id = Request["id"];
-            return new RoadFlow.Platform.Users().HasAccount(account, id) ? "帐号已经被使用了" : "1";
+            return new MyCreek.Platform.Users().HasAccount(account, id) ? "帐号已经被使用了" : "1";
         }
 
         public string GetNames()
         {
             string values = Request.QueryString["values"];
-            return new RoadFlow.Platform.Organize().GetNames(values);
+            return new MyCreek.Platform.Organize().GetNames(values);
         }
 
         public string GetNote()
@@ -734,16 +734,16 @@ namespace WebMvc.Controllers
             {
                 return "";
             }
-            RoadFlow.Platform.Organize borg = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users buser = new RoadFlow.Platform.Users();
-            if (id.StartsWith(RoadFlow.Platform.Users.PREFIX))
+            MyCreek.Platform.Organize borg = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users buser = new MyCreek.Platform.Users();
+            if (id.StartsWith(MyCreek.Platform.Users.PREFIX))
             {
                 Guid uid = buser.RemovePrefix1(id).ToGuid();
                 return string.Concat(borg.GetAllParentNames(buser.GetMainStation(uid)), " / ", buser.GetName(uid));
             }
-            else if (id.StartsWith(RoadFlow.Platform.WorkGroup.PREFIX))
+            else if (id.StartsWith(MyCreek.Platform.WorkGroup.PREFIX))
             {
-                return new RoadFlow.Platform.WorkGroup().GetUsersNames(RoadFlow.Platform.WorkGroup.RemovePrefix(id).ToGuid(), '、');
+                return new MyCreek.Platform.WorkGroup().GetUsersNames(MyCreek.Platform.WorkGroup.RemovePrefix(id).ToGuid(), '、');
             }
             else if (id.IsGuid(out gid))
             {
@@ -764,19 +764,19 @@ namespace WebMvc.Controllers
             string oldpass = Request.Form["oldpass"];
             string newpass = Request.Form["newpass"];
 
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-            var user = RoadFlow.Platform.Users.CurrentUser;
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+            var user = MyCreek.Platform.Users.CurrentUser;
             if (user != null)
             {
                 if (string.Compare(user.Password, busers.GetUserEncryptionPassword(user.ID.ToString(), oldpass.Trim()), false) != 0)
                 {
-                    RoadFlow.Platform.Log.Add("修改密码失败", string.Concat("用户：", user.Name, "(", user.ID, ")修改密码失败,旧密码错误!"), RoadFlow.Platform.Log.Types.用户登录);
+                    MyCreek.Platform.Log.Add("修改密码失败", string.Concat("用户：", user.Name, "(", user.ID, ")修改密码失败,旧密码错误!"), MyCreek.Platform.Log.Types.用户登录);
                     ViewBag.Script = "alert('旧密码错误!');";
                 }
                 else
                 {
                     busers.UpdatePassword(newpass.Trim(), user.ID);
-                    RoadFlow.Platform.Log.Add("修改密码成功", string.Concat("用户：", user.Name, "(", user.ID, ")修改密码成功!"), RoadFlow.Platform.Log.Types.用户登录);
+                    MyCreek.Platform.Log.Add("修改密码成功", string.Concat("用户：", user.Name, "(", user.ID, ")修改密码成功!"), MyCreek.Platform.Log.Types.用户登录);
                     ViewBag.Script = "alert('密码修改成功!');new RoadUI.Window().close();";
                 }
             }
@@ -794,8 +794,8 @@ namespace WebMvc.Controllers
         {
             string id = Request.QueryString["id"];
             Guid wid;
-            RoadFlow.Platform.WorkGroup bwg = new RoadFlow.Platform.WorkGroup();
-            RoadFlow.Data.Model.WorkGroup wg = null;
+            MyCreek.Platform.WorkGroup bwg = new MyCreek.Platform.WorkGroup();
+            MyCreek.Data.Model.WorkGroup wg = null;
             string name = string.Empty;
             string members = string.Empty;
             string note = string.Empty;
@@ -831,7 +831,7 @@ namespace WebMvc.Controllers
                 bwg.Update(wg);
                 users = bwg.GetUsersNames(wg.Members, '、');
                 string query = Request.Url.Query;
-                RoadFlow.Platform.Log.Add("修改了工作组", "修改了工作组", RoadFlow.Platform.Log.Types.组织机构, oldxml, wg.Serialize());
+                MyCreek.Platform.Log.Add("修改了工作组", "修改了工作组", MyCreek.Platform.Log.Types.组织机构, oldxml, wg.Serialize());
 
                 ViewBag.Script = "alert('保存成功!');";
             }
@@ -842,7 +842,7 @@ namespace WebMvc.Controllers
                 string oldxml = wg.Serialize();
                 bwg.Delete(wg.ID);
                 string query = Request.Url.Query;
-                RoadFlow.Platform.Log.Add("删除了工作组", oldxml, RoadFlow.Platform.Log.Types.组织机构);
+                MyCreek.Platform.Log.Add("删除了工作组", oldxml, MyCreek.Platform.Log.Types.组织机构);
                 ViewBag.Script = "parent.frames[0].treecng('1');alert('删除成功!');window.location = 'Empty' + '" + query + "';";
             }
             return View(wg);
@@ -857,7 +857,7 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult WorkGroupAdd(FormCollection collection)
         {
-            RoadFlow.Platform.WorkGroup bwg = new RoadFlow.Platform.WorkGroup();
+            MyCreek.Platform.WorkGroup bwg = new MyCreek.Platform.WorkGroup();
             string name = string.Empty;
             string members = string.Empty;
             string note = string.Empty;
@@ -867,7 +867,7 @@ namespace WebMvc.Controllers
                 members = Request.Form["Members"];
                 note = Request.Form["Note"];
 
-                RoadFlow.Data.Model.WorkGroup wg = new RoadFlow.Data.Model.WorkGroup();
+                MyCreek.Data.Model.WorkGroup wg = new MyCreek.Data.Model.WorkGroup();
                 wg.ID = Guid.NewGuid();
                 wg.Name = name.Trim();
                 wg.Members = members;
@@ -877,7 +877,7 @@ namespace WebMvc.Controllers
                 }
                 bwg.Add(wg);
                 string query = Request.Url.Query;
-                RoadFlow.Platform.Log.Add("添加了工作组", wg.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                MyCreek.Platform.Log.Add("添加了工作组", wg.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                 ViewBag.Script = "parent.frames[0].treecng('1');alert('添加成功!');window.location = 'WorkGroup' + '" + query + "';";
 
             }

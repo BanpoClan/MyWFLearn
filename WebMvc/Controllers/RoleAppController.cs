@@ -14,7 +14,7 @@ namespace WebMvc.Controllers
 
         public ActionResult Index()
         {
-            var roles = new RoadFlow.Platform.Role().GetAll();
+            var roles = new MyCreek.Platform.Role().GetAll();
             if (!Request.Form["Search"].IsNullOrEmpty())
             {
                 string name = Request.Form["Name"];
@@ -46,7 +46,7 @@ namespace WebMvc.Controllers
                 return "[]";
             }
 
-            RoadFlow.Platform.RoleApp BRoleApp = new RoadFlow.Platform.RoleApp();
+            MyCreek.Platform.RoleApp BRoleApp = new MyCreek.Platform.RoleApp();
             var appDt = BRoleApp.GetAllDataTableByRoleID(roleGuid);
             if (appDt.Rows.Count == 0)
             {
@@ -110,7 +110,7 @@ namespace WebMvc.Controllers
             {
                 return "[]";
             }
-            RoadFlow.Platform.RoleApp BRoleApp = new RoadFlow.Platform.RoleApp();
+            MyCreek.Platform.RoleApp BRoleApp = new MyCreek.Platform.RoleApp();
             var childs = BRoleApp.GetChild(id.ToGuid());
             System.Text.StringBuilder json = new System.Text.StringBuilder("[", childs.Count * 50);
             int count = childs.Count;
@@ -149,8 +149,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditRole(FormCollection collection)
         {
-            RoadFlow.Platform.Role brole = new RoadFlow.Platform.Role();
-            RoadFlow.Data.Model.Role role = null;
+            MyCreek.Platform.Role brole = new MyCreek.Platform.Role();
+            MyCreek.Data.Model.Role role = null;
             string roleID = Request.QueryString["roleid"];
             Guid roleGID;
             string name = string.Empty;
@@ -167,15 +167,15 @@ namespace WebMvc.Controllers
                 string tpl = Request.Form["ToTpl"];
                 if (tpl.IsGuid())
                 {
-                    new RoadFlow.Platform.RoleApp().CopyRoleApp(roleGID, tpl.ToGuid());
-                    RoadFlow.Platform.Log.Add("复制了模板应用", "源：" + roleID + "复制给：" + tpl, RoadFlow.Platform.Log.Types.角色应用);
+                    new MyCreek.Platform.RoleApp().CopyRoleApp(roleGID, tpl.ToGuid());
+                    MyCreek.Platform.Log.Add("复制了模板应用", "源：" + roleID + "复制给：" + tpl, MyCreek.Platform.Log.Types.角色应用);
                     ViewBag.Script = "alert('复制成功!');";
                 }
             }
 
             if (!Request.Form["Save"].IsNullOrEmpty() && role != null)
             {
-                RoadFlow.Platform.UsersRole busersRole = new RoadFlow.Platform.UsersRole();
+                MyCreek.Platform.UsersRole busersRole = new MyCreek.Platform.UsersRole();
                 using (System.Transactions.TransactionScope scope = new System.Transactions.TransactionScope())
                 {
                     name = Request.Form["Name"];
@@ -190,10 +190,10 @@ namespace WebMvc.Controllers
                     if (!useMember.IsNullOrEmpty())
                     {
                         busersRole.DeleteByRoleID(role.ID);
-                        var users = new RoadFlow.Platform.Organize().GetAllUsers(useMember);
+                        var users = new MyCreek.Platform.Organize().GetAllUsers(useMember);
                         foreach (var user in users)
                         {
-                            RoadFlow.Data.Model.UsersRole ur = new RoadFlow.Data.Model.UsersRole();
+                            MyCreek.Data.Model.UsersRole ur = new MyCreek.Data.Model.UsersRole();
                             ur.IsDefault = true;
                             ur.MemberID = user.ID;
                             ur.RoleID = role.ID;
@@ -210,11 +210,11 @@ namespace WebMvc.Controllers
                 using (System.Transactions.TransactionScope scope = new System.Transactions.TransactionScope())
                 {
                     brole.Delete(roleGID);
-                    new RoadFlow.Platform.RoleApp().DeleteByRoleID(roleGID);
-                    new RoadFlow.Platform.UsersRole().DeleteByRoleID(roleGID);
+                    new MyCreek.Platform.RoleApp().DeleteByRoleID(roleGID);
+                    new MyCreek.Platform.UsersRole().DeleteByRoleID(roleGID);
                     scope.Complete();
                 }
-                RoadFlow.Platform.Log.Add("删除的角色其及相关数据", roleID, RoadFlow.Platform.Log.Types.角色应用);
+                MyCreek.Platform.Log.Add("删除的角色其及相关数据", roleID, MyCreek.Platform.Log.Types.角色应用);
                 ViewBag.Script = "new RoadUI.Window().reloadOpener();new RoadUI.Window().close();";
             }
             ViewBag.RoleOptions = brole.GetRoleOptions("", roleID);
@@ -234,7 +234,7 @@ namespace WebMvc.Controllers
             string name = Request.Form["Name"];
             string note = Request.Form["Note"];
             string useMember = Request.Form["UseMember"];
-            RoadFlow.Data.Model.Role role = new RoadFlow.Data.Model.Role();
+            MyCreek.Data.Model.Role role = new MyCreek.Data.Model.Role();
             if (collection != null)
             {
                 using (System.Transactions.TransactionScope trans = new System.Transactions.TransactionScope())
@@ -244,11 +244,11 @@ namespace WebMvc.Controllers
                     if (!useMember.IsNullOrEmpty())
                     {
                         role.UseMember = useMember;
-                        RoadFlow.Platform.UsersRole busersRole = new RoadFlow.Platform.UsersRole();
-                        var users = new RoadFlow.Platform.Organize().GetAllUsers(useMember);
+                        MyCreek.Platform.UsersRole busersRole = new MyCreek.Platform.UsersRole();
+                        var users = new MyCreek.Platform.Organize().GetAllUsers(useMember);
                         foreach (var user in users)
                         {
-                            RoadFlow.Data.Model.UsersRole ur = new RoadFlow.Data.Model.UsersRole();
+                            MyCreek.Data.Model.UsersRole ur = new MyCreek.Data.Model.UsersRole();
                             ur.IsDefault = true;
                             ur.MemberID = user.ID;
                             ur.RoleID = role.ID;
@@ -259,16 +259,16 @@ namespace WebMvc.Controllers
                     {
                         role.Note = note.Trim();
                     }
-                    new RoadFlow.Platform.Role().Add(role);
+                    new MyCreek.Platform.Role().Add(role);
 
                     //添加一个根应用
-                    RoadFlow.Data.Model.RoleApp roleApp = new RoadFlow.Data.Model.RoleApp();
+                    MyCreek.Data.Model.RoleApp roleApp = new MyCreek.Data.Model.RoleApp();
                     roleApp.ID = Guid.NewGuid();
                     roleApp.ParentID = Guid.Empty;
                     roleApp.RoleID = role.ID;
                     roleApp.Sort = 1;
                     roleApp.Title = "管理目录";
-                    new RoadFlow.Platform.RoleApp().Add(roleApp);
+                    new MyCreek.Platform.RoleApp().Add(roleApp);
                     trans.Complete();
                     ViewBag.Script = "alert('添加成功!');new RoadUI.Window().reloadOpener();new RoadUI.Window().close();";
                 }
@@ -290,9 +290,9 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Body(FormCollection collection)
         {
-            RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
-            RoadFlow.Platform.RoleApp broleApp = new RoadFlow.Platform.RoleApp();
-            RoadFlow.Data.Model.RoleApp roleApp = null;
+            MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
+            MyCreek.Platform.RoleApp broleApp = new MyCreek.Platform.RoleApp();
+            MyCreek.Data.Model.RoleApp roleApp = null;
             string id = Request.QueryString["id"];
             string name = string.Empty;
             string type = string.Empty;
@@ -335,7 +335,7 @@ namespace WebMvc.Controllers
 
                 broleApp.Update(roleApp);
                 broleApp.ClearAllDataTableCache();
-                RoadFlow.Platform.Log.Add("修改了应用模板", "", RoadFlow.Platform.Log.Types.角色应用, oldXML, roleApp.Serialize());
+                MyCreek.Platform.Log.Add("修改了应用模板", "", MyCreek.Platform.Log.Types.角色应用, oldXML, roleApp.Serialize());
                 string refreshID = roleApp.ParentID == Guid.Empty ? roleApp.ID.ToString() : roleApp.ParentID.ToString();
                 ViewBag.Script = "parent.frames[0].reLoad('" + refreshID + "');alert('保存成功!');";
             }
@@ -344,13 +344,13 @@ namespace WebMvc.Controllers
             {
                 int i = broleApp.DeleteAndAllChilds(roleApp.ID);
                 broleApp.ClearAllDataTableCache();
-                RoadFlow.Platform.Log.Add("删除了模板及其所有下级共" + i.ToString() + "项", roleApp.Serialize(), RoadFlow.Platform.Log.Types.角色应用);
+                MyCreek.Platform.Log.Add("删除了模板及其所有下级共" + i.ToString() + "项", roleApp.Serialize(), MyCreek.Platform.Log.Types.角色应用);
                 string refreshID = roleApp.ParentID == Guid.Empty ? roleApp.ID.ToString() : roleApp.ParentID.ToString();
                 ViewBag.Script = "parent.frames[0].reLoad('" + refreshID + "');window.location='Body?id=" + refreshID + "&appid=" + Request.QueryString["appid"] + "&tabid=" + Request.QueryString["tabid"] + "';";
             }
             if (roleApp != null && roleApp.AppID.HasValue)
             {
-                var app = new RoadFlow.Platform.AppLibrary().Get(roleApp.AppID.Value);
+                var app = new MyCreek.Platform.AppLibrary().Get(roleApp.AppID.Value);
                 if (app != null)
                 {
                     type = app.Type.ToString();
@@ -365,7 +365,7 @@ namespace WebMvc.Controllers
         {
             string type = Request.Form["type"];
             string appid = Request.Form["value"];
-            return new RoadFlow.Platform.AppLibrary().GetAppsOptions(type.ToGuid(), appid);
+            return new MyCreek.Platform.AppLibrary().GetAppsOptions(type.ToGuid(), appid);
         }
 
 
@@ -378,9 +378,9 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddApp(FormCollection collection)
         {
-            RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
-            RoadFlow.Platform.RoleApp broleApp = new RoadFlow.Platform.RoleApp();
-            RoadFlow.Data.Model.RoleApp roleApp = null;
+            MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
+            MyCreek.Platform.RoleApp broleApp = new MyCreek.Platform.RoleApp();
+            MyCreek.Data.Model.RoleApp roleApp = null;
 
             string id = Request.QueryString["id"];
 
@@ -395,7 +395,7 @@ namespace WebMvc.Controllers
                     string params1 = Request.Form["Params"];
                     string ico = Request.Form["Ico"];
 
-                    RoadFlow.Data.Model.RoleApp roleApp1 = new RoadFlow.Data.Model.RoleApp();
+                    MyCreek.Data.Model.RoleApp roleApp1 = new MyCreek.Data.Model.RoleApp();
 
                     roleApp1.ID = Guid.NewGuid();
                     roleApp1.ParentID = id.ToGuid();
@@ -420,7 +420,7 @@ namespace WebMvc.Controllers
 
                     broleApp.Add(roleApp1);
                     broleApp.ClearAllDataTableCache();
-                    RoadFlow.Platform.Log.Add("添加了应用模板", roleApp1.Serialize(), RoadFlow.Platform.Log.Types.角色应用);
+                    MyCreek.Platform.Log.Add("添加了应用模板", roleApp1.Serialize(), MyCreek.Platform.Log.Types.角色应用);
                     string refreshID = id;
                     ViewBag.Script = "alert('添加成功');parent.frames[0].reLoad('" + refreshID + "');";
                 }
@@ -440,8 +440,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Sort(FormCollection collection)
         {
-            RoadFlow.Platform.RoleApp broleApp = new RoadFlow.Platform.RoleApp();
-            List<RoadFlow.Data.Model.RoleApp> roleAppList = new List<RoadFlow.Data.Model.RoleApp>();
+            MyCreek.Platform.RoleApp broleApp = new MyCreek.Platform.RoleApp();
+            List<MyCreek.Data.Model.RoleApp> roleAppList = new List<MyCreek.Data.Model.RoleApp>();
             string id = Request.QueryString["id"];
             var roleApp = broleApp.Get(id.ToGuid());
             roleAppList = broleApp.GetChild(roleApp.ParentID);

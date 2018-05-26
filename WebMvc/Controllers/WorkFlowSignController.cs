@@ -25,20 +25,20 @@ namespace WebMvc.Controllers
                         Response.Write("<script>alert('只能上传gif,jpg,png类型的图片文件!'); window.location = window.location;</script>");
                         Response.End();
                     }
-                    string filename = string.Concat(Server.MapPath(Url.Content("~/Content/UserSigns/")), RoadFlow.Platform.Users.CurrentUserID, ".gif");
+                    string filename = string.Concat(Server.MapPath(Url.Content("~/Content/UserSigns/")), MyCreek.Platform.Users.CurrentUserID, ".gif");
                     file1.SaveAs(filename);
-                    RoadFlow.Platform.Log.Add("修改了签名", filename, RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("修改了签名", filename, MyCreek.Platform.Log.Types.流程相关);
                     ViewBag.Script="alert('上传成功!'); window.location = window.location;";
                 }
             }
 
             if (!Request.Form["reset"].IsNullOrEmpty())
             {
-                string filename = string.Concat(Server.MapPath(Url.Content("~/Content/UserSigns/")), RoadFlow.Platform.Users.CurrentUserID, ".gif");
+                string filename = string.Concat(Server.MapPath(Url.Content("~/Content/UserSigns/")), MyCreek.Platform.Users.CurrentUserID, ".gif");
                 if (System.IO.File.Exists(filename))
                 {
                     System.IO.File.Delete(filename);
-                    RoadFlow.Platform.Log.Add("恢复了签名", filename, RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("恢复了签名", filename, MyCreek.Platform.Log.Types.流程相关);
                 }
                 ViewBag.Script="alert('已恢复为默认签名!'); window.location = window.location;";
             }

@@ -35,17 +35,17 @@ namespace WebForm.Platform.WorkFlowFormDesigner
                 return;
             }
 
-            RoadFlow.Platform.WorkFlowForm WFF = new RoadFlow.Platform.WorkFlowForm();
-            RoadFlow.Data.Model.WorkFlowForm wff = WFF.Get(formID);
+            MyCreek.Platform.WorkFlowForm WFF = new MyCreek.Platform.WorkFlowForm();
+            MyCreek.Data.Model.WorkFlowForm wff = WFF.Get(formID);
             bool isAdd = false;
             string oldXML = string.Empty;
             if (wff == null)
             {
-                wff = new RoadFlow.Data.Model.WorkFlowForm();
+                wff = new MyCreek.Data.Model.WorkFlowForm();
                 wff.ID = formID;
-                wff.CreateUserID = RoadFlow.Platform.Users.CurrentUserID;
-                wff.CreateUserName = RoadFlow.Platform.Users.CurrentUserName;
-                wff.CreateTime = RoadFlow.Utility.DateTimeNew.Now;
+                wff.CreateUserID = MyCreek.Platform.Users.CurrentUserID;
+                wff.CreateUserName = MyCreek.Platform.Users.CurrentUserName;
+                wff.CreateTime = MyCreek.Utility.DateTimeNew.Now;
                 wff.Status = 0;
                 isAdd = true;
             }
@@ -57,7 +57,7 @@ namespace WebForm.Platform.WorkFlowFormDesigner
             wff.Type = type.ToGuid();
             wff.Attribute = att;
             wff.Html = html;
-            wff.LastModifyTime = RoadFlow.Utility.DateTimeNew.Now;
+            wff.LastModifyTime = MyCreek.Utility.DateTimeNew.Now;
             wff.Name = name;
             wff.SubTableJson = subtable;
             wff.EventsJson = formEvents;
@@ -65,12 +65,12 @@ namespace WebForm.Platform.WorkFlowFormDesigner
             if (isAdd)
             {
                 WFF.Add(wff);
-                RoadFlow.Platform.Log.Add("添加了流程表单", wff.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                MyCreek.Platform.Log.Add("添加了流程表单", wff.Serialize(), MyCreek.Platform.Log.Types.流程相关);
             }
             else
             {
                 WFF.Update(wff);
-                RoadFlow.Platform.Log.Add("修改了流程表单", "", RoadFlow.Platform.Log.Types.流程相关, oldXML, wff.Serialize());
+                MyCreek.Platform.Log.Add("修改了流程表单", "", MyCreek.Platform.Log.Types.流程相关, oldXML, wff.Serialize());
             }
             context.Response.Write("保存成功!");
         }

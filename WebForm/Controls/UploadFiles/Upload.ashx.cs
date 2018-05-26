@@ -19,7 +19,7 @@ namespace WebForm.Controls.UploadFiles
             string str2 = context.Request.Form["str2"];
             string filetype = context.Request.Form["filetype"];
 
-            var obj = RoadFlow.Cache.IO.Opation.Get(str1 ?? "");
+            var obj = MyCreek.Cache.IO.Opation.Get(str1 ?? "");
             if (str1.IsNullOrEmpty() || str2.IsNullOrEmpty() || obj == null || obj.ToString() != str2)
             {
                 context.Response.Write("您不能上传文件");
@@ -31,7 +31,7 @@ namespace WebForm.Controls.UploadFiles
 
             if (filetype.IsNullOrEmpty())
             {
-                if (!RoadFlow.Utility.Config.UploadFileType.Contains(Path.GetExtension(file.FileName).TrimStart('.'), StringComparison.CurrentCultureIgnoreCase))
+                if (!MyCreek.Utility.Config.UploadFileType.Contains(Path.GetExtension(file.FileName).TrimStart('.'), StringComparison.CurrentCultureIgnoreCase))
                 {
                     context.Response.Write("您上传的文件类型不被允许");
                     return;
@@ -89,7 +89,7 @@ namespace WebForm.Controls.UploadFiles
         {
             while (System.IO.File.Exists(filePath + fileName))
             {
-                fileName = Path.GetFileNameWithoutExtension(fileName) + "_" + RoadFlow.Utility.Tools.GetRandomString() + Path.GetExtension(fileName);
+                fileName = Path.GetFileNameWithoutExtension(fileName) + "_" + MyCreek.Utility.Tools.GetRandomString() + Path.GetExtension(fileName);
             }
             return fileName;
         }
@@ -100,7 +100,7 @@ namespace WebForm.Controls.UploadFiles
         /// <returns></returns>
         private string getFilePath(out string path1)
         {
-            DateTime date = RoadFlow.Utility.DateTimeNew.Now;
+            DateTime date = MyCreek.Utility.DateTimeNew.Now;
             path1 = WebForm.Common.Tools.BaseUrl + "/Files/UploadFiles/" + date.ToString("yyyyMM") + "/" + date.ToString("dd") + "/";
             return path1;
         }

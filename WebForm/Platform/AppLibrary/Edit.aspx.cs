@@ -9,8 +9,8 @@ namespace WebForm.Platform.AppLibrary
 {
     public partial class Edit : Common.BasePage
     {
-        RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
-        RoadFlow.Data.Model.AppLibrary appLibrary = null;
+        MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
+        MyCreek.Data.Model.AppLibrary appLibrary = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             string editID = Request.QueryString["id"];
@@ -25,8 +25,8 @@ namespace WebForm.Platform.AppLibrary
                 {
                     this.Title1.Value = appLibrary.Title;
                     this.Address.Value = appLibrary.Address;
-                    this.TypeOptions.Text = new RoadFlow.Platform.AppLibrary().GetTypeOptions(appLibrary.Type.ToString());
-                    this.OpenModelOptions.Text = new RoadFlow.Platform.Dictionary().GetOptionsByCode("appopenmodel", value: appLibrary.OpenMode.ToString());
+                    this.TypeOptions.Text = new MyCreek.Platform.AppLibrary().GetTypeOptions(appLibrary.Type.ToString());
+                    this.OpenModelOptions.Text = new MyCreek.Platform.Dictionary().GetOptionsByCode("appopenmodel", value: appLibrary.OpenMode.ToString());
                     this.Params.Value = appLibrary.Params;
                     this.Width.Value = appLibrary.Width.ToString();
                     this.Height.Value = appLibrary.Height.ToString();
@@ -35,8 +35,8 @@ namespace WebForm.Platform.AppLibrary
                 }
                 else
                 {
-                    this.TypeOptions.Text = new RoadFlow.Platform.AppLibrary().GetTypeOptions("");
-                    this.OpenModelOptions.Text = new RoadFlow.Platform.Dictionary().GetOptionsByCode("appopenmodel");
+                    this.TypeOptions.Text = new MyCreek.Platform.AppLibrary().GetTypeOptions("");
+                    this.OpenModelOptions.Text = new MyCreek.Platform.Dictionary().GetOptionsByCode("appopenmodel");
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace WebForm.Platform.AppLibrary
             if (appLibrary == null)
             {
                 isAdd = true;
-                appLibrary = new RoadFlow.Data.Model.AppLibrary();
+                appLibrary = new MyCreek.Data.Model.AppLibrary();
                 appLibrary.ID = Guid.NewGuid();
             }
             else
@@ -85,18 +85,18 @@ namespace WebForm.Platform.AppLibrary
             if (isAdd)
             {
                 bappLibrary.Add(appLibrary);
-                RoadFlow.Platform.Log.Add("添加了应用程序库", appLibrary.Serialize(), RoadFlow.Platform.Log.Types.角色应用);
+                MyCreek.Platform.Log.Add("添加了应用程序库", appLibrary.Serialize(), MyCreek.Platform.Log.Types.角色应用);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('添加成功!');new RoadUI.Window().reloadOpener();new RoadUI.Window().close();", true);
             }
             else
             {
                 bappLibrary.Update(appLibrary);
-                RoadFlow.Platform.Log.Add("修改了应用程序库", "", RoadFlow.Platform.Log.Types.角色应用, oldXML, appLibrary.Serialize());
+                MyCreek.Platform.Log.Add("修改了应用程序库", "", MyCreek.Platform.Log.Types.角色应用, oldXML, appLibrary.Serialize());
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('修改成功!');new RoadUI.Window().reloadOpener();new RoadUI.Window().close();", true);
             }
             bappLibrary.UpdateUseMemberCache(appLibrary.ID);
             bappLibrary.ClearCache();
-            new RoadFlow.Platform.RoleApp().ClearAllDataTableCache();
+            new MyCreek.Platform.RoleApp().ClearAllDataTableCache();
         }
     }
 }

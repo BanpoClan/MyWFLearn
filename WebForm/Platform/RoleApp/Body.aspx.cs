@@ -10,11 +10,11 @@ namespace WebForm.Platform.RoleApp
     public partial class Body : Common.BasePage
     {
         protected string AppID = string.Empty;
-        protected RoadFlow.Data.Model.RoleApp roleApp = null;
+        protected MyCreek.Data.Model.RoleApp roleApp = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
-            RoadFlow.Platform.RoleApp broleApp = new RoadFlow.Platform.RoleApp();
+            MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
+            MyCreek.Platform.RoleApp broleApp = new MyCreek.Platform.RoleApp();
             
             string id = Request.QueryString["id"];
             string name = string.Empty;
@@ -60,7 +60,7 @@ namespace WebForm.Platform.RoleApp
 
                     broleApp.Update(roleApp);
                     broleApp.ClearAllDataTableCache();
-                    RoadFlow.Platform.Log.Add("修改了应用模板", "", RoadFlow.Platform.Log.Types.角色应用, oldXML, roleApp.Serialize());
+                    MyCreek.Platform.Log.Add("修改了应用模板", "", MyCreek.Platform.Log.Types.角色应用, oldXML, roleApp.Serialize());
                     string refreshID = roleApp.ParentID == Guid.Empty ? roleApp.ID.ToString() : roleApp.ParentID.ToString();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "parent.frames[0].reLoad('" + refreshID + "');alert('保存成功!');", true);
                 }
@@ -69,14 +69,14 @@ namespace WebForm.Platform.RoleApp
                 {
                     int i = broleApp.DeleteAndAllChilds(roleApp.ID);
                     broleApp.ClearAllDataTableCache();
-                    RoadFlow.Platform.Log.Add("删除了模板及其所有下级共" + i.ToString() + "项", roleApp.Serialize(), RoadFlow.Platform.Log.Types.角色应用);
+                    MyCreek.Platform.Log.Add("删除了模板及其所有下级共" + i.ToString() + "项", roleApp.Serialize(), MyCreek.Platform.Log.Types.角色应用);
                     string refreshID = roleApp.ParentID == Guid.Empty ? roleApp.ID.ToString() : roleApp.ParentID.ToString();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "parent.frames[0].reLoad('" + refreshID + "');window.location='Body.aspx?id=" + refreshID + "&appid=" + Request.QueryString["appid"] + "&tabid=" + Request.QueryString["tabid"] + "';", true);
                 }
             }
             if (roleApp != null && roleApp.AppID.HasValue)
             {
-                var app = new RoadFlow.Platform.AppLibrary().Get(roleApp.AppID.Value);
+                var app = new MyCreek.Platform.AppLibrary().Get(roleApp.AppID.Value);
                 if (app != null)
                 {
                     type = app.Type.ToString();

@@ -11,7 +11,7 @@ namespace WebForm.Platform.Members
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.WorkGroup bwg = new RoadFlow.Platform.WorkGroup();
+            MyCreek.Platform.WorkGroup bwg = new MyCreek.Platform.WorkGroup();
             string name = string.Empty;
             string members = string.Empty;
             string note = string.Empty;
@@ -21,7 +21,7 @@ namespace WebForm.Platform.Members
                 members = Request.Form["Members"];
                 note = Request.Form["Note"];
 
-                RoadFlow.Data.Model.WorkGroup wg = new RoadFlow.Data.Model.WorkGroup();
+                MyCreek.Data.Model.WorkGroup wg = new MyCreek.Data.Model.WorkGroup();
                 wg.ID = Guid.NewGuid();
                 wg.Name = name.Trim();
                 wg.Members = members;
@@ -31,7 +31,7 @@ namespace WebForm.Platform.Members
                 }
                 bwg.Add(wg);
                 string query = Request.Url.Query;
-                RoadFlow.Platform.Log.Add("添加了工作组", wg.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                MyCreek.Platform.Log.Add("添加了工作组", wg.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "parent.frames[0].treecng('1');alert('添加成功!');window.location = 'WorkGroup.aspx' + '" + query + "';", true);
 
             }

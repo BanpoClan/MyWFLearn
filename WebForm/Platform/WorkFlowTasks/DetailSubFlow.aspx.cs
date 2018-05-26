@@ -9,15 +9,15 @@ namespace WebForm.Platform.WorkFlowTasks
 {
     public partial class DetailSubFlow : Common.BasePage
     {
-        protected RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-        protected RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+        protected MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+        protected MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
         protected string query = string.Empty;
         protected string flowid = string.Empty;
         protected string groupid = string.Empty;
         protected string displayModel = string.Empty;
         protected string taskid = string.Empty;
-        protected RoadFlow.Data.Model.WorkFlowInstalled wfInstall = null;
-        protected IOrderedEnumerable<RoadFlow.Data.Model.WorkFlowTask> tasks;
+        protected MyCreek.Data.Model.WorkFlowInstalled wfInstall = null;
+        protected IOrderedEnumerable<MyCreek.Data.Model.WorkFlowTask> tasks;
         protected void Page_Load(object sender, EventArgs e)
         {
             query = string.Format("&flowid1={0}&groupid={1}&appid={2}&tabid={3}&title={4}&flowid={5}&sender={6}&date1={7}&date2={8}&iframeid={9}&openerid={10}&taskid={11}",

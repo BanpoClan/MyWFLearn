@@ -9,9 +9,9 @@ namespace WebForm.Platform.WorkFlowTasks
 {
     public partial class InstanceList : Common.BasePage
     {
-        protected RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-        protected RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-        protected IEnumerable<RoadFlow.Data.Model.WorkFlowTask> taskList;
+        protected MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+        protected MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+        protected IEnumerable<MyCreek.Data.Model.WorkFlowTask> taskList;
         protected string query = string.Empty;
         protected void Page_Load(object sender1, EventArgs e)
         {
@@ -57,7 +57,7 @@ namespace WebForm.Platform.WorkFlowTasks
 
 
             //可管理的流程ID数组
-            var flows = bworkFlow.GetInstanceManageFlowIDList(RoadFlow.Platform.Users.CurrentUserID, typeid);
+            var flows = bworkFlow.GetInstanceManageFlowIDList(MyCreek.Platform.Users.CurrentUserID, typeid);
             List<Guid> flowids = new List<Guid>();
             foreach (var flow in flows.OrderBy(p => p.Value))
             {
@@ -68,7 +68,7 @@ namespace WebForm.Platform.WorkFlowTasks
             this.FlowOptions.Text = bworkFlow.GetOptions(flows, typeid, flowid);
 
             taskList = bworkFlowTask.GetInstances(manageFlows, new Guid[] { },
-                sender.IsNullOrEmpty() ? new Guid[] { } : new Guid[] { sender.Replace(RoadFlow.Platform.Users.PREFIX, "").ToGuid() },
+                sender.IsNullOrEmpty() ? new Guid[] { } : new Guid[] { sender.Replace(MyCreek.Platform.Users.PREFIX, "").ToGuid() },
                 out pager, query1, title, flowid, date1, date2, status.ToInt());
             this.Pager.Text = pager;
         }

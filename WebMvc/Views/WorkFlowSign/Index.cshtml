@@ -9,11 +9,11 @@
         <input type="submit" name="reset" class="mybutton" value="恢复默认" />
     </div>
     <div style="margin-top:80px;">您的签名：
-        @{string signFile = string.Concat(Server.MapPath(Url.Content("~/Content/UserSigns/")), RoadFlow.Platform.Users.CurrentUserID, ".gif");
-          string signSrc = string.Concat(Url.Content("~/Content/UserSigns/"), RoadFlow.Platform.Users.CurrentUserID, ".gif");
+        @{string signFile = string.Concat(Server.MapPath(Url.Content("~/Content/UserSigns/")), MyCreek.Platform.Users.CurrentUserID, ".gif");
+          string signSrc = string.Concat(Url.Content("~/Content/UserSigns/"), MyCreek.Platform.Users.CurrentUserID, ".gif");
           if (!System.IO.File.Exists(signFile))
           {
-              System.Drawing.Bitmap img = new RoadFlow.Platform.WorkFlow().CreateSignImage(RoadFlow.Platform.Users.CurrentUserName);
+              System.Drawing.Bitmap img = new MyCreek.Platform.WorkFlow().CreateSignImage(MyCreek.Platform.Users.CurrentUserName);
               if (img != null)
               {
                   img.Save(signFile, System.Drawing.Imaging.ImageFormat.Gif);

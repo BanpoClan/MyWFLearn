@@ -23,7 +23,7 @@ namespace WebForm.Controls.SelectDictionary
             string parentfield = context.Request.QueryString["parentfield"];
             string where = (context.Request.QueryString["where"] ?? "").UrlDecode();
 
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
             var conn = bdbconn.Get(dbconn.ToGuid());
             string sql = "select " + valuefield + "," + titlefield + " from " + dbtable + (where.IsNullOrEmpty() ? "" : " where " + where);
             DataTable dt = bdbconn.GetDataTable(conn, sql.ReplaceSelectSql());

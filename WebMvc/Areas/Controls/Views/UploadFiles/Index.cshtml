@@ -2,11 +2,11 @@
     string extName = Request.QueryString["filetype"];
     string filesWebSite = Url.Content("~/Controls/UploadFiles/");
     string tmpID = Guid.NewGuid().ToString("N");
-    string tmpID1 = RoadFlow.Platform.Users.CurrentUserID.ToString();
-    RoadFlow.Cache.IO.Opation.Set(tmpID, tmpID1);
+    string tmpID1 = MyCreek.Platform.Users.CurrentUserID.ToString();
+    MyCreek.Cache.IO.Opation.Set(tmpID, tmpID1);
     Page.CheckApp = false;
 }
-    <script src="~/Scripts/Uploadify/jquery.uploadify.js?v=@RoadFlow.Utility.DateTimeNew.Now.Ticks" type="text/javascript"></script>
+    <script src="~/Scripts/Uploadify/jquery.uploadify.js?v=@MyCreek.Utility.DateTimeNew.Now.Ticks" type="text/javascript"></script>
     <style type="text/css">
         .uploadify-ico{border:none 0;vertical-align:middle;margin-right:3px;}
     </style>
@@ -39,7 +39,7 @@
                         string[] filesArray = files.Split('|');
                         foreach (string file in filesArray)
                         {
-                            string size = RoadFlow.Utility.Tools.GetFileSize(Server.MapPath(file));
+                            string size = MyCreek.Utility.Tools.GetFileSize(Server.MapPath(file));
                   
                     <tr>
                         <td style="background:#ffffff;"><a target="_blank" href="@file"><img alt="" class="uploadify-ico" src="@Url.Content("~/Images/ico/doc_stand.png")" style="border:none;" />@file.Substring(file.LastIndexOf('/')+1)</a></td>

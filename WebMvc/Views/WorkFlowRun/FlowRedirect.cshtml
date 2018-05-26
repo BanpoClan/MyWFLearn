@@ -6,9 +6,9 @@
     string groupid = Request.QueryString["groupid"];
     string instanceid = Request.QueryString["instanceid"];
 
-    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-    RoadFlow.Platform.WorkFlowTask btask = new RoadFlow.Platform.WorkFlowTask();
-    RoadFlow.Data.Model.WorkFlowInstalled wfInstalled = bworkFlow.GetWorkFlowRunModel(flowid);
+    MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+    MyCreek.Platform.WorkFlowTask btask = new MyCreek.Platform.WorkFlowTask();
+    MyCreek.Data.Model.WorkFlowInstalled wfInstalled = bworkFlow.GetWorkFlowRunModel(flowid);
     if (wfInstalled == null)
     {
         Response.Write("未找到流程运行实体");

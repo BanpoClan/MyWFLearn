@@ -9,10 +9,10 @@ namespace WebForm.Platform.Dictionary
 {
     public partial class Sort : Common.BasePage
     {
-        protected List<RoadFlow.Data.Model.Dictionary> DictList = new List<RoadFlow.Data.Model.Dictionary>();
+        protected List<MyCreek.Data.Model.Dictionary> DictList = new List<MyCreek.Data.Model.Dictionary>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.Dictionary BDict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary BDict = new MyCreek.Platform.Dictionary();
             string id = Request.QueryString["id"];
             string refreshID = "";
             Guid dictid;
@@ -44,7 +44,7 @@ namespace WebForm.Platform.Dictionary
                     }
                 }
                 BDict.RefreshCache();
-                RoadFlow.Platform.Log.Add("保存了数据字典排序", "保存了ID为：" + id + "的同级排序", RoadFlow.Platform.Log.Types.数据字典);
+                MyCreek.Platform.Log.Add("保存了数据字典排序", "保存了ID为：" + id + "的同级排序", MyCreek.Platform.Log.Types.数据字典);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "parent.frames[0].reLoad('" + refreshID + "');", true);
                 DictList = BDict.GetChilds(refreshID.ToGuid());
             }

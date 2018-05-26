@@ -1,4 +1,4 @@
-/*! WebUploader 0.1.2 */
+﻿/*! WebUploader 0.1.2 */
 
 
 /**

@@ -18,7 +18,7 @@ namespace WebForm.Platform.WorkFlowDesigner
             string id = context.Request.Form["id"];
             string type = context.Request.Form["type"];
 
-            RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
             var flow = bworkFlow.Get(id.ToGuid());
             if (flow == null)
             {
@@ -32,7 +32,7 @@ namespace WebForm.Platform.WorkFlowDesigner
                     flow.Status = 3;
                     bworkFlow.Update(flow);
                     bworkFlow.RefreshWrokFlowCache(flow.ID);
-                    RoadFlow.Platform.Log.Add("卸载了流程", flow.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("卸载了流程", flow.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                     context.Response.Write("1");
                     context.Response.End();
                 }
@@ -41,14 +41,14 @@ namespace WebForm.Platform.WorkFlowDesigner
                     flow.Status = 4;
                     bworkFlow.Update(flow);
                     //bworkFlow.ClearWorkFlowCache(flow.ID);
-                    RoadFlow.Platform.AppLibrary APP = new RoadFlow.Platform.AppLibrary();
+                    MyCreek.Platform.AppLibrary APP = new MyCreek.Platform.AppLibrary();
                     var app = APP.GetByCode(flow.ID.ToString());
                     if (app != null)
                     {
                         APP.Delete(app.ID);
-                        new RoadFlow.Platform.RoleApp().DeleteByAppID(app.ID);
+                        new MyCreek.Platform.RoleApp().DeleteByAppID(app.ID);
                     }
-                    RoadFlow.Platform.Log.Add("删除了流程", flow.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("删除了流程", flow.Serialize(), MyCreek.Platform.Log.Types.流程相关);
 
                     context.Response.Write("1");
                     context.Response.End();

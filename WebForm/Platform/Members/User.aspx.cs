@@ -11,11 +11,11 @@ namespace WebForm.Platform.Members
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-            RoadFlow.Platform.UsersRelation buserRelation = new RoadFlow.Platform.UsersRelation();
-            RoadFlow.Data.Model.Users user = null;
-            RoadFlow.Data.Model.Organize organize = null;
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+            MyCreek.Platform.UsersRelation buserRelation = new MyCreek.Platform.UsersRelation();
+            MyCreek.Data.Model.Users user = null;
+            MyCreek.Data.Model.Organize organize = null;
             string id = Request.QueryString["id"];
             string parentID = Request.QueryString["parentid"];
             
@@ -42,8 +42,8 @@ namespace WebForm.Platform.Members
 
                     }
                     this.ParentString.Text = sb.ToString();
-                    var roles = new RoadFlow.Platform.UsersRole().GetByUserIDFromCache(userID);
-                    RoadFlow.Platform.Role brole = new RoadFlow.Platform.Role();
+                    var roles = new MyCreek.Platform.UsersRole().GetByUserIDFromCache(userID);
+                    MyCreek.Platform.Role brole = new MyCreek.Platform.Role();
                     System.Text.StringBuilder rolesb = new System.Text.StringBuilder();
                     foreach (var role in roles)
                     {
@@ -78,7 +78,7 @@ namespace WebForm.Platform.Members
                     user.Note = note.IsNullOrEmpty() ? null : note.Trim();
 
                     busers.Update(user);
-                    RoadFlow.Platform.Log.Add("修改了用户", "", RoadFlow.Platform.Log.Types.组织机构, oldXML, user.Serialize());
+                    MyCreek.Platform.Log.Add("修改了用户", "", MyCreek.Platform.Log.Types.组织机构, oldXML, user.Serialize());
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('保存成功!');parent.frames[0].reLoad('" + parentID + "');", true);
                 }
                 #endregion
@@ -93,8 +93,8 @@ namespace WebForm.Platform.Members
 
                         buserRelation.DeleteByUserID(user.ID);
 
-                        new RoadFlow.Platform.UsersInfo().Delete(user.ID);
-                        new RoadFlow.Platform.UsersRole().DeleteByUserID(user.ID);
+                        new MyCreek.Platform.UsersInfo().Delete(user.ID);
+                        new MyCreek.Platform.UsersRole().DeleteByUserID(user.ID);
 
                         //更新父级[ChildsLength]字段
                         foreach (var ur in urs)
@@ -117,9 +117,9 @@ namespace WebForm.Platform.Members
                         refreshID = organize.ParentID == Guid.Empty ? organize.ID.ToString() : organize.ParentID.ToString();
                         url = "Body.aspx?id=" + parentID + "&appid=" + Request.QueryString["appid"] + "&tabid=" + Request.QueryString["tabid"] + "&parentid=" + organize.ParentID;
                     }
-                    RoadFlow.Platform.Log.Add("删除了用户", user.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                    MyCreek.Platform.Log.Add("删除了用户", user.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('删除成功');parent.frames[0].reLoad('" + refreshID + "');window.location='" + url + "'", true);
-                    new RoadFlow.Platform.AppLibrary().ClearUseMemberCache();
+                    new MyCreek.Platform.AppLibrary().ClearUseMemberCache();
                 }
                 #endregion
 
@@ -128,7 +128,7 @@ namespace WebForm.Platform.Members
                 {
                     string initpass = busers.GetInitPassword();
                     busers.InitPassword(user.ID);
-                    RoadFlow.Platform.Log.Add("初始化了用户密码", user.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                    MyCreek.Platform.Log.Add("初始化了用户密码", user.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('密码已初始化为：" + initpass + "');", true);
                 }
                 #endregion
@@ -149,7 +149,7 @@ namespace WebForm.Platform.Members
                                 buserRelation.DeleteByUserID(user.ID);
                             }
 
-                            RoadFlow.Data.Model.UsersRelation ur = new RoadFlow.Data.Model.UsersRelation();
+                            MyCreek.Data.Model.UsersRelation ur = new MyCreek.Data.Model.UsersRelation();
                             ur.UserID = user.ID;
                             ur.OrganizeID = moveToID;
                             ur.IsMain = "1" == movetostationjz ? 0 : 1;
@@ -168,8 +168,8 @@ namespace WebForm.Platform.Members
                             Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('调动成功!');parent.frames[0].reLoad('" + parentID + "');parent.frames[0].reLoad('" + moveto + "')", true);
                         }
 
-                        RoadFlow.Platform.Log.Add(("1" == movetostationjz ? "兼职" : "全职") + "调动了人员的岗位", "将人员调往岗位(" + moveto + ")", RoadFlow.Platform.Log.Types.组织机构);
-                        new RoadFlow.Platform.AppLibrary().ClearUseMemberCache();
+                        MyCreek.Platform.Log.Add(("1" == movetostationjz ? "兼职" : "全职") + "调动了人员的岗位", "将人员调往岗位(" + moveto + ")", MyCreek.Platform.Log.Types.组织机构);
+                        new MyCreek.Platform.AppLibrary().ClearUseMemberCache();
                     }
                 }
                 #endregion

@@ -9,8 +9,8 @@ namespace WebForm.Platform.WorkFlowDesigner
 {
     public partial class Set_Flow : Common.BasePage
     {
-        protected RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-        protected RoadFlow.Platform.DBConnection bdbConn = new RoadFlow.Platform.DBConnection();
+        protected MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+        protected MyCreek.Platform.DBConnection bdbConn = new MyCreek.Platform.DBConnection();
         protected string base_TypesOptions = string.Empty;
         protected string link_DBConnOptions = string.Empty;
         protected bool isAdd = false;
@@ -22,7 +22,7 @@ namespace WebForm.Platform.WorkFlowDesigner
             link_DBConnOptions = bdbConn.GetAllOptions();
             isAdd = "1" == Request.QueryString["isadd"];
             flowID = Request.QueryString["flowid"].IsGuid() && !isAdd ? Request.QueryString["flowid"] : Guid.NewGuid().ToString();
-            defaultManager = RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString();
+            defaultManager = MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString();
         }
     }
 }

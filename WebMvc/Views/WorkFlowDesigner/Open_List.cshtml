@@ -1,11 +1,11 @@
 ﻿@{
     ViewBag.Title = "Open_List";
-    RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-    RoadFlow.Platform.Organize borg = new RoadFlow.Platform.Organize();
-    RoadFlow.Platform.WorkFlow bwf = new RoadFlow.Platform.WorkFlow();
+    MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+    MyCreek.Platform.Organize borg = new MyCreek.Platform.Organize();
+    MyCreek.Platform.WorkFlow bwf = new MyCreek.Platform.WorkFlow();
     string type = Request.QueryString["typeid"];
 }
-@model IEnumerable<RoadFlow.Data.Model.WorkFlow>
+@model IEnumerable<MyCreek.Data.Model.WorkFlow>
 <form action="" method="post">
 @Html.AntiForgeryToken()
 <table cellpadding="0" cellspacing="1" border="0" width="99%" align="center">
@@ -30,7 +30,7 @@
     <tbody>
     @foreach (var flow in Model.OrderBy(p => p.Name))
     {
-        if (!borg.GetAllUsers(flow.Manager).Exists(p => p.ID == RoadFlow.Platform.Users.CurrentUserID))
+        if (!borg.GetAllUsers(flow.Manager).Exists(p => p.ID == MyCreek.Platform.Users.CurrentUserID))
         {
             continue;
         }

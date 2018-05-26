@@ -16,7 +16,7 @@ namespace WebForm.Tests
             context.Response.ContentType = "text/plain";
             string values = context.Request.QueryString["values"];
             System.Text.StringBuilder texts = new System.Text.StringBuilder();
-            RoadFlow.Platform.Log Log = new RoadFlow.Platform.Log();
+            MyCreek.Platform.Log Log = new MyCreek.Platform.Log();
             foreach (string value in values.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
             {
                 if (value.IsGuid())

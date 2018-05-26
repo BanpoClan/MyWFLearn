@@ -14,7 +14,7 @@ namespace WebMvc.Controllers
         public ActionResult Index()
         {
             string query1 = string.Format("&appid={0}&tabid={1}", Request.QueryString["appid"], Request.QueryString["tabid"]);
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
 
             if (!Request.Form["DeleteBut"].IsNullOrEmpty())
             {
@@ -30,7 +30,7 @@ namespace WebMvc.Controllers
                     }
                 }
                 bdbconn.ClearCache();
-                RoadFlow.Platform.Log.Add("删除了数据连接", delxml.ToString(), RoadFlow.Platform.Log.Types.流程相关);
+                MyCreek.Platform.Log.Add("删除了数据连接", delxml.ToString(), MyCreek.Platform.Log.Types.流程相关);
             }
             
 
@@ -49,8 +49,8 @@ namespace WebMvc.Controllers
         public ActionResult Edit(FormCollection collection)
         {
             string editid = Request.QueryString["id"];
-            RoadFlow.Platform.DBConnection bdbConn = new RoadFlow.Platform.DBConnection();
-            RoadFlow.Data.Model.DBConnection dbconn = null;
+            MyCreek.Platform.DBConnection bdbConn = new MyCreek.Platform.DBConnection();
+            MyCreek.Data.Model.DBConnection dbconn = null;
             if (editid.IsGuid())
             {
                 dbconn = bdbConn.Get(editid.ToGuid());
@@ -59,7 +59,7 @@ namespace WebMvc.Controllers
             string oldXML = string.Empty;
             if (dbconn == null)
             {
-                dbconn = new RoadFlow.Data.Model.DBConnection();
+                dbconn = new MyCreek.Data.Model.DBConnection();
                 dbconn.ID = Guid.NewGuid();
             }
             else
@@ -81,13 +81,13 @@ namespace WebMvc.Controllers
                 if (isAdd)
                 {
                     bdbConn.Add(dbconn);
-                    RoadFlow.Platform.Log.Add("添加了应用程序库", dbconn.Serialize(), RoadFlow.Platform.Log.Types.角色应用);
+                    MyCreek.Platform.Log.Add("添加了应用程序库", dbconn.Serialize(), MyCreek.Platform.Log.Types.角色应用);
                     ViewBag.Script = "alert('添加成功!');new RoadUI.Window().reloadOpener();new RoadUI.Window().close();";
                 }
                 else
                 {
                     bdbConn.Update(dbconn);
-                    RoadFlow.Platform.Log.Add("修改了应用程序库", "", RoadFlow.Platform.Log.Types.角色应用, oldXML, dbconn.Serialize());
+                    MyCreek.Platform.Log.Add("修改了应用程序库", "", MyCreek.Platform.Log.Types.角色应用, oldXML, dbconn.Serialize());
                     ViewBag.Script = "alert('修改成功!');new RoadUI.Window().reloadOpener();new RoadUI.Window().close();";
                 }
                 bdbConn.ClearCache();
@@ -106,7 +106,7 @@ namespace WebMvc.Controllers
             {
                 return "参数错误";
             }
-            return new RoadFlow.Platform.DBConnection().Test(cid);
+            return new MyCreek.Platform.DBConnection().Test(cid);
         }
     }
 }

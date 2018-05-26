@@ -15,7 +15,7 @@ namespace WebForm.Platform.RoleApp
             context.Response.ContentType = "text/plain";
             string type = context.Request.Form["type"];
             string appid = context.Request.Form["value"];
-            context.Response.Write(new RoadFlow.Platform.AppLibrary().GetAppsOptions(type.ToGuid(), appid));
+            context.Response.Write(new MyCreek.Platform.AppLibrary().GetAppsOptions(type.ToGuid(), appid));
         }
 
         public bool IsReusable

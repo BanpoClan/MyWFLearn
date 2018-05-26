@@ -48,7 +48,7 @@ namespace WebMvc.Controllers
             ViewBag.Date2 = date2;
             ViewBag.UserID = userid;
 
-            RoadFlow.Platform.Log blog = new RoadFlow.Platform.Log();
+            MyCreek.Platform.Log blog = new MyCreek.Platform.Log();
             string query = string.Format("&appid={0}&tabid={1}&Title={2}&Type={3}&Date1={4}&Date2={5}&UserID={6}",
                 Request.QueryString["appid"],
                 Request.QueryString["tabid"],
@@ -76,9 +76,9 @@ namespace WebMvc.Controllers
             string userid = Request.QueryString["userid"];
             string size = Request.QueryString["pagesize"];
             string number = Request.QueryString["pagenumber"];
-            RoadFlow.Platform.Log blog = new RoadFlow.Platform.Log();
+            MyCreek.Platform.Log blog = new MyCreek.Platform.Log();
             System.Data.DataTable dt = new System.Data.DataTable();// blog.GetPagerData(out count, size.ToInt(), number.ToInt(), "", title, type, date1, date2, userid);
-            string data = RoadFlow.Utility.Tools.DataTableToJsonString(dt);
+            string data = MyCreek.Utility.Tools.DataTableToJsonString(dt);
             return "{\"count\":" + count.ToString() + ",\"data\":" + data + "}";
         }
 
@@ -87,11 +87,11 @@ namespace WebMvc.Controllers
             string id = Request.QueryString["id"];
             if (id.IsGuid())
             {
-                return View(new RoadFlow.Platform.Log().Get(id.ToGuid()));
+                return View(new MyCreek.Platform.Log().Get(id.ToGuid()));
             }
             else
             {
-                return View(new RoadFlow.Data.Model.Log());
+                return View(new MyCreek.Data.Model.Log());
             }
         }
     }

@@ -22,13 +22,13 @@ namespace WebForm.Platform.WorkFlowTasks
             if (flowid.IsGuid(out fid) && groupid.IsGuid(out gid))
             {
                 System.Text.StringBuilder delxml = new System.Text.StringBuilder();
-                var tasks = new RoadFlow.Platform.WorkFlowTask().GetTaskList(fid, gid);
+                var tasks = new MyCreek.Platform.WorkFlowTask().GetTaskList(fid, gid);
                 foreach (var task in tasks)
                 {
                     delxml.Append(task.Serialize());
                 }
-                new RoadFlow.Platform.WorkFlowTask().DeleteInstance(fid, gid);
-                RoadFlow.Platform.Log.Add("管理员删除了流程实例", delxml.ToString(), RoadFlow.Platform.Log.Types.流程相关);
+                new MyCreek.Platform.WorkFlowTask().DeleteInstance(fid, gid);
+                MyCreek.Platform.Log.Add("管理员删除了流程实例", delxml.ToString(), MyCreek.Platform.Log.Types.流程相关);
                 context.Response.Write("删除成功!");
             }
             else

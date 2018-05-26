@@ -9,8 +9,8 @@ namespace WebForm.Platform.Dictionary
 {
     public partial class Body : Common.BasePage
     {
-        RoadFlow.Platform.Dictionary bdict = new RoadFlow.Platform.Dictionary();
-        RoadFlow.Data.Model.Dictionary dict = null;
+        MyCreek.Platform.Dictionary bdict = new MyCreek.Platform.Dictionary();
+        MyCreek.Data.Model.Dictionary dict = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             string id = Request.QueryString["id"];
@@ -31,7 +31,7 @@ namespace WebForm.Platform.Dictionary
                 {
                     int i = bdict.DeleteAndAllChilds(dict.ID);
                     bdict.RefreshCache();
-                    RoadFlow.Platform.Log.Add("删除了数据字典及其下级共" + i.ToString() + "项", dict.Serialize(), RoadFlow.Platform.Log.Types.数据字典);
+                    MyCreek.Platform.Log.Add("删除了数据字典及其下级共" + i.ToString() + "项", dict.Serialize(), MyCreek.Platform.Log.Types.数据字典);
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('删除成功!');parent.frames[0].reLoad('" + refreshID + "');window.location='Body.aspx?id=" + dict.ParentID.ToString() + "&appid=" + Request.QueryString["appid"] + "';", true);
                 }
                 //保存
@@ -52,7 +52,7 @@ namespace WebForm.Platform.Dictionary
 
                     bdict.Update(dict);
                     bdict.RefreshCache();
-                    RoadFlow.Platform.Log.Add("修改了数据字典项", "", RoadFlow.Platform.Log.Types.数据字典, oldXML, dict.Serialize());
+                    MyCreek.Platform.Log.Add("修改了数据字典项", "", MyCreek.Platform.Log.Types.数据字典, oldXML, dict.Serialize());
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('保存成功!');parent.frames[0].reLoad('" + refreshID + "');", true);
                 }
             }

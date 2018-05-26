@@ -20,16 +20,16 @@ namespace WebForm.Controls.SelectMember
             {
                 context.Response.Write("");
             }
-            RoadFlow.Platform.Organize borg = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users buser = new RoadFlow.Platform.Users();
-            if (id.StartsWith(RoadFlow.Platform.Users.PREFIX))
+            MyCreek.Platform.Organize borg = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users buser = new MyCreek.Platform.Users();
+            if (id.StartsWith(MyCreek.Platform.Users.PREFIX))
             {
                 Guid uid = buser.RemovePrefix1(id).ToGuid();
                 context.Response.Write(string.Concat(borg.GetAllParentNames(buser.GetMainStation(uid)), " / ", buser.GetName(uid)));
             }
-            else if (id.StartsWith(RoadFlow.Platform.WorkGroup.PREFIX))
+            else if (id.StartsWith(MyCreek.Platform.WorkGroup.PREFIX))
             {
-                context.Response.Write(new RoadFlow.Platform.WorkGroup().GetUsersNames(RoadFlow.Platform.WorkGroup.RemovePrefix(id).ToGuid(), '、'));
+                context.Response.Write(new MyCreek.Platform.WorkGroup().GetUsersNames(MyCreek.Platform.WorkGroup.RemovePrefix(id).ToGuid(), '、'));
             }
             else if (id.IsGuid(out gid))
             {

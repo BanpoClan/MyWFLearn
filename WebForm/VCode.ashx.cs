@@ -15,8 +15,8 @@ namespace WebForm
         public void ProcessRequest(HttpContext context)
         {
             string code;
-            System.IO.MemoryStream ms = RoadFlow.Utility.Tools.GetValidateImg(out code, "~/Images/vcodebg.png");
-            context.Session[RoadFlow.Utility.Keys.SessionKeys.ValidateCode.ToString()] = code;
+            System.IO.MemoryStream ms = MyCreek.Utility.Tools.GetValidateImg(out code, "~/Images/vcodebg.png");
+            context.Session[MyCreek.Utility.Keys.SessionKeys.ValidateCode.ToString()] = code;
             context.Response.ClearContent();
             context.Response.ContentType = "image/gif";
             context.Response.BinaryWrite(ms.ToArray());

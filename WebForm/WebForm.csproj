@@ -2126,45 +2126,45 @@
       <Project>{28d9f7ba-2923-4364-9bea-9e1ccd70dd22}</Project>
       <Name>LitJSON</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Cache.Factory\RoadFlow.Cache.Factory.csproj">
+    <ProjectReference Include="..\MyCreek.Cache.Factory\MyCreek.Cache.Factory.csproj">
       <Project>{1e605362-7767-45f9-9bc1-f8e495fa3f4e}</Project>
-      <Name>RoadFlow.Cache.Factory</Name>
+      <Name>MyCreek.Cache.Factory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Cache.InProc\RoadFlow.Cache.InProc.csproj">
+    <ProjectReference Include="..\MyCreek.Cache.InProc\MyCreek.Cache.InProc.csproj">
       <Project>{85ce9c4b-0e05-4951-83c0-bbb65f43df28}</Project>
-      <Name>RoadFlow.Cache.InProc</Name>
+      <Name>MyCreek.Cache.InProc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Cache.Interface\RoadFlow.Cache.Interface.csproj">
+    <ProjectReference Include="..\MyCreek.Cache.Interface\MyCreek.Cache.Interface.csproj">
       <Project>{c3f609a8-6a7b-4bff-9e21-02b785ad4f20}</Project>
-      <Name>RoadFlow.Cache.Interface</Name>
+      <Name>MyCreek.Cache.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Cache.IO\RoadFlow.Cache.IO.csproj">
+    <ProjectReference Include="..\MyCreek.Cache.IO\MyCreek.Cache.IO.csproj">
       <Project>{41c4c5a0-0cf3-4e8f-9339-1f557c6d5a0f}</Project>
-      <Name>RoadFlow.Cache.IO</Name>
+      <Name>MyCreek.Cache.IO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Data.Factory\RoadFlow.Data.Factory.csproj">
+    <ProjectReference Include="..\MyCreek.Data.Factory\MyCreek.Data.Factory.csproj">
       <Project>{c34a6499-929a-4f0e-b1ba-2a6a9734888e}</Project>
-      <Name>RoadFlow.Data.Factory</Name>
+      <Name>MyCreek.Data.Factory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Data.Interface\RoadFlow.Data.Interface.csproj">
+    <ProjectReference Include="..\MyCreek.Data.Interface\MyCreek.Data.Interface.csproj">
       <Project>{7f7ec855-ee2f-4ef5-861b-da945961c1a2}</Project>
-      <Name>RoadFlow.Data.Interface</Name>
+      <Name>MyCreek.Data.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Data.Model\RoadFlow.Data.Model.csproj">
+    <ProjectReference Include="..\MyCreek.Data.Model\MyCreek.Data.Model.csproj">
       <Project>{75fb2c86-f7d3-4e94-82e9-46dd9787b39d}</Project>
-      <Name>RoadFlow.Data.Model</Name>
+      <Name>MyCreek.Data.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Data.MSSQL\RoadFlow.Data.MSSQL.csproj">
+    <ProjectReference Include="..\MyCreek.Data.MSSQL\MyCreek.Data.MSSQL.csproj">
       <Project>{efcd6a7c-c598-4bbd-bdc6-3016aaabd26c}</Project>
-      <Name>RoadFlow.Data.MSSQL</Name>
+      <Name>MyCreek.Data.MSSQL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Platform\RoadFlow.Platform.csproj">
+    <ProjectReference Include="..\MyCreek.Platform\MyCreek.Platform.csproj">
       <Project>{4853eee1-204a-4501-a2a6-7d14ca7dcd0e}</Project>
-      <Name>RoadFlow.Platform</Name>
+      <Name>MyCreek.Platform</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadFlow.Utility\RoadFlow.Utility.csproj">
+    <ProjectReference Include="..\MyCreek.Utility\MyCreek.Utility.csproj">
       <Project>{ce3b0adb-736e-4a7b-bede-801c9104f95e}</Project>
-      <Name>RoadFlow.Utility</Name>
+      <Name>MyCreek.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -9,10 +9,10 @@ namespace WebForm.Platform.WorkFlowDelegation
 {
     public partial class Default : Common.BasePage
     {
-        protected RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-        protected RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-        protected RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-        protected IEnumerable<RoadFlow.Data.Model.WorkFlowDelegation> workFlowDelegationList;
+        protected MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+        protected MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+        protected MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+        protected IEnumerable<MyCreek.Data.Model.WorkFlowDelegation> workFlowDelegationList;
         protected string Query1 = string.Empty;
         protected bool isoneself = false;
         protected void Page_Load(object sender, EventArgs e)
@@ -21,12 +21,12 @@ namespace WebForm.Platform.WorkFlowDelegation
             if (isoneself)
             {
                 this.S_UserID.Disabled = true;
-                this.S_UserID.Value = RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString();
+                this.S_UserID.Value = MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString();
             }
-            RoadFlow.Platform.WorkFlowDelegation bworkFlowDelegation = new RoadFlow.Platform.WorkFlowDelegation();
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-            RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlowDelegation bworkFlowDelegation = new MyCreek.Platform.WorkFlowDelegation();
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+            MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
             
             string startTime = string.Empty;
             string endTime = string.Empty;
@@ -49,7 +49,7 @@ namespace WebForm.Platform.WorkFlowDelegation
                         if (comment != null)
                         {
                             bworkFlowDelegation.Delete(bid);
-                            RoadFlow.Platform.Log.Add("删除了流程意见", comment.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                            MyCreek.Platform.Log.Add("删除了流程意见", comment.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                         }
                     }
                     bworkFlowDelegation.RefreshCache();
@@ -70,11 +70,11 @@ namespace WebForm.Platform.WorkFlowDelegation
             
             if (isOneSelf)
             {
-                workFlowDelegationList = bworkFlowDelegation.GetPagerData(out pager, Query1, RoadFlow.Platform.Users.CurrentUserID.ToString(), startTime, endTime);
+                workFlowDelegationList = bworkFlowDelegation.GetPagerData(out pager, Query1, MyCreek.Platform.Users.CurrentUserID.ToString(), startTime, endTime);
             }
             else
             {
-                workFlowDelegationList = bworkFlowDelegation.GetPagerData(out pager, Query1, RoadFlow.Platform.Users.RemovePrefix(suserid), startTime, endTime);
+                workFlowDelegationList = bworkFlowDelegation.GetPagerData(out pager, Query1, MyCreek.Platform.Users.RemovePrefix(suserid), startTime, endTime);
             }
             this.Pager.Text = pager;
         }

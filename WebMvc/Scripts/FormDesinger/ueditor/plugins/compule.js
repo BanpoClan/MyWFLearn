@@ -170,11 +170,11 @@
 
             if ('radio' == type)
             {
-                radios = '<span>@Html.Raw(BDictionary.GetRadiosByID("' + dictid + '".ToGuid(), "' + id + '", RoadFlow.Platform.Dictionary.OptionValueField.ID, "' + defaultvalue + '", "isflow=\'1\' type1=\'flow_radio\'' + eventArrs + '"))' + eventScripts + '</span>';
+                radios = '<span>@Html.Raw(BDictionary.GetRadiosByID("' + dictid + '".ToGuid(), "' + id + '", MyCreek.Platform.Dictionary.OptionValueField.ID, "' + defaultvalue + '", "isflow=\'1\' type1=\'flow_radio\'' + eventArrs + '"))' + eventScripts + '</span>';
             }
             else if ('checkbox' == type)
             {
-                radios = '<span>@Html.Raw(BDictionary.GetCheckboxsByID("' + dictid + '".ToGuid(), "' + id + '", RoadFlow.Platform.Dictionary.OptionValueField.ID, "' + defaultvalue + '", "isflow=\'1\' type1=\'flow_checkbox\'' + eventArrs + '"))' + eventScripts + '</span>';
+                radios = '<span>@Html.Raw(BDictionary.GetCheckboxsByID("' + dictid + '".ToGuid(), "' + id + '", MyCreek.Platform.Dictionary.OptionValueField.ID, "' + defaultvalue + '", "isflow=\'1\' type1=\'flow_checkbox\'' + eventArrs + '"))' + eventScripts + '</span>';
             }
 
             $control.after(radios);
@@ -212,11 +212,11 @@
             var radios = '';
             if ("radio" == type)
             {
-                radios += '<span>@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetRadioFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + id + '", "' + defaultvalue + '", "isflow=\'1\' type1=\'flow_radio\'' + eventArrs + '"))' + eventScripts + '</span>';
+                radios += '<span>@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetRadioFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + id + '", "' + defaultvalue + '", "isflow=\'1\' type1=\'flow_radio\'' + eventArrs + '"))' + eventScripts + '</span>';
             }
             else if ("checkbox" == type)
             {
-                radios += '<span>@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetCheckboxFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + id + '", "' + defaultvalue + '", "isflow=\'1\' type1=\'flow_checkbox\'' + eventArrs + '"))' + eventScripts + '</span>';
+                radios += '<span>@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetCheckboxFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + id + '", "' + defaultvalue + '", "isflow=\'1\' type1=\'flow_checkbox\'' + eventArrs + '"))' + eventScripts + '</span>';
             }
             $control.after(radios);
             $control.remove();
@@ -238,7 +238,7 @@
             {
                 radios += '<option value=""></option>';
             }
-            radios += '@Html.Raw(BDictionary.GetOptionsByID("' + dictid + '".ToGuid(), RoadFlow.Platform.Dictionary.OptionValueField.ID, "' + defaultvalue + '"))';
+            radios += '@Html.Raw(BDictionary.GetOptionsByID("' + dictid + '".ToGuid(), MyCreek.Platform.Dictionary.OptionValueField.ID, "' + defaultvalue + '"))';
             radios += '</select>';
             var $radios = $(radios);
             $radios.attr("eventsid", $control.attr("eventsid"));
@@ -286,7 +286,7 @@
             {
                 radios += '<option value=""></option>';
             }
-            radios += '@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetOptionsFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + defaultvalue + '"))';
+            radios += '@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetOptionsFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + defaultvalue + '"))';
             radios += '</select>';
             var $radios = $(radios);
             $radios.attr("eventsid", $control.attr("eventsid"));
@@ -318,7 +318,7 @@
                 {
                     radios += '<option value=""></option>';
                 }
-                radios += '@Html.Raw(BDictionary.GetOptionsByID("' + dictid + '".ToGuid(), RoadFlow.Platform.Dictionary.OptionValueField.ID, "' + defaultvalue + '"))';
+                radios += '@Html.Raw(BDictionary.GetOptionsByID("' + dictid + '".ToGuid(), MyCreek.Platform.Dictionary.OptionValueField.ID, "' + defaultvalue + '"))';
                 radios += '</select>';
                 var $radios = $(radios);
                 $radios.attr("eventsid", $control.attr("eventsid"));
@@ -332,7 +332,7 @@
                 var table = '<span class="mycombox" id="' + id + '" name="' + id + '" ' + (width1 ? 'style="width:' + width1 + '"' : '') + (width2 ? 'width1="' + width2 + '"' : '') + (height1 ? 'height1="' + height1 + '"' : '') + ' datasource="' + datasource + '" listmode="' + listmode + '" isflow="1" type1="flow_combox"';
                 table += "1" == ismultiple ? ' multiple="multiple"' : '';
                 table += '>';
-                table += '@Html.Raw(BDictionary.GetComboxTableHtmlByID("' + dictid + '",RoadFlow.Platform.Dictionary.OptionValueField.ID,"' + defaultvalue + '"))';
+                table += '@Html.Raw(BDictionary.GetComboxTableHtmlByID("' + dictid + '",MyCreek.Platform.Dictionary.OptionValueField.ID,"' + defaultvalue + '"))';
                 table += '</span>';
                 var $table = $(table);
                 $table.attr("eventsid", $control.attr("eventsid"));
@@ -383,7 +383,7 @@
                 {
                     radios += '<option value=""></option>';
                 }
-                radios += '@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetOptionsFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + defaultvalue + '"))';
+                radios += '@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetOptionsFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + defaultvalue + '"))';
                 radios += '</select>';
                 var $radios = $(radios);
                 $radios.attr("eventsid", $control.attr("eventsid"));
@@ -398,7 +398,7 @@
                 var table = '<span class="mycombox" id="' + id + '" name="' + id + '" ' + (width1 ? 'style="width:' + width1 + '"' : '') + (width2 ? 'width1="' + width2 + '"' : '') + (height1 ? 'height1="' + height1 + '"' : '') + ' datasource="' + datasource + '" listmode="' + listmode + '" isflow="1" type1="flow_combox"';
                 table += "1" == ismultiple ? ' multiple="multiple"' : '';
                 table += '>';
-                table += '@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetComboxTableHtmlFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + defaultvalue + '"))';
+                table += '@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetComboxTableHtmlFromSql("' + dbconn + '", "' + sql.replaceAll('"', '\"') + '", "' + defaultvalue + '"))';
                 table += '</span>';
                 var $table = $(table);
                 $table.attr("eventsid", $control.attr("eventsid"));
@@ -417,7 +417,7 @@
                 {
                     radios += '<option value=""></option>';
                 }
-                radios += '@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetOptionsFromUrl("' + encodeURI(url) + '", "' + defaultvalue + '"))';
+                radios += '@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetOptionsFromUrl("' + encodeURI(url) + '", "' + defaultvalue + '"))';
                 radios += '</select>';
                 var $radios = $(radios);
                 $radios.attr("eventsid", $control.attr("eventsid"));
@@ -497,7 +497,7 @@
                 rootid = '@BWorkFlowTask.GetFirstSnderDeptID(FlowID.ToGuid(), GroupID.ToGuid())';
                 break;
             case "1": //处理者部门
-                rootid = '@RoadFlow.Platform.Users.CurrentDeptID';
+                rootid = '@MyCreek.Platform.Users.CurrentDeptID';
                 break;
             case "2": //自定义
                 rootid = $control.attr("org_rang1");
@@ -650,7 +650,7 @@
             div += 'overflow:auto;';
         }
         div += '" >';
-        div += '@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetFormGridHtml(DBConnID, "' + $control.attr("dataformat") + '","' + $control.attr("datasource") + '","' + $control.attr("datasource1") + '"))';
+        div += '@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetFormGridHtml(DBConnID, "' + $control.attr("dataformat") + '","' + $control.attr("datasource") + '","' + $control.attr("datasource1") + '"))';
         div += '</div>';
         $control.after(div);
         $control.remove();
@@ -780,7 +780,7 @@
                 {
                     select += '<option value=""></option>';
                 }
-                select += '@Html.Raw(BDictionary.GetOptionsByID("' + rootid + '".ToGuid(), RoadFlow.Platform.Dictionary.OptionValueField.ID, "' + dvalue + '"))';
+                select += '@Html.Raw(BDictionary.GetOptionsByID("' + rootid + '".ToGuid(), MyCreek.Platform.Dictionary.OptionValueField.ID, "' + dvalue + '"))';
                 break;
             case "select_dssql":
                 var conn = editmode.select_ds_dbconn;
@@ -789,7 +789,7 @@
                 {
                     select += '<option value=""></option>';
                 }
-                select += '@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetOptionsFromSql("' + conn + '", "' + sql.replaceAll('"', '\"') + '", "' + dvalue + '"))';
+                select += '@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetOptionsFromSql("' + conn + '", "' + sql.replaceAll('"', '\"') + '", "' + dvalue + '"))';
                 break;
             case "select_dsstring":
                 var str = editmode.select_ds_string;
@@ -814,12 +814,12 @@
         {
             case "checkbox_dsdict":
                 var rootid = editmode.checkbox_ds_dict;
-                checkbox = '<span>@Html.Raw(BDictionary.GetCheckboxsByID("' + rootid + '".ToGuid(), "' + name + '", RoadFlow.Platform.Dictionary.OptionValueField.ID, "' + dvalue + '", "issubflow=\'1\' type1=\'subflow_checkbox\' colname=\'' + colnumJSON.name + '\'"))</span>';
+                checkbox = '<span>@Html.Raw(BDictionary.GetCheckboxsByID("' + rootid + '".ToGuid(), "' + name + '", MyCreek.Platform.Dictionary.OptionValueField.ID, "' + dvalue + '", "issubflow=\'1\' type1=\'subflow_checkbox\' colname=\'' + colnumJSON.name + '\'"))</span>';
                 break;
             case "checkbox_dssql":
                 var conn = editmode.checkbox_ds_dbconn;
                 var sql = editmode.checkbox_ds_sql;
-                checkbox = '@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetCheckboxFromSql("' + conn + '", "' + sql.replaceAll('"', '\"') + '", "' + name + '", "' + dvalue + '", "issubflow=\'1\' type1=\'subflow_checkbox\' colname=\'' + colnumJSON.name + '\'"))';
+                checkbox = '@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetCheckboxFromSql("' + conn + '", "' + sql.replaceAll('"', '\"') + '", "' + name + '", "' + dvalue + '", "issubflow=\'1\' type1=\'subflow_checkbox\' colname=\'' + colnumJSON.name + '\'"))';
                 break;
             case "checkbox_dsstring":
                 var str = editmode.checkbox_ds_string;
@@ -840,12 +840,12 @@
         {
             case "radio_dsdict":
                 var rootid = editmode.radio_ds_dict;
-                radio = '<span>@Html.Raw(BDictionary.GetRadiosByID("' + rootid + '".ToGuid(), "' + name + '", RoadFlow.Platform.Dictionary.OptionValueField.ID, "' + dvalue + '", "issubflow=\'1\' type1=\'subflow_radio\' colname=\'' + colnumJSON.name + '\'"))</span>';
+                radio = '<span>@Html.Raw(BDictionary.GetRadiosByID("' + rootid + '".ToGuid(), "' + name + '", MyCreek.Platform.Dictionary.OptionValueField.ID, "' + dvalue + '", "issubflow=\'1\' type1=\'subflow_radio\' colname=\'' + colnumJSON.name + '\'"))</span>';
                 break;
             case "radio_dssql":
                 var conn = editmode.radio_ds_dbconn;
                 var sql = editmode.radio_ds_sql;
-                radio = '@Html.Raw(new RoadFlow.Platform.WorkFlowForm().GetRadioFromSql("' + conn + '", "' + sql.replaceAll('"', '\"') + '", "' + name + '", "' + dvalue + '", "issubflow=\'1\' type1=\'subflow_radio\'" colname=\'' + colnumJSON.name + '\'"))';
+                radio = '@Html.Raw(new MyCreek.Platform.WorkFlowForm().GetRadioFromSql("' + conn + '", "' + sql.replaceAll('"', '\"') + '", "' + name + '", "' + dvalue + '", "issubflow=\'1\' type1=\'subflow_radio\'" colname=\'' + colnumJSON.name + '\'"))';
                 break;
             case "radio_dsstring":
                 var str = editmode.radio_ds_string;
@@ -909,7 +909,7 @@
                 rootid = '@BWorkFlowTask.GetFirstSnderDeptID(FlowID.ToGuid(), GroupID.ToGuid())';
                 break;
             case "1": //处理者部门
-                rootid = '@(RoadFlow.Platform.Users.CurrentDeptID)';
+                rootid = '@(MyCreek.Platform.Users.CurrentDeptID)';
                 break;
             case "2": //自定义
                 rootid = editmode.org_rang1;
@@ -1121,8 +1121,8 @@
             html1 += '</thead>';
             html1 += '<tbody>';
             html1 += '@{';
-            html1 += 'System.Data.DataTable Dt = new RoadFlow.Platform.DBConnection().GetDataTable(DBConnID, "' + subtableJSON.secondtable + '","' + subtableJSON.secondtablerelationfield + '", InstanceID);';
-            html1 += 'RoadFlow.Platform.WorkFlowForm bWorkFlowForm = new RoadFlow.Platform.WorkFlowForm();';
+            html1 += 'System.Data.DataTable Dt = new MyCreek.Platform.DBConnection().GetDataTable(DBConnID, "' + subtableJSON.secondtable + '","' + subtableJSON.secondtablerelationfield + '", InstanceID);';
+            html1 += 'MyCreek.Platform.WorkFlowForm bWorkFlowForm = new MyCreek.Platform.WorkFlowForm();';
             html1 += 'foreach(System.Data.DataRow dr in Dt.Rows){';
             html1 += '';
             html1 += '<tr>';

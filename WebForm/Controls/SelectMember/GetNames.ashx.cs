@@ -15,7 +15,7 @@ namespace WebForm.Controls.SelectMember
         {
             context.Response.ContentType = "text/plain";
             string values = context.Request.QueryString["values"];
-            context.Response.Write(new RoadFlow.Platform.Organize().GetNames(values));
+            context.Response.Write(new MyCreek.Platform.Organize().GetNames(values));
         }
 
         public bool IsReusable

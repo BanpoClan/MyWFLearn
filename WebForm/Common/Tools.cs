@@ -43,7 +43,7 @@ namespace WebForm.Common
     <script type=""text/javascript"" src=""{0}/Scripts/roadui.accordion.js""></script>
     <script type=""text/javascript"" src=""{0}/Scripts/roadui.grid.js""></script>
     <script type=""text/javascript"" src=""{0}/Scripts/roadui.init.js""></script>"
-    , BaseUrl, RoadFlow.Utility.Config.Theme);
+    , BaseUrl, MyCreek.Utility.Config.Theme);
             }
         }
 
@@ -58,7 +58,7 @@ namespace WebForm.Common
         public static bool CheckLogin(out string msg)
         {
             msg = "";
-            object session = System.Web.HttpContext.Current.Session[RoadFlow.Utility.Keys.SessionKeys.UserID.ToString()];
+            object session = System.Web.HttpContext.Current.Session[MyCreek.Utility.Keys.SessionKeys.UserID.ToString()];
             Guid uid;
             if (session == null || !session.ToString().IsGuid(out uid) || uid == Guid.Empty)
             {
@@ -69,8 +69,8 @@ namespace WebForm.Common
             return true; //正式使用时请注释掉这一行
             //#endif
 
-            string uniqueIDSessionKey = RoadFlow.Utility.Keys.SessionKeys.UserUniqueID.ToString();
-            var user = new RoadFlow.Platform.OnlineUsers().Get(uid);
+            string uniqueIDSessionKey = MyCreek.Utility.Keys.SessionKeys.UserUniqueID.ToString();
+            var user = new MyCreek.Platform.OnlineUsers().Get(uid);
             if (user == null)
             {
                 return false;
@@ -122,10 +122,10 @@ namespace WebForm.Common
             {
                 return false;
             }
-            var app = new RoadFlow.Platform.RoleApp().GetFromCache(appid);
+            var app = new MyCreek.Platform.RoleApp().GetFromCache(appid);
             if (app != null)
             {
-                var roles = RoadFlow.Platform.Users.CurrentUserRoles;
+                var roles = MyCreek.Platform.Users.CurrentUserRoles;
                 if (roles.Contains(app["RoleID"].ToString().ToGuid()))
                 {
                     return true;
@@ -137,13 +137,13 @@ namespace WebForm.Common
             }
             else
             {
-                var userID = RoadFlow.Platform.Users.CurrentUserID;
+                var userID = MyCreek.Platform.Users.CurrentUserID;
                 if (userID.IsEmptyGuid())
                 {
                     msg = "<script>top.login();</script>";
                     return false;
                 }
-                var userApp = new RoadFlow.Platform.UsersApp().GetUserDataRows(userID);
+                var userApp = new MyCreek.Platform.UsersApp().GetUserDataRows(userID);
                 foreach (System.Data.DataRow dr in userApp)
                 {
                     if (dr["ID"].ToString().ToGuid() == appGuid)

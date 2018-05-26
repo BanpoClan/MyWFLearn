@@ -1,13 +1,13 @@
 ﻿@{
     ViewBag.Title = "Set_Flow";
-    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-    RoadFlow.Platform.DBConnection bdbConn = new RoadFlow.Platform.DBConnection();
+    MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+    MyCreek.Platform.DBConnection bdbConn = new MyCreek.Platform.DBConnection();
     string base_TypesOptions = bworkFlow.GetTypeOptions();
     string link_DBConnOptions = bdbConn.GetAllOptions();
     bool isAdd = "1" == Request.QueryString["isadd"];
 
     string flowID = Request.QueryString["flowid"].IsGuid() && !isAdd ? Request.QueryString["flowid"] : Guid.NewGuid().ToString();
-    string defaultManager = RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString();
+    string defaultManager = MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString();
 }
 <form method="post">
 <div id="tabdiv">

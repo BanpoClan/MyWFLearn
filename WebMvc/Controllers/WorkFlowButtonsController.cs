@@ -22,8 +22,8 @@ namespace WebMvc.Controllers
         {
             string name = string.Empty;
             ViewBag.Query1 = string.Format("&appid={0}&tabid={1}", Request.QueryString["appid"], Request.QueryString["tabid"]);
-            RoadFlow.Platform.WorkFlowButtons bworkFlowButtons = new RoadFlow.Platform.WorkFlowButtons();
-            IEnumerable<RoadFlow.Data.Model.WorkFlowButtons> workFlowButtonsList;
+            MyCreek.Platform.WorkFlowButtons bworkFlowButtons = new MyCreek.Platform.WorkFlowButtons();
+            IEnumerable<MyCreek.Data.Model.WorkFlowButtons> workFlowButtonsList;
 
             if (collection != null)
             {
@@ -41,7 +41,7 @@ namespace WebMvc.Controllers
                         if (but != null)
                         {
                             bworkFlowButtons.Delete(bid);
-                            RoadFlow.Platform.Log.Add("删除了流程按钮", but.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                            MyCreek.Platform.Log.Add("删除了流程按钮", but.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                         }
                     }
                     bworkFlowButtons.ClearCache();
@@ -76,8 +76,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlowButtons bworkFlowButtons = new RoadFlow.Platform.WorkFlowButtons();
-            RoadFlow.Data.Model.WorkFlowButtons workFlowButton = null;
+            MyCreek.Platform.WorkFlowButtons bworkFlowButtons = new MyCreek.Platform.WorkFlowButtons();
+            MyCreek.Data.Model.WorkFlowButtons workFlowButton = null;
             string id = Request.QueryString["id"];
 
             string title = string.Empty;
@@ -101,7 +101,7 @@ namespace WebMvc.Controllers
                 bool isAdd = !id.IsGuid();
                 if (workFlowButton == null)
                 {
-                    workFlowButton = new RoadFlow.Data.Model.WorkFlowButtons();
+                    workFlowButton = new MyCreek.Data.Model.WorkFlowButtons();
                     workFlowButton.ID = Guid.NewGuid();
                     workFlowButton.Sort = bworkFlowButtons.GetMaxSort();
                 }
@@ -114,17 +114,17 @@ namespace WebMvc.Controllers
                 if (isAdd)
                 {
                     bworkFlowButtons.Add(workFlowButton);
-                    RoadFlow.Platform.Log.Add("添加了流程按钮", workFlowButton.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("添加了流程按钮", workFlowButton.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                 }
                 else
                 {
                     bworkFlowButtons.Update(workFlowButton);
-                    RoadFlow.Platform.Log.Add("修改了流程按钮", "", RoadFlow.Platform.Log.Types.流程相关, oldXML, workFlowButton.Serialize());
+                    MyCreek.Platform.Log.Add("修改了流程按钮", "", MyCreek.Platform.Log.Types.流程相关, oldXML, workFlowButton.Serialize());
                 }
                 bworkFlowButtons.ClearCache();
                 ViewBag.Script = "new RoadUI.Window().reloadOpener();alert('保存成功!');new RoadUI.Window().close();";
             }
-            return View(workFlowButton == null ? new RoadFlow.Data.Model.WorkFlowButtons() : workFlowButton);
+            return View(workFlowButton == null ? new MyCreek.Data.Model.WorkFlowButtons() : workFlowButton);
         }
 
     }

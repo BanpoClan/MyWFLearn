@@ -22,8 +22,8 @@ namespace WebForm.Platform.WorkFlowArchives
             typeid = Request.QueryString["typeid"];
             title = string.Empty;
 
-            RoadFlow.Platform.WorkFlowArchives BWFA = new RoadFlow.Platform.WorkFlowArchives();
-            RoadFlow.Platform.WorkFlow BWF = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlowArchives BWFA = new MyCreek.Platform.WorkFlowArchives();
+            MyCreek.Platform.WorkFlow BWF = new MyCreek.Platform.WorkFlow();
             if (IsPostBack)
             {
                 title = Request.Form["Title1"];

@@ -21,10 +21,10 @@ namespace WebForm.Platform.UserApp
         protected void Page_Load(object sender, EventArgs e)
         {
             query = "&id=" + Request.QueryString["id"] + "&appid=" + Request.QueryString["appid"] + "&roleid=" + Request.QueryString["roleid"] + "&userid=" + Request.QueryString["userid"];
-            RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
-            RoadFlow.Platform.RoleApp broleApp = new RoadFlow.Platform.RoleApp();
-            RoadFlow.Platform.UsersApp buserApp = new RoadFlow.Platform.UsersApp();
-            RoadFlow.Data.Model.UsersApp usersApp = null;
+            MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
+            MyCreek.Platform.RoleApp broleApp = new MyCreek.Platform.RoleApp();
+            MyCreek.Platform.UsersApp buserApp = new MyCreek.Platform.UsersApp();
+            MyCreek.Data.Model.UsersApp usersApp = null;
 
             string id = Request.QueryString["id"];
 
@@ -76,7 +76,7 @@ namespace WebForm.Platform.UserApp
 
                     buserApp.Update(usersApp);
                     buserApp.ClearCache();
-                    RoadFlow.Platform.Log.Add("修改了个人应用", "", RoadFlow.Platform.Log.Types.角色应用, oldXML, usersApp.Serialize());
+                    MyCreek.Platform.Log.Add("修改了个人应用", "", MyCreek.Platform.Log.Types.角色应用, oldXML, usersApp.Serialize());
                     string refreshID = usersApp.ParentID.ToString();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('保存成功!'); parent.frames[0].reLoad('" + refreshID + "')", true);
                 }
@@ -85,7 +85,7 @@ namespace WebForm.Platform.UserApp
                 {
                     int i = buserApp.DeleteAndAllChilds(usersApp.ID);
                     buserApp.ClearCache();
-                    RoadFlow.Platform.Log.Add("删除了个人应用", usersApp.Serialize(), RoadFlow.Platform.Log.Types.角色应用);
+                    MyCreek.Platform.Log.Add("删除了个人应用", usersApp.Serialize(), MyCreek.Platform.Log.Types.角色应用);
                     string refreshID = usersApp.ParentID.ToString();
                     var parent = buserApp.Get(usersApp.ParentID);
                     string page = parent == null ? "Body.aspx" : "Body1.aspx";

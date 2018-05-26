@@ -20,11 +20,11 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlowDelegation bworkFlowDelegation = new RoadFlow.Platform.WorkFlowDelegation();
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-            RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-            IEnumerable<RoadFlow.Data.Model.WorkFlowDelegation> workFlowDelegationList;
+            MyCreek.Platform.WorkFlowDelegation bworkFlowDelegation = new MyCreek.Platform.WorkFlowDelegation();
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+            MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+            IEnumerable<MyCreek.Data.Model.WorkFlowDelegation> workFlowDelegationList;
 
             string startTime = string.Empty;
             string endTime = string.Empty;
@@ -46,7 +46,7 @@ namespace WebMvc.Controllers
                         if (comment != null)
                         {
                             bworkFlowDelegation.Delete(bid);
-                            RoadFlow.Platform.Log.Add("删除了流程意见", comment.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                            MyCreek.Platform.Log.Add("删除了流程意见", comment.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                         }
                     }
                     bworkFlowDelegation.RefreshCache();
@@ -66,11 +66,11 @@ namespace WebMvc.Controllers
             bool isOneSelf = "1" == Request.QueryString["isoneself"];
             if (isOneSelf)
             {
-                workFlowDelegationList = bworkFlowDelegation.GetPagerData(out pager, query1, RoadFlow.Platform.Users.CurrentUserID.ToString(), startTime, endTime);
+                workFlowDelegationList = bworkFlowDelegation.GetPagerData(out pager, query1, MyCreek.Platform.Users.CurrentUserID.ToString(), startTime, endTime);
             }
             else
             {
-                workFlowDelegationList = bworkFlowDelegation.GetPagerData(out pager, query1, RoadFlow.Platform.Users.RemovePrefix(suserid), startTime, endTime);
+                workFlowDelegationList = bworkFlowDelegation.GetPagerData(out pager, query1, MyCreek.Platform.Users.RemovePrefix(suserid), startTime, endTime);
             }
             ViewBag.Query1 = query1;
             ViewBag.startTime = startTime;
@@ -88,8 +88,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlowDelegation bworkFlowDelegation = new RoadFlow.Platform.WorkFlowDelegation();
-            RoadFlow.Data.Model.WorkFlowDelegation workFlowDelegation = null;
+            MyCreek.Platform.WorkFlowDelegation bworkFlowDelegation = new MyCreek.Platform.WorkFlowDelegation();
+            MyCreek.Data.Model.WorkFlowDelegation workFlowDelegation = null;
             string id = Request.QueryString["id"];
 
             string UserID = string.Empty;
@@ -124,10 +124,10 @@ namespace WebMvc.Controllers
                 bool isAdd = !id.IsGuid();
                 if (workFlowDelegation == null)
                 {
-                    workFlowDelegation = new RoadFlow.Data.Model.WorkFlowDelegation();
+                    workFlowDelegation = new MyCreek.Data.Model.WorkFlowDelegation();
                     workFlowDelegation.ID = Guid.NewGuid();
                 }
-                workFlowDelegation.UserID = isOneSelf ? RoadFlow.Platform.Users.CurrentUserID : RoadFlow.Platform.Users.RemovePrefix(UserID).ToGuid();
+                workFlowDelegation.UserID = isOneSelf ? MyCreek.Platform.Users.CurrentUserID : MyCreek.Platform.Users.RemovePrefix(UserID).ToGuid();
                 workFlowDelegation.EndTime = EndTime.ToDateTime();
                 if (FlowID.IsGuid())
                 {
@@ -135,26 +135,26 @@ namespace WebMvc.Controllers
                 }
                 workFlowDelegation.Note = Note.IsNullOrEmpty() ? null : Note;
                 workFlowDelegation.StartTime = StartTime.ToDateTime();
-                workFlowDelegation.ToUserID = RoadFlow.Platform.Users.RemovePrefix(ToUserID).ToGuid();
-                workFlowDelegation.WriteTime = RoadFlow.Utility.DateTimeNew.Now;
+                workFlowDelegation.ToUserID = MyCreek.Platform.Users.RemovePrefix(ToUserID).ToGuid();
+                workFlowDelegation.WriteTime = MyCreek.Utility.DateTimeNew.Now;
 
 
 
                 if (isAdd)
                 {
                     bworkFlowDelegation.Add(workFlowDelegation);
-                    RoadFlow.Platform.Log.Add("添加了工作委托", workFlowDelegation.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("添加了工作委托", workFlowDelegation.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                 }
                 else
                 {
                     bworkFlowDelegation.Update(workFlowDelegation);
-                    RoadFlow.Platform.Log.Add("修改了工作委托", "", RoadFlow.Platform.Log.Types.流程相关, oldXML, workFlowDelegation.Serialize());
+                    MyCreek.Platform.Log.Add("修改了工作委托", "", MyCreek.Platform.Log.Types.流程相关, oldXML, workFlowDelegation.Serialize());
                 }
                 bworkFlowDelegation.RefreshCache();
                 ViewBag.Script = "alert('保存成功!');new RoadUI.Window().reloadOpener();new RoadUI.Window().close();";
             }
-            ViewBag.FlowOptions = new RoadFlow.Platform.WorkFlow().GetOptions(FlowID);
-            return View(workFlowDelegation == null ? new RoadFlow.Data.Model.WorkFlowDelegation() { UserID = RoadFlow.Platform.Users.CurrentUserID } : workFlowDelegation);
+            ViewBag.FlowOptions = new MyCreek.Platform.WorkFlow().GetOptions(FlowID);
+            return View(workFlowDelegation == null ? new MyCreek.Data.Model.WorkFlowDelegation() { UserID = MyCreek.Platform.Users.CurrentUserID } : workFlowDelegation);
         }
 
     }

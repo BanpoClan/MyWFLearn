@@ -16,8 +16,8 @@ namespace WebForm.Platform.WorkFlowDesigner
         {
             context.Response.ContentType = "text/plain";
             string json = context.Request.Form["json"];
-            string msg = new RoadFlow.Platform.WorkFlow().SaveFlow(json);
-            RoadFlow.Platform.Log.Add("保存了流程", json + "(" + msg + ")", RoadFlow.Platform.Log.Types.流程相关);
+            string msg = new MyCreek.Platform.WorkFlow().SaveFlow(json);
+            MyCreek.Platform.Log.Add("保存了流程", json + "(" + msg + ")", MyCreek.Platform.Log.Types.流程相关);
             context.Response.Write(msg);
         }
 

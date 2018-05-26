@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * UEditor
  * version: ueditor
  * build: Thu May 29 2014 16:48:12 GMT+0800 (中国标准时间)

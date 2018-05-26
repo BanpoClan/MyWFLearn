@@ -15,7 +15,7 @@ namespace WebForm.Controls.SelectDictionary
         {
             context.Response.ContentType = "text/plain";
             string values = context.Request.QueryString["values"] ?? "";
-            RoadFlow.Platform.Dictionary Dict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary Dict = new MyCreek.Platform.Dictionary();
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             foreach (string value in values.Split(','))
             {

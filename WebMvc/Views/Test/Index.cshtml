@@ -34,9 +34,9 @@
     {
        //try
       // {
-            new RoadFlow.Data.ORACLE.DBHelper().Execute("truncate table " + table);
-            System.Data.DataTable dt = new RoadFlow.Data.MSSQL.DBHelper().GetDataTable("select * from " + table);
-            System.Data.DataTable dt1 = new RoadFlow.Data.ORACLE.DBHelper().GetDataTable("select * from " + table);
+            new MyCreek.Data.ORACLE.DBHelper().Execute("truncate table " + table);
+            System.Data.DataTable dt = new MyCreek.Data.MSSQL.DBHelper().GetDataTable("select * from " + table);
+            System.Data.DataTable dt1 = new MyCreek.Data.ORACLE.DBHelper().GetDataTable("select * from " + table);
             dt1.TableName = table;
             foreach (System.Data.DataRow dr in dt.Rows)
             {
@@ -48,7 +48,7 @@
                 dt1.Rows.Add(dr1);
 
             }
-            new RoadFlow.Data.ORACLE.DBHelper().BulkCopy(dt1);
+            new MyCreek.Data.ORACLE.DBHelper().BulkCopy(dt1);
        //}
       // catch(Exception err)
       // {

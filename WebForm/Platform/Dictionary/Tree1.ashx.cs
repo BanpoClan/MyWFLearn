@@ -14,7 +14,7 @@ namespace WebForm.Platform.Dictionary
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
-            RoadFlow.Platform.Dictionary BDict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary BDict = new MyCreek.Platform.Dictionary();
 
             string rootid = context.Request.QueryString["root"];
             bool ischild = "1" == context.Request.QueryString["ischild"];//是否要加载下级节点

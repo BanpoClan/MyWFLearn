@@ -21,7 +21,7 @@ namespace WebForm.Platform.DBConnection
                 context.Response.Write("参数错误");
                 return;
             }
-            context.Response.Write(new RoadFlow.Platform.DBConnection().Test(cid));
+            context.Response.Write(new MyCreek.Platform.DBConnection().Test(cid));
         }
 
         public bool IsReusable

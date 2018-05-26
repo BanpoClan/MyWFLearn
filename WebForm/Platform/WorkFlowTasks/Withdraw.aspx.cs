@@ -18,12 +18,12 @@ namespace WebForm.Platform.WorkFlowTasks
                 Response.Write("参数错误!");
                 Response.End();
             }
-            else if (new RoadFlow.Platform.WorkFlowTask().HasWithdraw(tid))
+            else if (new MyCreek.Platform.WorkFlowTask().HasWithdraw(tid))
             {
-                bool success = new RoadFlow.Platform.WorkFlowTask().WithdrawTask(tid);
+                bool success = new MyCreek.Platform.WorkFlowTask().WithdrawTask(tid);
                 if (success)
                 {
-                    RoadFlow.Platform.Log.Add("收回了任务", "任务ID：" + taskid, RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("收回了任务", "任务ID：" + taskid, MyCreek.Platform.Log.Types.流程相关);
                     Response.Write("收回成功!");
                     Response.End();
                 }

@@ -16,7 +16,7 @@ namespace WebForm.Tests
             context.Response.ContentType = "text/plain";
             string values=context.Request.QueryString["values"];
             string xx;
-            var logs = new RoadFlow.Platform.Log().GetPagerData(out xx, "", "", "", "", "", "");
+            var logs = new MyCreek.Platform.Log().GetPagerData(out xx, "", "", "", "", "", "");
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             foreach (System.Data.DataRow dr in logs.Rows)
             {

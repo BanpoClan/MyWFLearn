@@ -7,10 +7,10 @@
     string groupid = Request.QueryString["groupid"];
     string display = Request.QueryString["display"] ?? "0";
 
-    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-    RoadFlow.Platform.WorkFlowTask btask = new RoadFlow.Platform.WorkFlowTask();
-    RoadFlow.Platform.WorkFlowButtons bworkFlowButtons = new RoadFlow.Platform.WorkFlowButtons();
-    RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
+    MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+    MyCreek.Platform.WorkFlowTask btask = new MyCreek.Platform.WorkFlowTask();
+    MyCreek.Platform.WorkFlowButtons bworkFlowButtons = new MyCreek.Platform.WorkFlowButtons();
+    MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
     Guid flowID;
     if (!flowid.IsGuid(out flowID))
     {
@@ -39,7 +39,7 @@
         stepID = wfInstalled.FirstStepID;
     }
 
-    RoadFlow.Data.Model.WorkFlowInstalledSub.Step currentStep = wfInstalled.Steps.ToList().Find(p => p.ID == stepID);
+    MyCreek.Data.Model.WorkFlowInstalledSub.Step currentStep = wfInstalled.Steps.ToList().Find(p => p.ID == stepID);
 
     if (currentStep == null)
     {
@@ -57,7 +57,7 @@
     if ("0" == display && taskid.IsGuid(out taskgid))
     {
 
-        btask.UpdateOpenTime(taskgid, RoadFlow.Utility.DateTimeNew.Now, true);
+        btask.UpdateOpenTime(taskgid, MyCreek.Utility.DateTimeNew.Now, true);
 
         var task = btask.Get(taskgid);
         if (task != null)
@@ -67,7 +67,7 @@
                 Response.Write("<script type='text/javascript'>alert('该任务已处理,请刷新您的待办列表!');top.mainTab.closeTab();</script>");
                 Response.End();
             }
-            else if ("1" != display && task.ReceiveID != RoadFlow.Platform.Users.CurrentUserID)
+            else if ("1" != display && task.ReceiveID != MyCreek.Platform.Users.CurrentUserID)
             {
                 Response.Write("<script type='text/javascript'>alert('您不能处理当前任务,请刷新您的待办列表!');top.mainTab.closeTab();</script>");
                 Response.End();
@@ -85,7 +85,7 @@
 
     int debugType = wfInstalled.Debug;
     wfInstalled.DebugUsers.RemoveAll(p => p == null);
-    bool isDebug = (debugType == 1 || debugType == 2) && wfInstalled.DebugUsers.Exists(p => p.ID == RoadFlow.Platform.Users.CurrentUserID);
+    bool isDebug = (debugType == 1 || debugType == 2) && wfInstalled.DebugUsers.Exists(p => p.ID == MyCreek.Platform.Users.CurrentUserID);
     bool isSign = currentStep.SignatureType == 1 || currentStep.SignatureType == 2;//是否有意见
 
     int signType = currentStep.SignatureType;
@@ -159,7 +159,7 @@
     <!--意见处理栏-->   
     @if (isSign && "0" == display)
     {
-        string commentsOptions = new RoadFlow.Platform.WorkFlowComment().GetOptionsStringByUserID(RoadFlow.Platform.Users.CurrentUserID);
+        string commentsOptions = new MyCreek.Platform.WorkFlowComment().GetOptionsStringByUserID(MyCreek.Platform.Users.CurrentUserID);
     <div style="height:12px; margin:16px 8px 8px 8px; border-bottom:1px dashed #ccc;"></div>
     <div style="height:30px; margin:15px auto 8px auto; text-align:left; width:96%;">
         处理意见：<select class="myselect" id="mycomment" style="margin-right:6px; width:100px;" onchange="$('#comment').val(this.value);"><option value=""></option>@Html.Raw(commentsOptions)</select>&nbsp;<input type="text" class="mytext" id="comment" name="comment" value="" style="width:70%; margin-right:6px;" />
@@ -167,11 +167,11 @@
         {
         <input type="hidden" value="" id="issign" name="issign" />
         <input type="button" class="mybutton" id="signbutton" onclick="sign();" value="&nbsp;&nbsp;签&nbsp;&nbsp;章&nbsp;&nbsp;"/>
-            string signFile = string.Concat(Server.MapPath(Url.Content("~/Content/UserSigns/")), RoadFlow.Platform.Users.CurrentUserID, ".gif");
-            string signSrc = string.Concat(Url.Content("~/Content/UserSigns/"), RoadFlow.Platform.Users.CurrentUserID, ".gif");
+            string signFile = string.Concat(Server.MapPath(Url.Content("~/Content/UserSigns/")), MyCreek.Platform.Users.CurrentUserID, ".gif");
+            string signSrc = string.Concat(Url.Content("~/Content/UserSigns/"), MyCreek.Platform.Users.CurrentUserID, ".gif");
             if (!System.IO.File.Exists(signFile))
             {
-                System.Drawing.Bitmap img = new RoadFlow.Platform.WorkFlow().CreateSignImage(RoadFlow.Platform.Users.CurrentUserName);
+                System.Drawing.Bitmap img = new MyCreek.Platform.WorkFlow().CreateSignImage(MyCreek.Platform.Users.CurrentUserName);
                 if (img != null)
                 {
                     img.Save(signFile, System.Drawing.Imaging.ImageFormat.Gif);

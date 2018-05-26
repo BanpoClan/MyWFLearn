@@ -21,9 +21,9 @@ namespace WebForm
             }
 
             #region 得到用户角色相关的信息
-            RoadFlow.Platform.UsersRole buserRole = new RoadFlow.Platform.UsersRole();
-            RoadFlow.Platform.Role brole = new RoadFlow.Platform.Role();
-            var roles = buserRole.GetByUserID(RoadFlow.Platform.Users.CurrentUserID);
+            MyCreek.Platform.UsersRole buserRole = new MyCreek.Platform.UsersRole();
+            MyCreek.Platform.Role brole = new MyCreek.Platform.Role();
+            var roles = buserRole.GetByUserID(MyCreek.Platform.Users.CurrentUserID);
             RoleLength = roles.Count;
             DefaultRoleID = string.Empty;
             string rolesOptions = string.Empty;
@@ -31,7 +31,7 @@ namespace WebForm
             {
                 var mainRole = roles.Find(p => p.IsDefault);
                 DefaultRoleID = mainRole != null ? mainRole.RoleID.ToString() : roles.First().RoleID.ToString();
-                List<RoadFlow.Data.Model.Role> roleList = new List<RoadFlow.Data.Model.Role>();
+                List<MyCreek.Data.Model.Role> roleList = new List<MyCreek.Data.Model.Role>();
                 foreach (var role in roles)
                 {
                     var role1 = brole.Get(role.RoleID);
@@ -47,7 +47,7 @@ namespace WebForm
             #endregion
 
             this.UserName.Text = CurrentUserName;
-            this.CurrentTime.Text = RoadFlow.Utility.DateTimeNew.Now.ToDateWeekString();
+            this.CurrentTime.Text = MyCreek.Utility.DateTimeNew.Now.ToDateWeekString();
             this.RoleOptions.Text = rolesOptions;
             
         }

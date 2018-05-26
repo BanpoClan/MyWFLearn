@@ -9,7 +9,7 @@ namespace WebForm.Platform.Members
 {
     public partial class SortUsers : Common.BasePage
     {
-        protected List<RoadFlow.Data.Model.Users> Users = new List<RoadFlow.Data.Model.Users>();
+        protected List<MyCreek.Data.Model.Users> Users = new List<MyCreek.Data.Model.Users>();
         protected void Page_Load(object sender, EventArgs e)
         {
             string parentID = Request.QueryString["parentid"];
@@ -17,7 +17,7 @@ namespace WebForm.Platform.Members
             {
                 string sort = Request.Form["sort"] ?? "";
                 string[] sortArray = sort.Split(',');
-                RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
+                MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
                 for (int i = 0; i < sortArray.Length; i++)
                 {
                     Guid gid;
@@ -29,7 +29,7 @@ namespace WebForm.Platform.Members
                 }
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "parent.frames[0].reLoad('" + parentID + "');", true);
             }
-            Users = new RoadFlow.Platform.Organize().GetAllUsers(parentID.ToGuid());
+            Users = new MyCreek.Platform.Organize().GetAllUsers(parentID.ToGuid());
         }
     }
 }
