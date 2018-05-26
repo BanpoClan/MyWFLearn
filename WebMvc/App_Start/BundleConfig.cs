@@ -40,6 +40,23 @@ namespace WebMvc
                     .Include("~/Scripts/roadui.grid.js")
                     .Include("~/Scripts/roadui.init.js")
                 );
+
+
+            BundleTable.Bundles.Add(new StyleBundle("~/login/css")
+                .Include("~/Content/Theme/Login/reset.css")
+                .Include("~/Content/Theme/Login/login.css")
+                );
+
+            BundleTable.Bundles.Add(new ScriptBundle("~/login/script")
+                .Include("~/Scripts/login/jquery.min.js")
+                
+                .Include("~/Scripts/login/login.js"));
+
+
+            BundleTable.Bundles.Add(new ScriptBundle("~/login/canvs")
+                .Include("~/Scripts/login/canvas-particle.js"));
+
+
         }
     }
 }

@@ -24,6 +24,8 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -291,6 +293,8 @@
     <Content Include="Content\Theme\Green\Images\window\ico.gif" />
     <Content Include="Content\Theme\Green\Style\style.css" />
     <Content Include="Content\Theme\Green\Style\ui.css" />
+    <Content Include="Content\Theme\Login\login.css" />
+    <Content Include="Content\Theme\Login\reset.css" />
     <Content Include="Content\UserSigns\eb03262c-ab60-4bc6-a4c0-96e66a4229fe.gif" />
     <Content Include="Scripts\FlowDesinger\workflow-show.js" />
     <Content Include="Scripts\FlowDesinger\workflow.js" />
@@ -624,6 +628,9 @@
     <Content Include="Scripts\FormDesinger\ueditor\ueditor.parse.min.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\Login\canvas-particle.js" />
+    <Content Include="Scripts\Login\jquery.min.js" />
+    <Content Include="Scripts\Login\login.js" />
     <Content Include="Scripts\roadui.combox.js" />
     <Content Include="Scripts\roadui.grid.js" />
     <Content Include="Scripts\Ueditor\dialogs\anchor\anchor.html" />

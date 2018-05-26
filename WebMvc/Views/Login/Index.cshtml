@@ -3,13 +3,16 @@
     Page.BodyStyle = "style='background:#f3f7f9; overflow:hidden;'";
     Page.CheckApp = false;
 }
+<!--
 <div id="bgdiv" class="loginbgdiv"></div>
+    -->
 <script type="text/javascript">
     var win = new RoadUI.Window();
-    $(function ()
-    {
-        var left = $(window).width() - 500;
-        var top = $(window).height() - 280;
-        win.open({ url: "Login/Login", width: 300, height: 200, top: top, left: left, showico: false, title: "用户登录", resize: false, ismodal: false, showclose: false });
+    $(function () {
+        var left = 0;// $(window).width() - 500;
+        var top = 0;//$(window).height() - 280;
+        //win.open({ url: "Login/Login", width: 300, height: 200, top: top, left: left, showico: false, title: "用户登录", resize: false, ismodal: false, showclose: false });
+        //win.open({ url: "Login/Login", width: 800, height: 800, top: top, left: left, showico: false, title: "用户登录", resize: false, ismodal: false, showclose: false });
+        window.location.href = "Login/Login";
     });
 </script>

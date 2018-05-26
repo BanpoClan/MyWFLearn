@@ -1,48 +1,114 @@
 ﻿@{
     ViewBag.Title = "Login";
     Page.CheckApp = false;
+    @Styles.Render("~/login/css");
+    @Scripts.Render("~/login/script")
 }
 
 <form method="post" id="form1">
-<br />
-<input type="hidden" id="Force" name="Force" value="0" />
-<table cellpadding="0" cellspacing="1" border="0" style="width:95%; margin:0 auto;">
-    <tr>
-        <td style="width:70px; height:45px; text-align:right;">帐号：</td>
-        <td><input type="text" class="mytext" id="Account" name="Account" value="" maxlength="50" style="width:170px;" /></td>
-    </tr>
-    <tr>
-        <td style="height:45px; text-align:right;">密码：</td>
-        <td><input type="password" class="mytext" id="Password" name="Password" maxlength="50" style="width:170px;" /></td>
-    </tr>
-    <tr id="novcode" style="display:none;">
-        <td style="height:45px; text-align:right;">验证码：</td>
-        <td><input type="text" class="mytext" id="VCode" name="VCode" maxlength="4" style="width:80px;" />
-            <img alt="" src="VCode?@DateTime.Now.Ticks" onclick="cngimg();" style="vertical-align:middle;" id="VcodeImg" />
-        </td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <td><input type="submit" value="&nbsp;&nbsp;登&nbsp;&nbsp;录&nbsp;&nbsp;" class="mybutton" style="width:80px;" onclick="return checkForm();" /></td>
-    </tr>
-    @if("1"!=Request.QueryString["session"]){
-    <tr>
-        <td>&nbsp;</td>
-        <td style="text-align:left; vertical-align:bottom; height:23px;"><span style="color:blue; margin-right:10px;">用户名:xh 密码:111</span><a href="http://www.cqroad.cn" target="_blank" ><span style="color:blue;">官网:cqroad.cn</span></a></td>
-    </tr>
-    }
-</table>
+    <br />
+    <input type="hidden" id="Force" name="Force" value="0" />
+
+
+
+    <!--
+    <table cellpadding="0" cellspacing="1" border="0" style="width:95%; margin:0 auto;">
+        <tr>
+            <td style="width:70px; height:45px; text-align:right;">帐号：</td>
+            <td><input type="text" class="mytext" id="Account" name="Account" value="" maxlength="50" style="width:170px;" /></td>
+        </tr>
+        <tr>
+            <td style="height:45px; text-align:right;">密码：</td>
+            <td><input type="password" class="mytext" id="Password" name="Password" maxlength="50" style="width:170px;" /></td>
+        </tr>
+        <tr id="novcode" style="display:none;">
+            <td style="height:45px; text-align:right;">验证码：</td>
+            <td>
+                <input type="text" class="mytext" id="VCode" name="VCode" maxlength="4" style="width:80px;" />
+                <img alt="" src="VCode?@DateTime.Now.Ticks" onclick="cngimg();" style="vertical-align:middle;" id="VcodeImg" />
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="&nbsp;&nbsp;登&nbsp;&nbsp;录&nbsp;&nbsp;" class="mybutton" style="width:80px;" onclick="return checkForm();" /></td>
+        </tr>
+        @if ("1" != Request.QueryString["session"])
+        {
+            <tr>
+                <td>&nbsp;</td>
+                <td style="text-align:left; vertical-align:bottom; height:23px;"><span style="color:blue; margin-right:10px;">用户名:xh 密码:111</span><a href="http://www.cqroad.cn" target="_blank"><span style="color:blue;">官网:cqroad.cn</span></a></td>
+            </tr>
+        }
+    </table>
+    -->
+
+
+    <div class="page">
+        <div class="loginwarrp">
+            <div class="logo">管理员登陆</div>
+            <div class="login_form">
+                <form id="Login" name="Login" method="post" onsubmit="" action="">
+                    <ul>
+                        <li class="login-item">
+                            <span>用户名：</span>
+                            <input type="text" id="Account" name="Account" class="login_input">
+                            <span id="count-msg" class="error"></span>
+                        </li>
+                        <li class="login-item">
+                            <span>密　码：</span>
+                            <input type="password" id="Password" name="Password" class="login_input">
+                            <span id="password-msg" class="error"></span>
+                        </li>
+                        <li id="novcode" class="login-item">
+                            <span>验证码：</span>
+                            <input type="text" class="login_input" id="VCode" name="VCode" maxlength="4" style="width:80px;" />
+                            <img alt="" src="VCode?@DateTime.Now.Ticks" onclick="cngimg();" style="vertical-align:middle;" id="VcodeImg" />
+                            <span id="vcode-msg" class="error"></span>
+                        </li>
+                        <li class="login-sub">
+                            <input type="submit" name="Submit" value="登录" onclick=" return checkForm()" />
+                        </li>
+                    </ul>
+
+                    @if ("1" != Request.QueryString["session"])
+                    {
+                        <span style="color:blue; margin-right:10px;">用户名:xh 密码:111</span>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
 </form>
+
+
 <script type="text/javascript">
     var isVcode = '1' == '@Session[ViewBag.IsVcodeSessionKey]';
     var isSessionLost = "1" == '@Request.QueryString["session"]';
     $(window).load(function ()
     {
+
+        var config = {
+            vx: 4,
+            vy: 4,
+            height: 2,
+            width: 2,
+            count: 100,
+            color: "121, 162, 185",
+            stroke: "100, 200, 180",
+            dist: 6000,
+            e_dist: 20000,
+            max_conn: 10
+        }
+        CanvasParticle(config);
+
         if (isVcode)
         {
             if (!isSessionLost)
             {
-                top.win.resize(300, 250);
+               // top.win.resize(300, 250);
             }
             $("#novcode").show();
         }
@@ -52,6 +118,7 @@
     function checkForm()
     {
         var form1 = document.forms[0];
+        /*
         if ($.trim(form1.Account.value).length == 0)
         {
             alert("帐号不能为空!");
@@ -64,9 +131,11 @@
             form1.Password.focus();
             return false;
         }
+        */
         if (isVcode && form1.VCode && $.trim(form1.VCode.value).length == 0)
         {
-            alert("验证码不能为空!");
+           // alert("验证码不能为空!");
+            $('#vcode-msg').html("验证码错误");
             form1.VCode.focus();
             return false;
         }
@@ -77,3 +146,4 @@
         $('#VcodeImg').attr('src', 'VCode?' + new Date().toString());
     }
 </script>
+<script type="text/javascript" src="~/login/canvs"></script>
