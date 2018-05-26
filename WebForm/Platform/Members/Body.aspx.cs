@@ -11,8 +11,8 @@ namespace WebForm.Platform.Members
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Data.Model.Organize org = null;
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
+            MyCreek.Data.Model.Organize org = null;
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
             string id = Request.QueryString["id"];
             if (id.IsGuid())
             {
@@ -39,7 +39,7 @@ namespace WebForm.Platform.Members
                     org.Note = note.IsNullOrEmpty() ? null : note.Trim();
 
                     borganize.Update(org);
-                    RoadFlow.Platform.Log.Add("修改了组织机构", "", RoadFlow.Platform.Log.Types.组织机构, oldXML, org.Serialize());
+                    MyCreek.Platform.Log.Add("修改了组织机构", "", MyCreek.Platform.Log.Types.组织机构, oldXML, org.Serialize());
                     string rid = org.ParentID == Guid.Empty ? org.ID.ToString() : org.ParentID.ToString();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('保存成功!');parent.frames[0].reLoad('" + rid + "');", true);
                 }
@@ -51,7 +51,7 @@ namespace WebForm.Platform.Members
                     Guid toID;
                     if (toOrgID.IsGuid(out toID) && borganize.Move(org.ID, toID))
                     {
-                        RoadFlow.Platform.Log.Add("移动了组织机构", "将机构：" + org.ID + "移动到了：" + toID, RoadFlow.Platform.Log.Types.组织机构);
+                        MyCreek.Platform.Log.Add("移动了组织机构", "将机构：" + org.ID + "移动到了：" + toID, MyCreek.Platform.Log.Types.组织机构);
                         string refreshID = org.ParentID == Guid.Empty ? org.ID.ToString() : org.ParentID.ToString();
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('移动成功!');parent.frames[0].reLoad('" + refreshID + "');parent.frames[0].reLoad('" + toOrgID + "')", true);
                     }
@@ -65,7 +65,7 @@ namespace WebForm.Platform.Members
                 if (!Request.Form["Delete"].IsNullOrEmpty())
                 {
                     int i = borganize.DeleteAndAllChilds(org.ID);
-                    RoadFlow.Platform.Log.Add("删除了组织机构及其所有下级共" + i.ToString() + "项", org.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                    MyCreek.Platform.Log.Add("删除了组织机构及其所有下级共" + i.ToString() + "项", org.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                     string refreshID = org.ParentID == Guid.Empty ? org.ID.ToString() : org.ParentID.ToString();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('共删除了" + i.ToString() + "项!');parent.frames[0].reLoad('" + refreshID + "');", true);
                 }

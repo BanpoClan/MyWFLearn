@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     var parent = window.parent;
     //dialog对象
     dialog = parent.$EDITORUI[window.frameElement.id.replace( /_iframe$/, '' )];

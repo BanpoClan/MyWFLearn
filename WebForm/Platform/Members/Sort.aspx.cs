@@ -9,7 +9,7 @@ namespace WebForm.Platform.Members
 {
     public partial class Sort : Common.BasePage
     {
-        protected List<RoadFlow.Data.Model.Organize> Orgs = new List<RoadFlow.Data.Model.Organize>();
+        protected List<MyCreek.Data.Model.Organize> Orgs = new List<MyCreek.Data.Model.Organize>();
         protected void Page_Load(object sender, EventArgs e)
         {
             string parentid = Request.QueryString["parentid"];
@@ -17,7 +17,7 @@ namespace WebForm.Platform.Members
             {
                 string sort = Request.Form["sort"] ?? "";
                 string[] sortArray = sort.Split(',');
-                RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
+                MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
                 for (int i = 0; i < sortArray.Length; i++)
                 {
                     Guid gid;
@@ -29,7 +29,7 @@ namespace WebForm.Platform.Members
                 }
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "parent.frames[0].reLoad('" + parentid + "');", true);
             }
-            Orgs = new RoadFlow.Platform.Organize().GetChilds(parentid.ToGuid());
+            Orgs = new MyCreek.Platform.Organize().GetChilds(parentid.ToGuid());
         }
     }
 }

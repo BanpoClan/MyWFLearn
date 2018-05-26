@@ -9,7 +9,7 @@
         string newName = Request.Form["NewFlowName"];
         string saveOpen = Request.Form["SaveOpen"];
 
-        var wf = new RoadFlow.Platform.WorkFlow().SaveAs(flowid.ToGuid(), newName);
+        var wf = new MyCreek.Platform.WorkFlow().SaveAs(flowid.ToGuid(), newName);
         if(wf!=null)
         {
             string newid=wf.ID.ToString();

@@ -15,8 +15,8 @@ namespace WebForm.Platform.WorkFlowDesigner
         {
             context.Response.ContentType = "text/plain";
             string json = context.Request.Form["json"];
-            string msg = new RoadFlow.Platform.WorkFlow().InstallFlow(json, false);
-            RoadFlow.Platform.Log.Add("安装了流程", json + "(" + msg + ")", RoadFlow.Platform.Log.Types.流程相关);
+            string msg = new MyCreek.Platform.WorkFlow().InstallFlow(json, false);
+            MyCreek.Platform.Log.Add("安装了流程", json + "(" + msg + ")", MyCreek.Platform.Log.Types.流程相关);
             context.Response.Write(msg);
         }
 

@@ -19,7 +19,7 @@ namespace WebForm.Platform.WorkFlowArchives
                 Contents = "无内容";
                 return;
             }
-            var archives = new RoadFlow.Platform.WorkFlowArchives().Get(id.ToGuid());
+            var archives = new MyCreek.Platform.WorkFlowArchives().Get(id.ToGuid());
             if (archives != null)
             {
                 Contents = archives.Contents;

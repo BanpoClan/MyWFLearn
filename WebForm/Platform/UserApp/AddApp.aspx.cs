@@ -12,10 +12,10 @@ namespace WebForm.Platform.UserApp
         protected string AppTypesOptions = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
-            RoadFlow.Platform.UsersApp busersApp = new RoadFlow.Platform.UsersApp();
-            RoadFlow.Platform.RoleApp broleApp = new RoadFlow.Platform.RoleApp();
-            RoadFlow.Data.Model.UsersApp usersApp = null;
+            MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
+            MyCreek.Platform.UsersApp busersApp = new MyCreek.Platform.UsersApp();
+            MyCreek.Platform.RoleApp broleApp = new MyCreek.Platform.RoleApp();
+            MyCreek.Data.Model.UsersApp usersApp = null;
 
             string id = Request.QueryString["id"];
             string userID = Request.QueryString["userid"];
@@ -32,7 +32,7 @@ namespace WebForm.Platform.UserApp
                     string params1 = Request.Form["Params"];
                     string ico = Request.Form["Ico"];
 
-                    RoadFlow.Data.Model.UsersApp usersApp1 = new RoadFlow.Data.Model.UsersApp();
+                    MyCreek.Data.Model.UsersApp usersApp1 = new MyCreek.Data.Model.UsersApp();
 
                     usersApp1.ID = Guid.NewGuid();
                     usersApp1.ParentID = id.ToGuid();
@@ -56,7 +56,7 @@ namespace WebForm.Platform.UserApp
 
                     busersApp.Add(usersApp1);
                     busersApp.ClearCache();
-                    RoadFlow.Platform.Log.Add("添加了个人应用", busersApp.Serialize(), RoadFlow.Platform.Log.Types.角色应用);
+                    MyCreek.Platform.Log.Add("添加了个人应用", busersApp.Serialize(), MyCreek.Platform.Log.Types.角色应用);
                     string refreshID = id;
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('添加成功!'); parent.frames[0].reLoad('" + refreshID + "')", true);
                 }

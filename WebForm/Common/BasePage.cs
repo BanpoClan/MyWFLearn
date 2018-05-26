@@ -60,11 +60,11 @@ namespace WebForm.Common
         /// <summary>
         /// 当前登录用户
         /// </summary>
-        public static RoadFlow.Data.Model.Users CurrentUser
+        public static MyCreek.Data.Model.Users CurrentUser
         {
             get
             {
-                return RoadFlow.Platform.Users.CurrentUser;
+                return MyCreek.Platform.Users.CurrentUser;
             }
         }
         /// <summary>
@@ -74,7 +74,7 @@ namespace WebForm.Common
         {
             get
             {
-                return RoadFlow.Platform.Users.CurrentUserID;
+                return MyCreek.Platform.Users.CurrentUserID;
             }
         }
         /// <summary>
@@ -84,7 +84,7 @@ namespace WebForm.Common
         {
             get
             {
-                return RoadFlow.Platform.Users.CurrentUserName;
+                return MyCreek.Platform.Users.CurrentUserName;
             }
         }
         /// <summary>

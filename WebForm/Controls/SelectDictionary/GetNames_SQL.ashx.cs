@@ -18,7 +18,7 @@ namespace WebForm.Controls.SelectDictionary
             context.Response.ContentType = "text/plain";
             string dbconn = context.Request.QueryString["dbconn"];
             string sql = context.Request.QueryString["sql"];
-            RoadFlow.Platform.DBConnection conn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection conn = new MyCreek.Platform.DBConnection();
             var conn1 = conn.Get(dbconn.ToGuid());
             DataTable dt = conn.GetDataTable(conn1, sql.UrlDecode().ReplaceSelectSql());
 

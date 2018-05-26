@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license Highcharts JS v3.0.6 (2013-10-04)
  * MooTools adapter
  *

@@ -19,7 +19,7 @@ namespace WebMvc.Areas.Controls.Controllers
         public string GetNames()
         {
             string values = Request.QueryString["values"];
-            return new RoadFlow.Platform.Organize().GetNames(values);
+            return new MyCreek.Platform.Organize().GetNames(values);
         }
 
         public string GetNote()
@@ -30,16 +30,16 @@ namespace WebMvc.Areas.Controls.Controllers
             {
                 return "";
             }
-            RoadFlow.Platform.Organize borg = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users buser = new RoadFlow.Platform.Users();
-            if (id.StartsWith(RoadFlow.Platform.Users.PREFIX))
+            MyCreek.Platform.Organize borg = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users buser = new MyCreek.Platform.Users();
+            if (id.StartsWith(MyCreek.Platform.Users.PREFIX))
             {
                 Guid uid = buser.RemovePrefix1(id).ToGuid();
                 return string.Concat(borg.GetAllParentNames(buser.GetMainStation(uid)), " / ", buser.GetName(uid));
             }
-            else if (id.StartsWith(RoadFlow.Platform.WorkGroup.PREFIX))
+            else if (id.StartsWith(MyCreek.Platform.WorkGroup.PREFIX))
             {
-                return new RoadFlow.Platform.WorkGroup().GetUsersNames(RoadFlow.Platform.WorkGroup.RemovePrefix(id).ToGuid(), '、');
+                return new MyCreek.Platform.WorkGroup().GetUsersNames(MyCreek.Platform.WorkGroup.RemovePrefix(id).ToGuid(), '、');
             }
             else if (id.IsGuid(out gid))
             {

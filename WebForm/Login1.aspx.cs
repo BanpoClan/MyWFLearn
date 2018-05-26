@@ -35,8 +35,8 @@ namespace WebForm
 
         private void check()
         {
-            string isVcodeSessionKey = RoadFlow.Utility.Keys.SessionKeys.IsValidateCode.ToString();
-            string vcodeSessionKey = RoadFlow.Utility.Keys.SessionKeys.ValidateCode.ToString();
+            string isVcodeSessionKey = MyCreek.Utility.Keys.SessionKeys.IsValidateCode.ToString();
+            string vcodeSessionKey = MyCreek.Utility.Keys.SessionKeys.ValidateCode.ToString();
 
             string account = Request.Form["Account"];
             string password = Request.Form["Password"];
@@ -54,28 +54,28 @@ namespace WebForm
             else if (account.IsNullOrEmpty() || password.IsNullOrEmpty())
             {
                 Session[isVcodeSessionKey] = "1";
-                RoadFlow.Platform.Log.Add("用户登录失败", string.Concat("用户:", account, "登录失败，帐号或密码为空"), RoadFlow.Platform.Log.Types.用户登录);
+                MyCreek.Platform.Log.Add("用户登录失败", string.Concat("用户:", account, "登录失败，帐号或密码为空"), MyCreek.Platform.Log.Types.用户登录);
                 Script = "alert('帐号或密码不能为空!');";
             }
             else
             {
-                RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
+                MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
                 var user = busers.GetByAccount(account.Trim());
                 if (user == null || string.Compare(user.Password, busers.GetUserEncryptionPassword(user.ID.ToString(), password.Trim()), false) != 0)
                 {
                     Session[isVcodeSessionKey] = "1";
-                    RoadFlow.Platform.Log.Add("用户登录失败", string.Concat("用户:", account, "登录失败，帐号或密码错误"), RoadFlow.Platform.Log.Types.用户登录);
+                    MyCreek.Platform.Log.Add("用户登录失败", string.Concat("用户:", account, "登录失败，帐号或密码错误"), MyCreek.Platform.Log.Types.用户登录);
                     Script = "alert('帐号或密码错误!');";
                 }
                 else if (user.Status == 1)
                 {
                     Session[isVcodeSessionKey] = "1";
-                    RoadFlow.Platform.Log.Add("用户登录失败", string.Concat("用户:", account, "登录失败，帐号已被冻结"), RoadFlow.Platform.Log.Types.用户登录);
+                    MyCreek.Platform.Log.Add("用户登录失败", string.Concat("用户:", account, "登录失败，帐号已被冻结"), MyCreek.Platform.Log.Types.用户登录);
                     Script = "alert('帐号已被冻结!');";
                 }
                 else
                 {
-                    RoadFlow.Platform.OnlineUsers bou = new RoadFlow.Platform.OnlineUsers();
+                    MyCreek.Platform.OnlineUsers bou = new MyCreek.Platform.OnlineUsers();
                     var onUser = bou.Get(user.ID);
                     if (onUser != null && "1" != force)
                     {
@@ -86,11 +86,11 @@ namespace WebForm
                     else
                     {
                         Guid uniqueID = Guid.NewGuid();
-                        Session[RoadFlow.Utility.Keys.SessionKeys.UserID.ToString()] = user.ID;
-                        Session[RoadFlow.Utility.Keys.SessionKeys.UserUniqueID.ToString()] = uniqueID;
+                        Session[MyCreek.Utility.Keys.SessionKeys.UserID.ToString()] = user.ID;
+                        Session[MyCreek.Utility.Keys.SessionKeys.UserUniqueID.ToString()] = uniqueID;
                         bou.Add(user, uniqueID);
                         Session.Remove(isVcodeSessionKey);
-                        RoadFlow.Platform.Log.Add("用户登录成功", string.Concat("用户:", user.Name, "(", user.ID, ")登录成功"), RoadFlow.Platform.Log.Types.用户登录);
+                        MyCreek.Platform.Log.Add("用户登录成功", string.Concat("用户:", user.Name, "(", user.ID, ")登录成功"), MyCreek.Platform.Log.Types.用户登录);
                         if (isSessionLost)
                         {
                             Script = "alert('登录成功!');new RoadUI.Window().close();";

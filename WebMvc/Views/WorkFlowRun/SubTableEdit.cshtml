@@ -7,8 +7,8 @@
 @{
     if ("1" == Request.Form["issave"])
     {
-        RoadFlow.Data.Model.WorkFlowCustomEventParams parmas = new RoadFlow.Data.Model.WorkFlowCustomEventParams();
-        string instanceid1 = new RoadFlow.Platform.WorkFlow().SaveFromData(Request.QueryString["instanceid"], parmas);
+        MyCreek.Data.Model.WorkFlowCustomEventParams parmas = new MyCreek.Data.Model.WorkFlowCustomEventParams();
+        string instanceid1 = new MyCreek.Platform.WorkFlow().SaveFromData(Request.QueryString["instanceid"], parmas);
         <script>
             alert('保存成功!');
             new RoadUI.Window().reloadOpener();
@@ -36,7 +36,7 @@
     <div style="padding-top:10px;">
         <input type="hidden" name="@secondtablerelationfield" id="@secondtablerelationfield" value="@Request.QueryString["primarytableid"]" />
          @{
-             var form = new RoadFlow.Platform.AppLibrary().Get(secondtableeditform.ToGuid());
+             var form = new MyCreek.Platform.AppLibrary().Get(secondtableeditform.ToGuid());
              if (form != null)
              {
                  string src = form.Address;

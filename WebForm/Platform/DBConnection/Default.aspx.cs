@@ -10,11 +10,11 @@ namespace WebForm.Platform.DBConnection
     public partial class Default : Common.BasePage
     {
         protected string Query1 = string.Empty;
-        protected List<RoadFlow.Data.Model.DBConnection> ConnList = new List<RoadFlow.Data.Model.DBConnection>();
+        protected List<MyCreek.Data.Model.DBConnection> ConnList = new List<MyCreek.Data.Model.DBConnection>();
         protected void Page_Load(object sender, EventArgs e)
         {
             string query1 = string.Format("&appid={0}&tabid={1}", Request.QueryString["appid"], Request.QueryString["tabid"]);
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
 
             if (IsPostBack)
             {
@@ -32,7 +32,7 @@ namespace WebForm.Platform.DBConnection
                         }
                     }
                     bdbconn.ClearCache();
-                    RoadFlow.Platform.Log.Add("删除了数据连接", delxml.ToString(), RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("删除了数据连接", delxml.ToString(), MyCreek.Platform.Log.Types.流程相关);
                 }
             }
 

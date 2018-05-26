@@ -20,7 +20,7 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(FormCollection collection)
         {
-            RoadFlow.Platform.OnlineUsers bou = new RoadFlow.Platform.OnlineUsers();
+            MyCreek.Platform.OnlineUsers bou = new MyCreek.Platform.OnlineUsers();
             if (!Request.Form["ClearAll"].IsNullOrEmpty())
             {
                 bou.RemoveAll();
@@ -48,7 +48,7 @@ namespace WebMvc.Controllers
 
         private ActionResult query(FormCollection collection)
         {
-            RoadFlow.Platform.OnlineUsers bou = new RoadFlow.Platform.OnlineUsers();
+            MyCreek.Platform.OnlineUsers bou = new MyCreek.Platform.OnlineUsers();
             string name = string.Empty;
             if (collection != null)
             {

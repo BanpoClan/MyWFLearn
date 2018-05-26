@@ -9,14 +9,14 @@ namespace WebForm.Platform.WorkFlowTasks
 {
     public partial class Detail : Common.BasePage
     {
-        protected RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-        protected RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+        protected MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+        protected MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
         protected string flowid = string.Empty;
         protected string groupid = string.Empty;
         protected string displayModel = string.Empty;
         protected string query = string.Empty;
-        protected IOrderedEnumerable<RoadFlow.Data.Model.WorkFlowTask> tasks;
-        protected RoadFlow.Data.Model.WorkFlowInstalled wfInstall = null;
+        protected IOrderedEnumerable<MyCreek.Data.Model.WorkFlowTask> tasks;
+        protected MyCreek.Data.Model.WorkFlowInstalled wfInstall = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             flowid = Request.QueryString["flowid1"] ?? Request.QueryString["flowid"];

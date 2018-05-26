@@ -13,7 +13,7 @@ namespace WebForm.Controls.SelectDictionary
         protected string defaultValuesString = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.Dictionary Dict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary Dict = new MyCreek.Platform.Dictionary();
 
             string values = Request.QueryString["values"];
             string rootid = Request.QueryString["rootid"];
@@ -24,7 +24,7 @@ namespace WebForm.Controls.SelectDictionary
             if ("1" == datasource)
             {
                 string dbconn = Request.QueryString["dbconn"];
-                RoadFlow.Platform.DBConnection conn = new RoadFlow.Platform.DBConnection();
+                MyCreek.Platform.DBConnection conn = new MyCreek.Platform.DBConnection();
                 var conn1 = conn.Get(dbconn.ToGuid());
                 SqlDataTable = conn.GetDataTable(conn1, sql.UrlDecode().ReplaceSelectSql());
             }
@@ -83,7 +83,7 @@ namespace WebForm.Controls.SelectDictionary
                         string titlefield = Request.QueryString["titlefield"];
                         string parentfield = Request.QueryString["parentfield"];
                         string where = Request.QueryString["where"];
-                        RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+                        MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
                         var conn = bdbconn.Get(dbconn.ToGuid());
                         string sql2 = "select " + titlefield + " from " + dbtable + " where " + valuefield + "='" + value + "'";
                         DataTable dt = bdbconn.GetDataTable(conn, sql2.ReplaceSelectSql());

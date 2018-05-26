@@ -11,8 +11,8 @@ namespace WebForm.Platform.Members
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            RoadFlow.Data.Model.Organize org = null;
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            MyCreek.Data.Model.Organize org = null;
             string id = Request.QueryString["id"];
             string name = string.Empty;
             string type = string.Empty;
@@ -32,7 +32,7 @@ namespace WebForm.Platform.Members
                 status = Request.Form["Status"];
                 note = Request.Form["note"];
 
-                RoadFlow.Data.Model.Organize org1 = new RoadFlow.Data.Model.Organize();
+                MyCreek.Data.Model.Organize org1 = new MyCreek.Data.Model.Organize();
                 Guid org1ID = Guid.NewGuid();
                 org1.ID = org1ID;
                 org1.Name = name.Trim();
@@ -52,7 +52,7 @@ namespace WebForm.Platform.Members
                     scope.Complete();
                 }
 
-                RoadFlow.Platform.Log.Add("添加了组织机构", org1.Serialize(), RoadFlow.Platform.Log.Types.组织机构);
+                MyCreek.Platform.Log.Add("添加了组织机构", org1.Serialize(), MyCreek.Platform.Log.Types.组织机构);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('添加成功!');parent.frames[0].reLoad('" + id + "');window.location=window.location;", true);
             }
             

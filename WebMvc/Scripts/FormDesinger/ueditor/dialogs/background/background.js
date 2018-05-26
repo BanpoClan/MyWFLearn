@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
 
     var onlineImage,
         backupStyle = editor.queryCommandValue('background');

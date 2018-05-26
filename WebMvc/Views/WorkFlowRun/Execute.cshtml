@@ -24,11 +24,11 @@
     var opationJSON = LitJson.JsonMapper.ToObject(params1);
     string opation = opationJSON["type"].ToString().ToLower();
 
-    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-    RoadFlow.Platform.WorkFlowTask btask = new RoadFlow.Platform.WorkFlowTask();
-    RoadFlow.Platform.WorkFlowDelegation bworkFlowDelegation = new RoadFlow.Platform.WorkFlowDelegation();
-    RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-    RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
+    MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+    MyCreek.Platform.WorkFlowTask btask = new MyCreek.Platform.WorkFlowTask();
+    MyCreek.Platform.WorkFlowDelegation bworkFlowDelegation = new MyCreek.Platform.WorkFlowDelegation();
+    MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+    MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
     
     var wfInstalled=bworkFlow.GetWorkFlowRunModel(flowid);
     if(wfInstalled==null)
@@ -41,24 +41,24 @@
     string titleField = Request.Form["Form_TitleField"];
     string title = Request.Form[titleField];
 
-    RoadFlow.Data.Model.WorkFlowExecute.Execute execute = new RoadFlow.Data.Model.WorkFlowExecute.Execute();
+    MyCreek.Data.Model.WorkFlowExecute.Execute execute = new MyCreek.Data.Model.WorkFlowExecute.Execute();
     execute.Comment = comment.IsNullOrEmpty() ? "" : comment.Trim();
     switch(opation)
     {
         case "submit":
-            execute.ExecuteType = RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit;
+            execute.ExecuteType = MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit;
             break;
         case "save":
-            execute.ExecuteType = RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Save;
+            execute.ExecuteType = MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Save;
             break;
         case "back":
-            execute.ExecuteType = RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Back;
+            execute.ExecuteType = MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Back;
             break;
         case "completed":
-            execute.ExecuteType = RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed;
+            execute.ExecuteType = MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed;
             break;
         case "redirect":
-            execute.ExecuteType = RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Redirect;
+            execute.ExecuteType = MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Redirect;
             break;
     }
     
@@ -67,7 +67,7 @@
     execute.InstanceID = instanceid;
     execute.IsSign = "1" == issign;
     execute.Note = "";
-    execute.Sender = RoadFlow.Platform.Users.CurrentUser;
+    execute.Sender = MyCreek.Platform.Users.CurrentUser;
     execute.StepID = stepid.IsGuid() ? stepid.ToGuid() : wfInstalled.FirstStepID;
     execute.TaskID = taskid.ToGuid();
     execute.Title = title ?? "";
@@ -84,21 +84,21 @@
             {
                 switch(execute.ExecuteType)
                 {
-                    case RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit:
+                    case MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit:
                         execute.Steps.Add(gid, borganize.GetAllUsers(member));
                         break;
-                    case RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Back:
-                        execute.Steps.Add(gid, new List<RoadFlow.Data.Model.Users>());
+                    case MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Back:
+                        execute.Steps.Add(gid, new List<MyCreek.Data.Model.Users>());
                         break;
-                    case RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Save:
+                    case MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Save:
                         break;
-                    case RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed:
+                    case MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed:
                         break;
-                    case RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Redirect:
+                    case MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Redirect:
                         break;
                 }
             }
-            if (execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Redirect)
+            if (execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Redirect)
             {
                 execute.Steps.Add(Guid.Empty, borganize.GetAllUsers(member));
             }
@@ -106,7 +106,7 @@
     }
 
     
-    RoadFlow.Data.Model.WorkFlowCustomEventParams eventParams = new RoadFlow.Data.Model.WorkFlowCustomEventParams();
+    MyCreek.Data.Model.WorkFlowCustomEventParams eventParams = new MyCreek.Data.Model.WorkFlowCustomEventParams();
     eventParams.FlowID = execute.FlowID;
     eventParams.GroupID = execute.GroupID;
     eventParams.StepID = execute.StepID;
@@ -114,8 +114,8 @@
     eventParams.InstanceID = execute.InstanceID;
 
     //保存业务数据 "1" != Request.QueryString["isSystemDetermine"]:当前步骤流转类型如果是系统判断，则先保存数据，在这里就不需要保存数据了。
-    if (execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Save ||
-        execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed ||
+    if (execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Save ||
+        execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed ||
         "1" != Request.QueryString["isSystemDetermine"]
     )
     {
@@ -135,15 +135,15 @@
     {
         //步骤提交前事件
         if (!step.Event.SubmitBefore.IsNullOrEmpty()
-            && (execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit
-            || execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed)
+            && (execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit
+            || execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed)
             )
         {
             object obj = btask.ExecuteFlowCustomEvent(step.Event.SubmitBefore.Trim(), eventParams);
             Response.Write(string.Format("执行步骤提交前事件：({0}) 返回值：{1}<br/>", step.Event.SubmitBefore.Trim(), obj.ToString()));
         }
         //步骤退回前事件
-        if (!step.Event.BackBefore.IsNullOrEmpty() && execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Back)
+        if (!step.Event.BackBefore.IsNullOrEmpty() && execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Back)
         {
             object obj = btask.ExecuteFlowCustomEvent(step.Event.BackBefore.Trim(), eventParams);
             Response.Write(string.Format("执行步骤退回前事件：({0}) 返回值：{1}<br/>", step.Event.BackBefore.Trim(), obj.ToString()));
@@ -175,21 +175,21 @@
         reslut.Messages
         );
 
-    RoadFlow.Platform.Log.Add(string.Format("处理了流程({0})", wfInstalled.Name), logContent, RoadFlow.Platform.Log.Types.流程相关);
+    MyCreek.Platform.Log.Add(string.Format("处理了流程({0})", wfInstalled.Name), logContent, MyCreek.Platform.Log.Types.流程相关);
 
     foreach (var step in steps)
     {
         //步骤提交后事件
         if (!step.Event.SubmitAfter.IsNullOrEmpty()
-            && (execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit
-            || execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed)
+            && (execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit
+            || execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed)
             )
         {
             object obj = btask.ExecuteFlowCustomEvent(step.Event.SubmitAfter.Trim(), eventParams);
             Response.Write(string.Format("执行步骤提交后事件：({0}) 返回值：{1}<br/>", step.Event.SubmitAfter.Trim(), obj.ToString()));
         }
         //步骤退回后事件
-        if (!step.Event.BackAfter.IsNullOrEmpty() && execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Back)
+        if (!step.Event.BackAfter.IsNullOrEmpty() && execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Back)
         {
             object obj = btask.ExecuteFlowCustomEvent(step.Event.BackAfter.Trim(), eventParams);
             Response.Write(string.Format("执行步骤退回后事件：({0}) 返回值：{1}<br/>", step.Event.BackAfter.Trim(), obj.ToString()));
@@ -197,8 +197,8 @@
     }
     
     //归档
-    if (execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit 
-        || execute.ExecuteType == RoadFlow.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed)
+    if (execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Submit 
+        || execute.ExecuteType == MyCreek.Data.Model.WorkFlowExecute.EnumType.ExecuteType.Completed)
     {
         var currentsteps = wfInstalled.Steps.Where(p=>p.ID==execute.StepID);
         if (currentsteps.Count() > 0 && currentsteps.First().Archives == 1)
@@ -207,8 +207,8 @@
             string formHtml = Request.Form["form_body_div_textarea"];
             string commentHtml = Request.Form["form_commentlist_div_textarea"];
             stepName = bworkFlow.GetStepName(execute.StepID, execute.FlowID, out flowName, true);
-            string archivesContents = new RoadFlow.Platform.WorkFlowForm().GetArchivesString(formHtml, commentHtml);
-            RoadFlow.Data.Model.WorkFlowArchives wfr = new RoadFlow.Data.Model.WorkFlowArchives();
+            string archivesContents = new MyCreek.Platform.WorkFlowForm().GetArchivesString(formHtml, commentHtml);
+            MyCreek.Data.Model.WorkFlowArchives wfr = new MyCreek.Data.Model.WorkFlowArchives();
             wfr.Comments = commentHtml;
             wfr.Contents = archivesContents;
             wfr.FlowID = execute.FlowID;
@@ -220,8 +220,8 @@
             wfr.StepName = stepName;
             wfr.Title = title.IsNullOrEmpty() ? flowName + "-" + stepName : title;
             wfr.TaskID = execute.TaskID;
-            wfr.WriteTime = RoadFlow.Utility.DateTimeNew.Now;
-            new RoadFlow.Platform.WorkFlowArchives().Add(wfr);
+            wfr.WriteTime = MyCreek.Utility.DateTimeNew.Now;
+            new MyCreek.Platform.WorkFlowArchives().Add(wfr);
         }
     }
     
@@ -234,7 +234,7 @@
     if (reslut.IsSuccess)
     {
         //判断是打开任务还是关闭窗口
-        var nextTasks = reslut.NextTasks.Where(p => p.Status.In(0, 1) && p.ReceiveID == RoadFlow.Platform.Users.CurrentUserID);
+        var nextTasks = reslut.NextTasks.Where(p => p.Status.In(0, 1) && p.ReceiveID == MyCreek.Platform.Users.CurrentUserID);
         var nextTask = nextTasks.Count() > 0 ? nextTasks.First() : null;
         if (nextTask != null)
         {

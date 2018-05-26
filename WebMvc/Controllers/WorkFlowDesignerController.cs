@@ -35,7 +35,7 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Open_List(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlow bwf = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlow bwf = new MyCreek.Platform.WorkFlow();
             string name = string.Empty;
             string type = Request.QueryString["typeid"];
             if (collection != null)
@@ -43,7 +43,7 @@ namespace WebMvc.Controllers
                 name = Request.Form["flow_name"];
             }
 
-            IEnumerable<RoadFlow.Data.Model.WorkFlow> flows = bwf.GetAll().Where(p => p.Status != 4);
+            IEnumerable<MyCreek.Data.Model.WorkFlow> flows = bwf.GetAll().Where(p => p.Status != 4);
             if (!name.IsNullOrEmpty())
             {
                 flows = flows.Where(p => p.Name.IndexOf(name) >= 0);
@@ -60,7 +60,7 @@ namespace WebMvc.Controllers
             {
                 return "{}";
             }
-            var flow = new RoadFlow.Platform.WorkFlow().Get(flowid.ToGuid());
+            var flow = new MyCreek.Platform.WorkFlow().Get(flowid.ToGuid());
             if (flow == null)
             {
                 return "{}";
@@ -84,7 +84,7 @@ namespace WebMvc.Controllers
             {
                 return "[]";
             }
-            List<string> tables = new RoadFlow.Platform.DBConnection().GetTables(connID.ToGuid());
+            List<string> tables = new MyCreek.Platform.DBConnection().GetTables(connID.ToGuid());
             System.Text.StringBuilder sb = new System.Text.StringBuilder("[", 1000);
             foreach (string table in tables)
             {
@@ -104,7 +104,7 @@ namespace WebMvc.Controllers
             {
                 return "[]";
             }
-            Dictionary<string, string> fields = new RoadFlow.Platform.DBConnection().GetFields(connid.ToGuid(), table);
+            Dictionary<string, string> fields = new MyCreek.Platform.DBConnection().GetFields(connid.ToGuid(), table);
             System.Text.StringBuilder sb = new System.Text.StringBuilder("[", 1000);
 
             foreach (var field in fields)
@@ -168,7 +168,7 @@ namespace WebMvc.Controllers
             string tablepk = Request["tablepk"];
             string where = Request["where"];
 
-            RoadFlow.Platform.DBConnection dbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection dbconn = new MyCreek.Platform.DBConnection();
 
             if (!connid.IsGuid())
             {

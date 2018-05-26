@@ -11,8 +11,8 @@ namespace WebForm.Platform.WorkFlowDelegation
     {
         protected bool isOneSelf = false;
         protected string FlowOptions = string.Empty;
-        protected RoadFlow.Platform.WorkFlowDelegation bworkFlowDelegation = new RoadFlow.Platform.WorkFlowDelegation();
-        protected RoadFlow.Data.Model.WorkFlowDelegation workFlowDelegation = null;
+        protected MyCreek.Platform.WorkFlowDelegation bworkFlowDelegation = new MyCreek.Platform.WorkFlowDelegation();
+        protected MyCreek.Data.Model.WorkFlowDelegation workFlowDelegation = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             string id = Request.QueryString["id"];
@@ -49,10 +49,10 @@ namespace WebForm.Platform.WorkFlowDelegation
                 bool isAdd = !id.IsGuid();
                 if (workFlowDelegation == null)
                 {
-                    workFlowDelegation = new RoadFlow.Data.Model.WorkFlowDelegation();
+                    workFlowDelegation = new MyCreek.Data.Model.WorkFlowDelegation();
                     workFlowDelegation.ID = Guid.NewGuid();
                 }
-                workFlowDelegation.UserID = isOneSelf ? RoadFlow.Platform.Users.CurrentUserID : RoadFlow.Platform.Users.RemovePrefix(UserID).ToGuid();
+                workFlowDelegation.UserID = isOneSelf ? MyCreek.Platform.Users.CurrentUserID : MyCreek.Platform.Users.RemovePrefix(UserID).ToGuid();
                 workFlowDelegation.EndTime = EndTime.ToDateTime();
                 if (FlowID.IsGuid())
                 {
@@ -60,24 +60,24 @@ namespace WebForm.Platform.WorkFlowDelegation
                 }
                 workFlowDelegation.Note = Note.IsNullOrEmpty() ? null : Note;
                 workFlowDelegation.StartTime = StartTime.ToDateTime();
-                workFlowDelegation.ToUserID = RoadFlow.Platform.Users.RemovePrefix(ToUserID).ToGuid();
-                workFlowDelegation.WriteTime = RoadFlow.Utility.DateTimeNew.Now;
+                workFlowDelegation.ToUserID = MyCreek.Platform.Users.RemovePrefix(ToUserID).ToGuid();
+                workFlowDelegation.WriteTime = MyCreek.Utility.DateTimeNew.Now;
 
                 if (isAdd)
                 {
                     bworkFlowDelegation.Add(workFlowDelegation);
-                    RoadFlow.Platform.Log.Add("添加了工作委托", workFlowDelegation.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("添加了工作委托", workFlowDelegation.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                 }
                 else
                 {
                     bworkFlowDelegation.Update(workFlowDelegation);
-                    RoadFlow.Platform.Log.Add("修改了工作委托", "", RoadFlow.Platform.Log.Types.流程相关, oldXML, workFlowDelegation.Serialize());
+                    MyCreek.Platform.Log.Add("修改了工作委托", "", MyCreek.Platform.Log.Types.流程相关, oldXML, workFlowDelegation.Serialize());
                 }
                 bworkFlowDelegation.RefreshCache();
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('保存成功!');new RoadUI.Window().reloadOpener();new RoadUI.Window().close();", true);
             }
-            FlowOptions = new RoadFlow.Platform.WorkFlow().GetOptions(FlowID);
-            if (workFlowDelegation == null) workFlowDelegation = new RoadFlow.Data.Model.WorkFlowDelegation();
+            FlowOptions = new MyCreek.Platform.WorkFlow().GetOptions(FlowID);
+            if (workFlowDelegation == null) workFlowDelegation = new MyCreek.Data.Model.WorkFlowDelegation();
         }
     }
 }

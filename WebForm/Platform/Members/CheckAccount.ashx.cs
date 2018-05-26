@@ -16,7 +16,7 @@ namespace WebForm.Platform.Members
             context.Response.ContentType = "text/plain";
             string account = context.Request.Form["value"];
             string id = context.Request["id"];
-            context.Response.Write(new RoadFlow.Platform.Users().HasAccount(account, id) ? "帐号已经被使用了" : "1");
+            context.Response.Write(new MyCreek.Platform.Users().HasAccount(account, id) ? "帐号已经被使用了" : "1");
         }
 
         public bool IsReusable

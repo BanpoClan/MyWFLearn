@@ -1,9 +1,9 @@
 ﻿@{
     ViewBag.Title = "Set_Step";
-    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-    RoadFlow.Platform.DBConnection bdbConn = new RoadFlow.Platform.DBConnection();
-    RoadFlow.Platform.WorkFlowButtons bworkFlowButtons = new RoadFlow.Platform.WorkFlowButtons();
-    RoadFlow.Platform.AppLibrary bappLibrary = new RoadFlow.Platform.AppLibrary();
+    MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+    MyCreek.Platform.DBConnection bdbConn = new MyCreek.Platform.DBConnection();
+    MyCreek.Platform.WorkFlowButtons bworkFlowButtons = new MyCreek.Platform.WorkFlowButtons();
+    MyCreek.Platform.AppLibrary bappLibrary = new MyCreek.Platform.AppLibrary();
 
     string appLibraryTypes = bappLibrary.GetTypeOptions();
     string stepID = Request.QueryString["id"];

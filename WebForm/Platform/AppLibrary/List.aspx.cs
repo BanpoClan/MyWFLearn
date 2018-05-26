@@ -9,7 +9,7 @@ namespace WebForm.Platform.AppLibrary
 {
     public partial class List : Common.BasePage
     {
-        protected List<RoadFlow.Data.Model.AppLibrary> AppList = new List<RoadFlow.Data.Model.AppLibrary>();
+        protected List<MyCreek.Data.Model.AppLibrary> AppList = new List<MyCreek.Data.Model.AppLibrary>();
         protected string Query = string.Empty;
         protected string Query1 = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
@@ -20,7 +20,7 @@ namespace WebForm.Platform.AppLibrary
             string typeid = Request.QueryString["typeid"];
             string title1 = Request.QueryString["title1"];
             string address = Request.QueryString["address"];
-            RoadFlow.Platform.AppLibrary bapp = new RoadFlow.Platform.AppLibrary();
+            MyCreek.Platform.AppLibrary bapp = new MyCreek.Platform.AppLibrary();
             if (IsPostBack)
             {
                 title1 = Request.Form["Title1"];
@@ -43,11 +43,11 @@ namespace WebForm.Platform.AppLibrary
                             }
                         }
                     }
-                    RoadFlow.Platform.Log.Add("删除了一批应用程序库", delxml.ToString(), RoadFlow.Platform.Log.Types.角色应用);
+                    MyCreek.Platform.Log.Add("删除了一批应用程序库", delxml.ToString(), MyCreek.Platform.Log.Types.角色应用);
                 }
             }
 
-            RoadFlow.Platform.Dictionary bdict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary bdict = new MyCreek.Platform.Dictionary();
            
             string typeidstring = typeid.IsGuid() ? bapp.GetAllChildsIDString(typeid.ToGuid()) : "";
             Query = string.Format("&appid={0}&tabid={1}&title1={2}&typeid={3}&address={4}",

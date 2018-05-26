@@ -13,8 +13,8 @@ namespace WebForm.Platform.Dictionary
         {
             if (IsPostBack)
             {
-                RoadFlow.Data.Model.Dictionary dict = new RoadFlow.Data.Model.Dictionary();
-                RoadFlow.Platform.Dictionary bdict = new RoadFlow.Platform.Dictionary();
+                MyCreek.Data.Model.Dictionary dict = new MyCreek.Data.Model.Dictionary();
+                MyCreek.Platform.Dictionary bdict = new MyCreek.Platform.Dictionary();
                 string id = Request.QueryString["id"];
                 if (!id.IsGuid())
                 {
@@ -44,7 +44,7 @@ namespace WebForm.Platform.Dictionary
 
                 bdict.Add(dict);
                 bdict.RefreshCache();
-                RoadFlow.Platform.Log.Add("添加了数据字典项", dict.Serialize(), RoadFlow.Platform.Log.Types.数据字典);
+                MyCreek.Platform.Log.Add("添加了数据字典项", dict.Serialize(), MyCreek.Platform.Log.Types.数据字典);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('添加成功!');parent.frames[0].reLoad('" + id + "');", true);
 
             }

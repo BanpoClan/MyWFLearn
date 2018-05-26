@@ -9,10 +9,10 @@ namespace WebForm.Platform.RoleApp
 {
     public partial class Default : Common.BasePage
     {
-        protected List<RoadFlow.Data.Model.Role> RoleList = new List<RoadFlow.Data.Model.Role>();
+        protected List<MyCreek.Data.Model.Role> RoleList = new List<MyCreek.Data.Model.Role>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoleList = new RoadFlow.Platform.Role().GetAll();
+            RoleList = new MyCreek.Platform.Role().GetAll();
             if (IsPostBack && !Request.Form["Search"].IsNullOrEmpty())
             {
                 string name = Request.Form["Name"];

@@ -16,12 +16,12 @@ namespace WebForm.Platform.Members
             context.Response.ContentType = "text/plain";
             string rootid = context.Request.QueryString["rootid"];
             string showtype = context.Request.QueryString["showtype"];
-            RoadFlow.Platform.Organize BOrganize = new RoadFlow.Platform.Organize();
+            MyCreek.Platform.Organize BOrganize = new MyCreek.Platform.Organize();
             System.Text.StringBuilder json = new System.Text.StringBuilder("[", 1000);
 
             if ("1" == showtype)//显示工作组
             {
-                RoadFlow.Platform.WorkGroup BWorkGroup = new RoadFlow.Platform.WorkGroup();
+                MyCreek.Platform.WorkGroup BWorkGroup = new MyCreek.Platform.WorkGroup();
                 var workGroups = BWorkGroup.GetAll();
 
                 json.Append("{");
@@ -64,7 +64,7 @@ namespace WebForm.Platform.Members
 
 
             Guid rootID;
-            RoadFlow.Data.Model.Organize root;
+            MyCreek.Data.Model.Organize root;
             if (rootid.IsGuid(out rootID))
             {
                 root = BOrganize.Get(rootID);
@@ -74,9 +74,9 @@ namespace WebForm.Platform.Members
                 root = BOrganize.GetRoot();
             }
 
-            List<RoadFlow.Data.Model.Users> users = new List<RoadFlow.Data.Model.Users>();
+            List<MyCreek.Data.Model.Users> users = new List<MyCreek.Data.Model.Users>();
 
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
             users = busers.GetAllByOrganizeID(root.ID);
 
             json.Append("{");
@@ -114,7 +114,7 @@ namespace WebForm.Platform.Members
 
             if (users.Count > 0)
             {
-                var userRelations = new RoadFlow.Platform.UsersRelation().GetAllByOrganizeID(root.ID);
+                var userRelations = new MyCreek.Platform.UsersRelation().GetAllByOrganizeID(root.ID);
                 int count1 = users.Count;
                 int j = 0;
                 foreach (var user in users)

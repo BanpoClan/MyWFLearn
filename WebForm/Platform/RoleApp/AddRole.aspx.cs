@@ -16,7 +16,7 @@ namespace WebForm.Platform.RoleApp
                 string name = Request.Form["Name"];
                 string note = Request.Form["Note"];
                 string useMember = Request.Form["UseMember"];
-                RoadFlow.Data.Model.Role role = new RoadFlow.Data.Model.Role();
+                MyCreek.Data.Model.Role role = new MyCreek.Data.Model.Role();
                 using (System.Transactions.TransactionScope trans = new System.Transactions.TransactionScope())
                 {
                     role.ID = Guid.NewGuid();
@@ -24,11 +24,11 @@ namespace WebForm.Platform.RoleApp
                     if (!useMember.IsNullOrEmpty())
                     {
                         role.UseMember = useMember;
-                        RoadFlow.Platform.UsersRole busersRole = new RoadFlow.Platform.UsersRole();
-                        var users = new RoadFlow.Platform.Organize().GetAllUsers(useMember);
+                        MyCreek.Platform.UsersRole busersRole = new MyCreek.Platform.UsersRole();
+                        var users = new MyCreek.Platform.Organize().GetAllUsers(useMember);
                         foreach (var user in users)
                         {
-                            RoadFlow.Data.Model.UsersRole ur = new RoadFlow.Data.Model.UsersRole();
+                            MyCreek.Data.Model.UsersRole ur = new MyCreek.Data.Model.UsersRole();
                             ur.IsDefault = true;
                             ur.MemberID = user.ID;
                             ur.RoleID = role.ID;
@@ -39,16 +39,16 @@ namespace WebForm.Platform.RoleApp
                     {
                         role.Note = note.Trim();
                     }
-                    new RoadFlow.Platform.Role().Add(role);
+                    new MyCreek.Platform.Role().Add(role);
 
                     //添加一个根应用
-                    RoadFlow.Data.Model.RoleApp roleApp = new RoadFlow.Data.Model.RoleApp();
+                    MyCreek.Data.Model.RoleApp roleApp = new MyCreek.Data.Model.RoleApp();
                     roleApp.ID = Guid.NewGuid();
                     roleApp.ParentID = Guid.Empty;
                     roleApp.RoleID = role.ID;
                     roleApp.Sort = 1;
                     roleApp.Title = "管理目录";
-                    new RoadFlow.Platform.RoleApp().Add(roleApp);
+                    new MyCreek.Platform.RoleApp().Add(roleApp);
                     trans.Complete();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('添加成功!');new RoadUI.Window().reloadOpener();new RoadUI.Window().close();", true);
                 }

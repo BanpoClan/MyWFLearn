@@ -22,7 +22,7 @@ namespace WebForm.Platform.Dictionary
                 return;
             }
             System.Text.StringBuilder json = new System.Text.StringBuilder("[", 1000);
-            RoadFlow.Platform.Dictionary BDict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary BDict = new MyCreek.Platform.Dictionary();
             var childs = BDict.GetChilds(gid).OrderBy(p => p.Sort);
             int i = 0;
             int count = childs.Count();

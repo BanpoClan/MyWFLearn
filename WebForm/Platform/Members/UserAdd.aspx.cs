@@ -12,8 +12,8 @@ namespace WebForm.Platform.Members
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Account.Attributes.Add("validate_url", "CheckAccount.ashx");
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
 
             string id = Request.QueryString["id"];
 
@@ -35,7 +35,7 @@ namespace WebForm.Platform.Members
                 using (System.Transactions.TransactionScope scope = new System.Transactions.TransactionScope())
                 {
                     //添加人员
-                    RoadFlow.Data.Model.Users user = new RoadFlow.Data.Model.Users();
+                    MyCreek.Data.Model.Users user = new MyCreek.Data.Model.Users();
                     user.Account = account.Trim();
                     user.Name = name.Trim();
                     user.Note = note.IsNullOrEmpty() ? null : note;
@@ -46,24 +46,24 @@ namespace WebForm.Platform.Members
                     busers.Add(user);
 
                     //添加关系
-                    RoadFlow.Data.Model.UsersRelation userRelation = new RoadFlow.Data.Model.UsersRelation();
+                    MyCreek.Data.Model.UsersRelation userRelation = new MyCreek.Data.Model.UsersRelation();
                     userRelation.IsMain = 1;
                     userRelation.OrganizeID = parentID;
-                    userRelation.Sort = new RoadFlow.Platform.UsersRelation().GetMaxSort(parentID);
+                    userRelation.Sort = new MyCreek.Platform.UsersRelation().GetMaxSort(parentID);
                     userRelation.UserID = userID;
-                    new RoadFlow.Platform.UsersRelation().Add(userRelation);
+                    new MyCreek.Platform.UsersRelation().Add(userRelation);
 
                     //更新父级[ChildsLength]字段
                     borganize.UpdateChildsLength(parentID);
 
                     //更新角色
-                    new RoadFlow.Platform.UsersRole().UpdateByUserID(userID);
+                    new MyCreek.Platform.UsersRole().UpdateByUserID(userID);
 
                     userXML = user.Serialize();
                     scope.Complete();
                 }
 
-                RoadFlow.Platform.Log.Add("添加了人员", userXML, RoadFlow.Platform.Log.Types.组织机构);
+                MyCreek.Platform.Log.Add("添加了人员", userXML, MyCreek.Platform.Log.Types.组织机构);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('添加成功!');parent.frames[0].reLoad('" + id + "');window.location=window.location;", true);
             }
             this.StatusRadios.Text = borganize.GetStatusRadio("Status", "0", "validate=\"radio\"");

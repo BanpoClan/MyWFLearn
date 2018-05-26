@@ -15,7 +15,7 @@ namespace WebForm
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/html";
-            new RoadFlow.Platform.OnlineUsers().Remove(RoadFlow.Platform.Users.CurrentUserID);
+            new MyCreek.Platform.OnlineUsers().Remove(MyCreek.Platform.Users.CurrentUserID);
             context.Session.RemoveAll();
             context.Response.Redirect("Login.aspx");
         }

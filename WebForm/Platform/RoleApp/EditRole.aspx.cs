@@ -11,8 +11,8 @@ namespace WebForm.Platform.RoleApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.Role brole = new RoadFlow.Platform.Role();
-            RoadFlow.Data.Model.Role role = null;
+            MyCreek.Platform.Role brole = new MyCreek.Platform.Role();
+            MyCreek.Data.Model.Role role = null;
             string roleID = Request.QueryString["roleid"];
             Guid roleGID;
             string name = string.Empty;
@@ -31,15 +31,15 @@ namespace WebForm.Platform.RoleApp
                     string tpl = Request.Form["ToTpl"];
                     if (tpl.IsGuid())
                     {
-                        new RoadFlow.Platform.RoleApp().CopyRoleApp(roleGID, tpl.ToGuid());
-                        RoadFlow.Platform.Log.Add("复制了模板应用", "源：" + roleID + "复制给：" + tpl, RoadFlow.Platform.Log.Types.角色应用);
+                        new MyCreek.Platform.RoleApp().CopyRoleApp(roleGID, tpl.ToGuid());
+                        MyCreek.Platform.Log.Add("复制了模板应用", "源：" + roleID + "复制给：" + tpl, MyCreek.Platform.Log.Types.角色应用);
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "alert('复制成功!');", true);
                     }
                 }
 
                 if (!Request.Form["Save"].IsNullOrEmpty() && role != null)
                 {
-                    RoadFlow.Platform.UsersRole busersRole = new RoadFlow.Platform.UsersRole();
+                    MyCreek.Platform.UsersRole busersRole = new MyCreek.Platform.UsersRole();
                     using (System.Transactions.TransactionScope scope = new System.Transactions.TransactionScope())
                     {
                         name = Request.Form["Name"];
@@ -54,10 +54,10 @@ namespace WebForm.Platform.RoleApp
                         if (!useMember.IsNullOrEmpty())
                         {
                             busersRole.DeleteByRoleID(role.ID);
-                            var users = new RoadFlow.Platform.Organize().GetAllUsers(useMember);
+                            var users = new MyCreek.Platform.Organize().GetAllUsers(useMember);
                             foreach (var user in users)
                             {
-                                RoadFlow.Data.Model.UsersRole ur = new RoadFlow.Data.Model.UsersRole();
+                                MyCreek.Data.Model.UsersRole ur = new MyCreek.Data.Model.UsersRole();
                                 ur.IsDefault = true;
                                 ur.MemberID = user.ID;
                                 ur.RoleID = role.ID;
@@ -74,11 +74,11 @@ namespace WebForm.Platform.RoleApp
                     using (System.Transactions.TransactionScope scope = new System.Transactions.TransactionScope())
                     {
                         brole.Delete(roleGID);
-                        new RoadFlow.Platform.RoleApp().DeleteByRoleID(roleGID);
-                        new RoadFlow.Platform.UsersRole().DeleteByRoleID(roleGID);
+                        new MyCreek.Platform.RoleApp().DeleteByRoleID(roleGID);
+                        new MyCreek.Platform.UsersRole().DeleteByRoleID(roleGID);
                         scope.Complete();
                     }
-                    RoadFlow.Platform.Log.Add("删除的角色其及相关数据", roleID, RoadFlow.Platform.Log.Types.角色应用);
+                    MyCreek.Platform.Log.Add("删除的角色其及相关数据", roleID, MyCreek.Platform.Log.Types.角色应用);
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "ok", "new RoadUI.Window().reloadOpener();new RoadUI.Window().close();", true);
                 }
             }

@@ -4,9 +4,9 @@
     if (!Request.Form["save"].IsNullOrEmpty())
     {
         string pass = Request.Form["pass"];
-        var user = RoadFlow.Platform.Users.CurrentUser;
+        var user = MyCreek.Platform.Users.CurrentUser;
         string openerid=Request.QueryString["openerid"];
-        if(string.Compare(user.Password, new RoadFlow.Platform.Users().GetUserEncryptionPassword(user.ID.ToString(),pass.Trim()), false)==0)
+        if(string.Compare(user.Password, new MyCreek.Platform.Users().GetUserEncryptionPassword(user.ID.ToString(),pass.Trim()), false)==0)
         {
             <script type="text/javascript">
                 var frame = null;

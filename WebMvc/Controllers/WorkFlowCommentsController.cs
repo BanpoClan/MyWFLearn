@@ -20,9 +20,9 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlowComment bworkFlowComment = new RoadFlow.Platform.WorkFlowComment();
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-            IEnumerable<RoadFlow.Data.Model.WorkFlowComment> workFlowCommentList;
+            MyCreek.Platform.WorkFlowComment bworkFlowComment = new MyCreek.Platform.WorkFlowComment();
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+            IEnumerable<MyCreek.Data.Model.WorkFlowComment> workFlowCommentList;
 
             if (collection != null)
             {
@@ -40,7 +40,7 @@ namespace WebMvc.Controllers
                         if (comment != null)
                         {
                             bworkFlowComment.Delete(bid);
-                            RoadFlow.Platform.Log.Add("删除了流程意见", comment.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                            MyCreek.Platform.Log.Add("删除了流程意见", comment.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                         }
                     }
                     bworkFlowComment.RefreshCache();
@@ -53,7 +53,7 @@ namespace WebMvc.Controllers
             bool isOneSelf = "1" == Request.QueryString["isoneself"];
             if (isOneSelf)
             {
-                workFlowCommentList = workFlowCommentList.Where(p => p.MemberID == RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString());
+                workFlowCommentList = workFlowCommentList.Where(p => p.MemberID == MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString());
             }
             return View(workFlowCommentList);
         }
@@ -68,8 +68,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlowComment bworkFlowComment = new RoadFlow.Platform.WorkFlowComment();
-            RoadFlow.Data.Model.WorkFlowComment workFlowComment = null;
+            MyCreek.Platform.WorkFlowComment bworkFlowComment = new MyCreek.Platform.WorkFlowComment();
+            MyCreek.Data.Model.WorkFlowComment workFlowComment = null;
             string id = Request.QueryString["id"];
 
             string member = string.Empty;
@@ -89,14 +89,14 @@ namespace WebMvc.Controllers
             string oldXML = workFlowComment.Serialize();
             if (collection != null)
             {
-                member = isOneSelf ? RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString() : Request.Form["Member"];
+                member = isOneSelf ? MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString() : Request.Form["Member"];
                 comment = Request.Form["Comment"];
                 sort = Request.Form["Sort"];
 
                 bool isAdd = !id.IsGuid();
                 if (workFlowComment == null)
                 {
-                    workFlowComment = new RoadFlow.Data.Model.WorkFlowComment();
+                    workFlowComment = new MyCreek.Data.Model.WorkFlowComment();
                     workFlowComment.ID = Guid.NewGuid();
                     workFlowComment.Type = isOneSelf ? 1 : 0;
                 }
@@ -109,17 +109,17 @@ namespace WebMvc.Controllers
                 if (isAdd)
                 {
                     bworkFlowComment.Add(workFlowComment);
-                    RoadFlow.Platform.Log.Add("添加了流程意见", workFlowComment.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("添加了流程意见", workFlowComment.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                 }
                 else
                 {
                     bworkFlowComment.Update(workFlowComment);
-                    RoadFlow.Platform.Log.Add("修改了流程意见", "", RoadFlow.Platform.Log.Types.流程相关, oldXML, workFlowComment.Serialize());
+                    MyCreek.Platform.Log.Add("修改了流程意见", "", MyCreek.Platform.Log.Types.流程相关, oldXML, workFlowComment.Serialize());
                 }
                 bworkFlowComment.RefreshCache();
                 ViewBag.Script = "new RoadUI.Window().reloadOpener();alert('保存成功!');";
             }
-            return View(workFlowComment == null ? new RoadFlow.Data.Model.WorkFlowComment() : workFlowComment);
+            return View(workFlowComment == null ? new MyCreek.Data.Model.WorkFlowComment() : workFlowComment);
         }
 
     }

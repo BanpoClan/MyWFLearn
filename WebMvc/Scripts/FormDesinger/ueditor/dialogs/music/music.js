@@ -1,4 +1,4 @@
-function Music() {
+﻿function Music() {
     this.init();
 }
 (function () {

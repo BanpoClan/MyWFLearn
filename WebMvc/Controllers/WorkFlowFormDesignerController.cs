@@ -27,7 +27,7 @@ namespace WebMvc.Controllers
                 return "";
             }
 
-            var wff = new RoadFlow.Platform.WorkFlowForm().Get(gid);
+            var wff = new MyCreek.Platform.WorkFlowForm().Get(gid);
             if (wff == null)
             {
                 return "";
@@ -47,7 +47,7 @@ namespace WebMvc.Controllers
                 return "";
             }
 
-            var wff = new RoadFlow.Platform.WorkFlowForm().Get(gid);
+            var wff = new MyCreek.Platform.WorkFlowForm().Get(gid);
             if (wff == null)
             {
                 return "";
@@ -67,7 +67,7 @@ namespace WebMvc.Controllers
                 return "";
             }
 
-            var wff = new RoadFlow.Platform.WorkFlowForm().Get(gid);
+            var wff = new MyCreek.Platform.WorkFlowForm().Get(gid);
             if (wff == null)
             {
                 return "";
@@ -87,7 +87,7 @@ namespace WebMvc.Controllers
                 return "";
             }
 
-            var wff = new RoadFlow.Platform.WorkFlowForm().Get(gid);
+            var wff = new MyCreek.Platform.WorkFlowForm().Get(gid);
             if (wff == null)
             {
                 return "";
@@ -108,7 +108,7 @@ namespace WebMvc.Controllers
                 return "SQL语句为空或未设置数据连接";
             }
 
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
             var dbconn1 = bdbconn.Get(dbconn.ToGuid());
             if (bdbconn.TestSql(dbconn1, sql))
             {
@@ -141,17 +141,17 @@ namespace WebMvc.Controllers
                 return "表单ID无效!";
             }
 
-            RoadFlow.Platform.WorkFlowForm WFF = new RoadFlow.Platform.WorkFlowForm();
-            RoadFlow.Data.Model.WorkFlowForm wff = WFF.Get(formID);
+            MyCreek.Platform.WorkFlowForm WFF = new MyCreek.Platform.WorkFlowForm();
+            MyCreek.Data.Model.WorkFlowForm wff = WFF.Get(formID);
             bool isAdd = false;
             string oldXML = string.Empty;
             if (wff == null)
             {
-                wff = new RoadFlow.Data.Model.WorkFlowForm();
+                wff = new MyCreek.Data.Model.WorkFlowForm();
                 wff.ID = formID;
-                wff.CreateUserID = RoadFlow.Platform.Users.CurrentUserID;
-                wff.CreateUserName = RoadFlow.Platform.Users.CurrentUserName;
-                wff.CreateTime = RoadFlow.Utility.DateTimeNew.Now;
+                wff.CreateUserID = MyCreek.Platform.Users.CurrentUserID;
+                wff.CreateUserName = MyCreek.Platform.Users.CurrentUserName;
+                wff.CreateTime = MyCreek.Utility.DateTimeNew.Now;
                 wff.Status = 0;
                 isAdd = true;
             }
@@ -162,7 +162,7 @@ namespace WebMvc.Controllers
 
             wff.Attribute = att;
             wff.Html = html;
-            wff.LastModifyTime = RoadFlow.Utility.DateTimeNew.Now;
+            wff.LastModifyTime = MyCreek.Utility.DateTimeNew.Now;
             wff.Name = name;
             wff.Type = type.ToGuid();
             wff.SubTableJson = subtable;
@@ -171,12 +171,12 @@ namespace WebMvc.Controllers
             if (isAdd)
             {
                 WFF.Add(wff);
-                RoadFlow.Platform.Log.Add("添加了流程表单", wff.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                MyCreek.Platform.Log.Add("添加了流程表单", wff.Serialize(), MyCreek.Platform.Log.Types.流程相关);
             }
             else
             {
                 WFF.Update(wff);
-                RoadFlow.Platform.Log.Add("修改了流程表单", "", RoadFlow.Platform.Log.Types.流程相关, oldXML, wff.Serialize());
+                MyCreek.Platform.Log.Add("修改了流程表单", "", MyCreek.Platform.Log.Types.流程相关, oldXML, wff.Serialize());
             }
             return "保存成功!";
         }
@@ -189,7 +189,7 @@ namespace WebMvc.Controllers
             string primarytablefiledvalue = Request["primarytablefiledvalue"];
             string secondtablerelationfield = Request["secondtablerelationfield"];
             string dbconnid = Request["dbconnid"];
-            LitJson.JsonData data = new RoadFlow.Platform.WorkFlow().GetSubTableData(dbconnid, secondtable, secondtablerelationfield, primarytablefiledvalue, secondtableprimarykey);
+            LitJson.JsonData data = new MyCreek.Platform.WorkFlow().GetSubTableData(dbconnid, secondtable, secondtablerelationfield, primarytablefiledvalue, secondtableprimarykey);
             return data.ToJson();
         }
 
@@ -206,9 +206,9 @@ namespace WebMvc.Controllers
             {
                 return "参数错误!";
             }
-            RoadFlow.Platform.WorkFlowForm WFF = new RoadFlow.Platform.WorkFlowForm();
+            MyCreek.Platform.WorkFlowForm WFF = new MyCreek.Platform.WorkFlowForm();
 
-            RoadFlow.Data.Model.WorkFlowForm wff = WFF.Get(gid);
+            MyCreek.Data.Model.WorkFlowForm wff = WFF.Get(gid);
             if (wff == null)
             {
                 return "未找到表单!";
@@ -230,9 +230,9 @@ namespace WebMvc.Controllers
             serverScript.AppendFormat("\tstring DBTableTitle = \"{0}\";\r\n", attrJSON["dbtabletitle"].ToString());
             serverScript.Append("if(InstanceID.IsNullOrEmpty()){InstanceID = Request.QueryString[\"instanceid1\"];}");
 
-            serverScript.Append("\tRoadFlow.Platform.Dictionary BDictionary = new RoadFlow.Platform.Dictionary();\r\n");
-            serverScript.Append("\tRoadFlow.Platform.WorkFlow BWorkFlow = new RoadFlow.Platform.WorkFlow();\r\n");
-            serverScript.Append("\tRoadFlow.Platform.WorkFlowTask BWorkFlowTask = new RoadFlow.Platform.WorkFlowTask();\r\n");
+            serverScript.Append("\tMyCreek.Platform.Dictionary BDictionary = new MyCreek.Platform.Dictionary();\r\n");
+            serverScript.Append("\tMyCreek.Platform.WorkFlow BWorkFlow = new MyCreek.Platform.WorkFlow();\r\n");
+            serverScript.Append("\tMyCreek.Platform.WorkFlowTask BWorkFlowTask = new MyCreek.Platform.WorkFlowTask();\r\n");
             serverScript.Append("\tstring fieldStatus = BWorkFlow.GetFieldStatus(FlowID, StepID);\r\n");
             serverScript.Append("\tLitJson.JsonData initData = BWorkFlow.GetFormData(DBConnID, DBTable, DBTablePK, InstanceID, fieldStatus);\r\n");
             serverScript.Append("\tstring TaskTitle = BWorkFlow.GetFromFieldData(initData, DBTable, DBTableTitle);\r\n");
@@ -288,12 +288,12 @@ namespace WebMvc.Controllers
 
             string attr = wff.Attribute;
             string appType = LitJson.JsonMapper.ToObject(attr)["apptype"].ToString();
-            RoadFlow.Platform.AppLibrary App = new RoadFlow.Platform.AppLibrary();
+            MyCreek.Platform.AppLibrary App = new MyCreek.Platform.AppLibrary();
             var app = App.GetByCode(id);
             bool isAdd = false;
             if (app == null)
             {
-                app = new RoadFlow.Data.Model.AppLibrary();
+                app = new MyCreek.Data.Model.AppLibrary();
                 app.ID = Guid.NewGuid();
                 app.Code = id;
                 isAdd = true;
@@ -303,7 +303,7 @@ namespace WebMvc.Controllers
             app.OpenMode = 0;
             app.Params = "";
             app.Title = name.Trim();
-            app.Type = appType.IsGuid() ? appType.ToGuid() : new RoadFlow.Platform.Dictionary().GetIDByCode("FormTypes");
+            app.Type = appType.IsGuid() ? appType.ToGuid() : new MyCreek.Platform.Dictionary().GetIDByCode("FormTypes");
             if (isAdd)
             {
                 App.Add(app);
@@ -313,7 +313,7 @@ namespace WebMvc.Controllers
                 App.Update(app);
             }
 
-            RoadFlow.Platform.Log.Add("发布了流程表单", app.Serialize() + "内容：" + html, RoadFlow.Platform.Log.Types.流程相关);
+            MyCreek.Platform.Log.Add("发布了流程表单", app.Serialize() + "内容：" + html, MyCreek.Platform.Log.Types.流程相关);
             wff.Status = 1;
             WFF.Update(wff);
             return "发布成功!";

@@ -13,9 +13,9 @@ namespace WebForm.Platform.UserApp
         protected void Page_Load(object sender, EventArgs e)
         {
             string userid = Request.QueryString["id"];
-            RoadFlow.Platform.Role brole = new RoadFlow.Platform.Role();
-            var roles = new RoadFlow.Platform.UsersRole().GetByUserID(userid.ToGuid());
-            List<RoadFlow.Data.Model.Role> roleList = new List<RoadFlow.Data.Model.Role>();
+            MyCreek.Platform.Role brole = new MyCreek.Platform.Role();
+            var roles = new MyCreek.Platform.UsersRole().GetByUserID(userid.ToGuid());
+            List<MyCreek.Data.Model.Role> roleList = new List<MyCreek.Data.Model.Role>();
             foreach (var role in roles)
             {
                 var role1 = brole.Get(role.RoleID);
@@ -26,7 +26,7 @@ namespace WebForm.Platform.UserApp
                 roleList.Add(role1);
             }
 
-            RoleOptions = new RoadFlow.Platform.Role().GetRoleOptions(Request.QueryString["roleid"], "", roleList);
+            RoleOptions = new MyCreek.Platform.Role().GetRoleOptions(Request.QueryString["roleid"], "", roleList);
 
         }
     }

@@ -23,10 +23,10 @@
             instanceid = Request.QueryString["instanceid1"];
         }
 
-        RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-        RoadFlow.Platform.WorkFlowTask btask = new RoadFlow.Platform.WorkFlowTask();
+        MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+        MyCreek.Platform.WorkFlowTask btask = new MyCreek.Platform.WorkFlowTask();
 
-        RoadFlow.Data.Model.WorkFlowInstalled wfInstalled = bworkFlow.GetWorkFlowRunModel(flowid);
+        MyCreek.Data.Model.WorkFlowInstalled wfInstalled = bworkFlow.GetWorkFlowRunModel(flowid);
         if (wfInstalled == null)
         {
             Response.Write("未找到流程运行实体");
@@ -45,7 +45,7 @@
             Response.End();
         }
 
-        var form = new RoadFlow.Platform.AppLibrary().Get(currentStep.Forms.First().ID);
+        var form = new MyCreek.Platform.AppLibrary().Get(currentStep.Forms.First().ID);
         if (form != null)
         {
             string src = form.Address;

@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Copyright (c) 2005 - 2010, James Auldridge
 * All rights reserved.
 *

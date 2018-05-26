@@ -1,18 +1,18 @@
 ﻿@{
     ViewBag.Title = "Index";
     bool isOneSelf = "1" == Request.QueryString["isoneself"];
-    RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
-    RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+    MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
+    MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+    MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
 }
-@model IEnumerable<RoadFlow.Data.Model.WorkFlowDelegation>
+@model IEnumerable<MyCreek.Data.Model.WorkFlowDelegation>
 <form method="post" >
 @Html.AntiForgeryToken()
 <div class="querybar">
     <table cellpadding="0" cellspacing="1" border="0" width="100%">
         <tr>
             <td>
-                委托人：<input type="text" class="mymember" @Html.Raw(isOneSelf?"disabled='disabled' value='"+RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString()+"'":"value='"+ViewBag.suserid+"'") style="width:150px;" id="S_UserID" name="S_UserID" value="" />
+                委托人：<input type="text" class="mymember" @Html.Raw(isOneSelf?"disabled='disabled' value='"+MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString()+"'":"value='"+ViewBag.suserid+"'") style="width:150px;" id="S_UserID" name="S_UserID" value="" />
                 开始时间：<input type="text" class="mycalendar" style="width:100px;" id="S_StartTime" name="S_StartTime" value="@ViewBag.startTime" />
                 结束时间：<input type="text" class="mycalendar" style="width:100px;" id="S_EndTime" name="S_EndTime" value="@ViewBag.endTime" />
                 <input type="submit" name="Search" value="&nbsp;&nbsp;查&nbsp;询&nbsp;&nbsp;" class="mybutton" />
@@ -47,7 +47,7 @@
             <td>@deletation.StartTime.ToDateTimeStringS()</td>
             <td>@deletation.EndTime.ToDateTimeStringS()</td>
             <td>@deletation.Note</td>
-            <td>@(deletation.EndTime>=RoadFlow.Utility.DateTimeNew.Now?"委托中":"已失效")</td>
+            <td>@(deletation.EndTime>=MyCreek.Utility.DateTimeNew.Now?"委托中":"已失效")</td>
             <td><a class="editlink" href="javascript:edit('@deletation.ID');">编辑</a></td>
         </tr>
     }

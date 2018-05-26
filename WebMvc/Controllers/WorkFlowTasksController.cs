@@ -40,8 +40,8 @@ namespace WebMvc.Controllers
 
         public ActionResult instanceList1(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-            RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+            MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
 
             string title = "";
             string flowid = "";
@@ -85,7 +85,7 @@ namespace WebMvc.Controllers
 
 
             //可管理的流程ID数组
-            var flows = bworkFlow.GetInstanceManageFlowIDList(RoadFlow.Platform.Users.CurrentUserID, typeid);
+            var flows = bworkFlow.GetInstanceManageFlowIDList(MyCreek.Platform.Users.CurrentUserID, typeid);
             List<Guid> flowids = new List<Guid>();
             foreach (var flow in flows.OrderBy(p => p.Value))
             {
@@ -96,7 +96,7 @@ namespace WebMvc.Controllers
             string flowOptions = bworkFlow.GetOptions(flows, typeid, flowid);
 
             var taskList = bworkFlowTask.GetInstances(manageFlows, new Guid[] { },
-                sender.IsNullOrEmpty() ? new Guid[] { } : new Guid[] { sender.Replace(RoadFlow.Platform.Users.PREFIX, "").ToGuid() },
+                sender.IsNullOrEmpty() ? new Guid[] { } : new Guid[] { sender.Replace(MyCreek.Platform.Users.PREFIX, "").ToGuid() },
                 out pager, query1, title, flowid, date1, date2, status.ToInt());
 
             ViewBag.Query = query;
@@ -133,13 +133,13 @@ namespace WebMvc.Controllers
                 string user = Request.Form["user"];
                 string openerid = Request.QueryString["openerid"];
 
-                RoadFlow.Platform.WorkFlowTask btask = new RoadFlow.Platform.WorkFlowTask();
-                var users = new RoadFlow.Platform.Organize().GetAllUsers(user);
+                MyCreek.Platform.WorkFlowTask btask = new MyCreek.Platform.WorkFlowTask();
+                var users = new MyCreek.Platform.Organize().GetAllUsers(user);
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
                 foreach (var user1 in users)
                 {
                     btask.DesignateTask(taskID, user1);
-                    RoadFlow.Platform.Log.Add("管理员指派了流程任务", "将任务" + taskID + "指派给了：" + user1.Name + user1.ID, RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("管理员指派了流程任务", "将任务" + taskID + "指派给了：" + user1.Name + user1.ID, MyCreek.Platform.Log.Types.流程相关);
 
                     sb.Append(user1.Name);
                     sb.Append(",");
@@ -159,13 +159,13 @@ namespace WebMvc.Controllers
             if (flowid.IsGuid(out fid) && groupid.IsGuid(out gid))
             {
                 System.Text.StringBuilder delxml = new System.Text.StringBuilder();
-                var tasks = new RoadFlow.Platform.WorkFlowTask().GetTaskList(fid, gid);
+                var tasks = new MyCreek.Platform.WorkFlowTask().GetTaskList(fid, gid);
                 foreach (var task in tasks)
                 {
                     delxml.Append(task.Serialize());
                 }
-                new RoadFlow.Platform.WorkFlowTask().DeleteInstance(fid, gid);
-                RoadFlow.Platform.Log.Add("管理员删除了流程实例", delxml.ToString(), RoadFlow.Platform.Log.Types.流程相关);
+                new MyCreek.Platform.WorkFlowTask().DeleteInstance(fid, gid);
+                MyCreek.Platform.Log.Add("管理员删除了流程实例", delxml.ToString(), MyCreek.Platform.Log.Types.流程相关);
                 return "删除成功!";
             }
             else
@@ -183,8 +183,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult WaitList(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-            RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+            MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
 
             string title = "";
             string flowid = "";
@@ -218,7 +218,7 @@ namespace WebMvc.Controllers
                 Request.QueryString["appid"], Request.QueryString["tabid"], title.UrlEncode(), flowid, sender, date1, date2);
             string pager;
 
-            var taskList = bworkFlowTask.GetTasks(RoadFlow.Platform.Users.CurrentUserID,
+            var taskList = bworkFlowTask.GetTasks(MyCreek.Platform.Users.CurrentUserID,
                out pager, query, title, flowid, sender, date1, date2);
             ViewBag.query = query;
             ViewBag.flowOptions = bworkFlow.GetOptions(flowid);
@@ -235,8 +235,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CompletedList(FormCollection collection)
         {
-            RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-            RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+            MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
 
 
             string title = "";
@@ -278,7 +278,7 @@ namespace WebMvc.Controllers
 
             string pager;
 
-            var taskList = bworkFlowTask.GetTasks(RoadFlow.Platform.Users.CurrentUserID,
+            var taskList = bworkFlowTask.GetTasks(MyCreek.Platform.Users.CurrentUserID,
                out pager, query2, title, flowid, sender, date1, date2, 1);
             ViewBag.pager = pager;
             ViewBag.flowOptions = bworkFlow.GetOptions(flowid);
@@ -288,8 +288,8 @@ namespace WebMvc.Controllers
 
         public ActionResult Detail()
         {
-            RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-            RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+            MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
 
             string flowid = Request.QueryString["flowid1"] ?? Request.QueryString["flowid"];
             string groupid = Request.QueryString["groupid"];
@@ -319,8 +319,8 @@ namespace WebMvc.Controllers
 
         public ActionResult DetailSubFlow()
         {
-            RoadFlow.Platform.WorkFlowTask bworkFlowTask = new RoadFlow.Platform.WorkFlowTask();
-            RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
+            MyCreek.Platform.WorkFlowTask bworkFlowTask = new MyCreek.Platform.WorkFlowTask();
+            MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
 
             string query = string.Format("&flowid1={0}&groupid={1}&appid={2}&tabid={3}&title={4}&flowid={5}&sender={6}&date1={7}&date2={8}&iframeid={9}&openerid={10}&taskid={11}",
                 Request.QueryString["flowid"],
@@ -346,18 +346,18 @@ namespace WebMvc.Controllers
             string displayModel = Request.QueryString["displaymodel"];
             if (!taskid.IsGuid())
             {
-                return View(new List<RoadFlow.Data.Model.WorkFlowTask>());
+                return View(new List<MyCreek.Data.Model.WorkFlowTask>());
             }
             var task = bworkFlowTask.Get(taskid.ToGuid());
             
             if (task == null || !task.SubFlowGroupID.HasValue)
             {
-                return View(new List<RoadFlow.Data.Model.WorkFlowTask>());
+                return View(new List<MyCreek.Data.Model.WorkFlowTask>());
             }
             var subFlowTasks = bworkFlowTask.GetTaskList(Guid.Empty, task.SubFlowGroupID.Value);
             if (subFlowTasks.Count == 0)
             {
-                return View(new List<RoadFlow.Data.Model.WorkFlowTask>());
+                return View(new List<MyCreek.Data.Model.WorkFlowTask>());
             }
 
             var wfInstall = bworkFlow.GetWorkFlowRunModel(subFlowTasks.First().FlowID);
@@ -375,12 +375,12 @@ namespace WebMvc.Controllers
             {
                 return "参数错误!";
             }
-            else if (new RoadFlow.Platform.WorkFlowTask().HasWithdraw(tid))
+            else if (new MyCreek.Platform.WorkFlowTask().HasWithdraw(tid))
             {
-                bool success = new RoadFlow.Platform.WorkFlowTask().WithdrawTask(tid);
+                bool success = new MyCreek.Platform.WorkFlowTask().WithdrawTask(tid);
                 if (success)
                 {
-                    RoadFlow.Platform.Log.Add("收回了任务", "任务ID：" + taskid, RoadFlow.Platform.Log.Types.流程相关);
+                    MyCreek.Platform.Log.Add("收回了任务", "任务ID：" + taskid, MyCreek.Platform.Log.Types.流程相关);
                     return "收回成功!";
                 }
                 else

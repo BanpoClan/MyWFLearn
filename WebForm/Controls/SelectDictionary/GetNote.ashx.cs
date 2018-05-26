@@ -19,7 +19,7 @@ namespace WebForm.Controls.SelectDictionary
             string note = "";
             if (id.IsGuid(out gid))
             {
-                var dict = new RoadFlow.Platform.Dictionary().Get(gid, true);
+                var dict = new MyCreek.Platform.Dictionary().Get(gid, true);
                 if (dict != null)
                 {
                     note = dict.Note;

@@ -14,7 +14,7 @@ namespace WebMvc.Areas.Controls.Controllers
 
         public ActionResult Index()
         {
-            RoadFlow.Platform.Dictionary Dict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary Dict = new MyCreek.Platform.Dictionary();
 
             string values = Request.QueryString["values"] ?? "";
             string rootid = Request.QueryString["rootid"];
@@ -25,7 +25,7 @@ namespace WebMvc.Areas.Controls.Controllers
             if ("1" == datasource)
             {
                 string dbconn = Request.QueryString["dbconn"];
-                RoadFlow.Platform.DBConnection conn = new RoadFlow.Platform.DBConnection();
+                MyCreek.Platform.DBConnection conn = new MyCreek.Platform.DBConnection();
                 var conn1 = conn.Get(dbconn.ToGuid());
                 SqlDataTable = conn.GetDataTable(conn1, sql.UrlDecode().ReplaceSelectSql());
             }
@@ -85,7 +85,7 @@ namespace WebMvc.Areas.Controls.Controllers
                         string titlefield = Request.QueryString["titlefield"];
                         string parentfield = Request.QueryString["parentfield"];
                         string where = Request.QueryString["where1"];
-                        RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+                        MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
                         var conn = bdbconn.Get(dbconn.ToGuid());
                         string sql2 = "select " + titlefield + " from " + dbtable + " where " + valuefield + "='" + value + "'";
                         DataTable dt = bdbconn.GetDataTable(conn, sql2.ReplaceSelectSql());
@@ -108,7 +108,7 @@ namespace WebMvc.Areas.Controls.Controllers
         public string GetNames()
         {
             string values = Request.QueryString["values"] ?? "";
-            RoadFlow.Platform.Dictionary Dict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary Dict = new MyCreek.Platform.Dictionary();
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             foreach (string value in values.Split(','))
             {
@@ -129,7 +129,7 @@ namespace WebMvc.Areas.Controls.Controllers
             string note = "";
             if (id.IsGuid(out gid))
             {
-                var dict = new RoadFlow.Platform.Dictionary().Get(gid, true);
+                var dict = new MyCreek.Platform.Dictionary().Get(gid, true);
                 if (dict != null)
                 {
                     note = dict.Note;
@@ -142,7 +142,7 @@ namespace WebMvc.Areas.Controls.Controllers
         {
             string dbconn = Request.QueryString["dbconn"];
             string sql = Request.QueryString["sql"];
-            RoadFlow.Platform.DBConnection conn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection conn = new MyCreek.Platform.DBConnection();
             var conn1 = conn.Get(dbconn.ToGuid());
             DataTable dt = conn.GetDataTable(conn1, sql.UrlDecode().ReplaceSelectSql());
             string values = Request.QueryString["values"] ?? "";
@@ -174,7 +174,7 @@ namespace WebMvc.Areas.Controls.Controllers
             }
             string dbconn = Request.QueryString["dbconn"];
             string sql = Request.QueryString["sql"];
-            RoadFlow.Platform.DBConnection conn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection conn = new MyCreek.Platform.DBConnection();
             var conn1 = conn.Get(dbconn.ToGuid());
             System.Data.DataTable dt = conn.GetDataTable(conn1, sql.UrlDecode().ReplaceSelectSql());
             System.Text.StringBuilder json = new System.Text.StringBuilder(1000);
@@ -204,7 +204,7 @@ namespace WebMvc.Areas.Controls.Controllers
             string parentfield = Request.QueryString["parentfield"];
             string where = (Request.QueryString["where"] ?? "").UrlDecode();
 
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
             var conn = bdbconn.Get(dbconn.ToGuid());
             string sql = "select " + valuefield + "," + titlefield + " from " + dbtable + (where.IsNullOrEmpty() ? "" : " where " + where);
             DataTable dt = bdbconn.GetDataTable(conn, sql.ReplaceSelectSql());
@@ -237,7 +237,7 @@ namespace WebMvc.Areas.Controls.Controllers
             string where = Request.QueryString["where"];
             string id = Request.QueryString["refreshid"];
 
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
             var conn = bdbconn.Get(dbconn.ToGuid());
             string sql = "select " + valuefield + "," + titlefield + " from " + dbtable + " where " + parentfield + "='" + id + "'";
             DataTable dt = bdbconn.GetDataTable(conn, sql.ReplaceSelectSql());
@@ -270,7 +270,7 @@ namespace WebMvc.Areas.Controls.Controllers
             string where = Request.QueryString["where"];
             string values = Request.QueryString["values"] ?? "";
 
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
             var conn = bdbconn.Get(dbconn.ToGuid());
             System.Text.StringBuilder names = new System.Text.StringBuilder();
             foreach (string value in values.Split(','))

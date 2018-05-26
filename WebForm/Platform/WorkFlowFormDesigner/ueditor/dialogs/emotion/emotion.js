@@ -1,4 +1,4 @@
-window.onload = function () {
+﻿window.onload = function () {
     editor.setOpt({
         emotionLocalization:false
     });

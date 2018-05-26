@@ -12,9 +12,9 @@ namespace WebMvc.Controllers
         // GET: /Home/
         public ActionResult Index()
         {
-            RoadFlow.Platform.UsersRole buserRole = new RoadFlow.Platform.UsersRole();
-            RoadFlow.Platform.Role brole = new RoadFlow.Platform.Role();
-            var roles = buserRole.GetByUserID(RoadFlow.Platform.Users.CurrentUserID);
+            MyCreek.Platform.UsersRole buserRole = new MyCreek.Platform.UsersRole();
+            MyCreek.Platform.Role brole = new MyCreek.Platform.Role();
+            var roles = buserRole.GetByUserID(MyCreek.Platform.Users.CurrentUserID);
             ViewBag.RoleLength = roles.Count;
             ViewBag.DefaultRoleID = string.Empty;
             ViewBag.RolesOptions = string.Empty;
@@ -22,7 +22,7 @@ namespace WebMvc.Controllers
             {
                 var mainRole = roles.Find(p => p.IsDefault);
                 ViewBag.defaultRoleID = mainRole != null ? mainRole.RoleID.ToString() : roles.First().RoleID.ToString();
-                List<RoadFlow.Data.Model.Role> roleList = new List<RoadFlow.Data.Model.Role>();
+                List<MyCreek.Data.Model.Role> roleList = new List<MyCreek.Data.Model.Role>();
                 foreach (var role in roles)
                 {
                     var role1 = brole.Get(role.RoleID);
@@ -36,9 +36,9 @@ namespace WebMvc.Controllers
                 ViewBag.RolesOptions = brole.GetRoleOptions("", "", roleList);
             }
 
-            var user = RoadFlow.Platform.Users.CurrentUser;
+            var user = MyCreek.Platform.Users.CurrentUser;
             ViewBag.UserName = user == null ? "" : user.Name;
-            ViewBag.DateTime = RoadFlow.Utility.DateTimeNew.Now.ToDateWeekString();
+            ViewBag.DateTime = MyCreek.Utility.DateTimeNew.Now.ToDateWeekString();
 
             return View();
         }
@@ -59,7 +59,7 @@ namespace WebMvc.Controllers
             }
             else
             {
-                return new RoadFlow.Platform.RoleApp().GetRoleAppJsonString(gid, uid, Url.Content("~/").TrimEnd('/'));
+                return new MyCreek.Platform.RoleApp().GetRoleAppJsonString(gid, uid, Url.Content("~/").TrimEnd('/'));
             }
         }
 
@@ -75,7 +75,7 @@ namespace WebMvc.Controllers
             }
             else
             {
-                return new RoadFlow.Platform.RoleApp().GetRoleAppRefreshJsonString(gid, uid, refreshid, Url.Content("~/").TrimEnd('/'));
+                return new MyCreek.Platform.RoleApp().GetRoleAppRefreshJsonString(gid, uid, refreshid, Url.Content("~/").TrimEnd('/'));
             }
         }
 

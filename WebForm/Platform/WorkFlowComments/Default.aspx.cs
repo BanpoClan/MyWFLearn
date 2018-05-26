@@ -11,12 +11,12 @@ namespace WebForm.Platform.WorkFlowComments
     {
         protected bool isOneSelf = false;
         protected string query1 = string.Empty;
-        protected IEnumerable<RoadFlow.Data.Model.WorkFlowComment> workFlowCommentList;
-        protected RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
+        protected IEnumerable<MyCreek.Data.Model.WorkFlowComment> workFlowCommentList;
+        protected MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.WorkFlowComment bworkFlowComment = new RoadFlow.Platform.WorkFlowComment();
-            RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
+            MyCreek.Platform.WorkFlowComment bworkFlowComment = new MyCreek.Platform.WorkFlowComment();
+            MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
             query1 = string.Format("&appid={0}&tabid={1}&isoneself={2}", Request.QueryString["appid"], Request.QueryString["tabid"], Request.QueryString["isoneself"]);
             if (IsPostBack)
             {
@@ -34,7 +34,7 @@ namespace WebForm.Platform.WorkFlowComments
                         if (comment != null)
                         {
                             bworkFlowComment.Delete(bid);
-                            RoadFlow.Platform.Log.Add("删除了流程意见", comment.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+                            MyCreek.Platform.Log.Add("删除了流程意见", comment.Serialize(), MyCreek.Platform.Log.Types.流程相关);
                         }
                     }
                     bworkFlowComment.RefreshCache();
@@ -47,7 +47,7 @@ namespace WebForm.Platform.WorkFlowComments
             isOneSelf = "1" == Request.QueryString["isoneself"];
             if (isOneSelf)
             {
-                workFlowCommentList = workFlowCommentList.Where(p => p.MemberID == RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString());
+                workFlowCommentList = workFlowCommentList.Where(p => p.MemberID == MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString());
             }
         }
     }

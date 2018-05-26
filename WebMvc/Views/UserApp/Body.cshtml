@@ -2,7 +2,7 @@
     ViewBag.Title = "Body";
     string query = "&id=" + Request.QueryString["id"] + "&appid=" + Request.QueryString["appid"] + "&roleid=" + Request.QueryString["roleid"] + "&userid=" + Request.QueryString["userid"];
 }
-@model RoadFlow.Data.Model.RoleApp
+@model MyCreek.Data.Model.RoleApp
 <form action="" method="post">
 @Html.AntiForgeryToken()
 <br />

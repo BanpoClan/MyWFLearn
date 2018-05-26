@@ -11,10 +11,10 @@
         instanceid = Request.QueryString["instanceid1"];
     }
 
-    RoadFlow.Platform.WorkFlow bworkFlow = new RoadFlow.Platform.WorkFlow();
-    RoadFlow.Platform.WorkFlowTask btask = new RoadFlow.Platform.WorkFlowTask();
-    RoadFlow.Platform.Users busers = new RoadFlow.Platform.Users();
-    RoadFlow.Data.Model.WorkFlowInstalled wfInstalled = bworkFlow.GetWorkFlowRunModel(flowid);
+    MyCreek.Platform.WorkFlow bworkFlow = new MyCreek.Platform.WorkFlow();
+    MyCreek.Platform.WorkFlowTask btask = new MyCreek.Platform.WorkFlowTask();
+    MyCreek.Platform.Users busers = new MyCreek.Platform.Users();
+    MyCreek.Data.Model.WorkFlowInstalled wfInstalled = bworkFlow.GetWorkFlowRunModel(flowid);
     if (wfInstalled == null)
     {
         Response.Write("未找到流程运行实体");
@@ -43,7 +43,7 @@
         if (currentStep.Behavior.FlowType == 0 && nextSteps.Count() > 0)
         {
             List<Guid> removeIDList = new List<Guid>();
-            RoadFlow.Data.Model.WorkFlowCustomEventParams eventParams = new RoadFlow.Data.Model.WorkFlowCustomEventParams();
+            MyCreek.Data.Model.WorkFlowCustomEventParams eventParams = new MyCreek.Data.Model.WorkFlowCustomEventParams();
             eventParams.FlowID = flowid.ToGuid();
             eventParams.GroupID = groupid.ToGuid();
             eventParams.StepID = stepid.ToGuid();
@@ -95,7 +95,7 @@
                         }
                     }
                     #region 组织机构关系判断
-                    Guid SenderID = RoadFlow.Platform.Users.CurrentUserID;
+                    Guid SenderID = MyCreek.Platform.Users.CurrentUserID;
                     if ("1" == line.Organize_SenderChargeLeader && !busers.IsChargeLeader(SenderID))
                     {
                         removeIDList.Add(step.ID);
@@ -180,9 +180,9 @@
         var defaultMember = string.Empty;//默认处理人员
 
         //如果是调试模式并且当前登录人员包含在调试人员中 则默认为发起者
-        if ((wfInstalled.Debug == 1 || wfInstalled.Debug == 2) && wfInstalled.DebugUsers.Exists(p => p.ID == RoadFlow.Platform.Users.CurrentUserID))
+        if ((wfInstalled.Debug == 1 || wfInstalled.Debug == 2) && wfInstalled.DebugUsers.Exists(p => p.ID == MyCreek.Platform.Users.CurrentUserID))
         {
-            defaultMember = RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString();
+            defaultMember = MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString();
         }
         else
         {
@@ -207,39 +207,39 @@
                     Guid userid = btask.GetFirstSnderID(wfInstalled.ID, groupid.ToGuid());
                     if (userid != Guid.Empty)
                     {
-                        defaultMember = RoadFlow.Platform.Users.PREFIX + userid.ToString();
+                        defaultMember = MyCreek.Platform.Users.PREFIX + userid.ToString();
                     }
                     if (defaultMember.IsNullOrEmpty() && currentStep.ID == wfInstalled.FirstStepID)
                     {
-                        defaultMember = RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString();
+                        defaultMember = MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString();
                     }
                     break;
                 case 6://前一步骤处理者
                     defaultMember = btask.GetStepSnderIDString(wfInstalled.ID, currentStep.ID, groupid.ToGuid());
                     if (defaultMember.IsNullOrEmpty() && currentStep.ID == wfInstalled.FirstStepID)
                     {
-                        defaultMember = RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString();
+                        defaultMember = MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString();
                     }
                     break;
                 case 7://某一步骤处理者
                     defaultMember = btask.GetStepSnderIDString(wfInstalled.ID, step.Behavior.HandlerStepID, groupid.ToGuid());
                     if (defaultMember.IsNullOrEmpty() && step.Behavior.HandlerStepID == wfInstalled.FirstStepID)
                     {
-                        defaultMember = RoadFlow.Platform.Users.PREFIX + RoadFlow.Platform.Users.CurrentUserID.ToString();
+                        defaultMember = MyCreek.Platform.Users.PREFIX + MyCreek.Platform.Users.CurrentUserID.ToString();
                     }
                     break;
                 case 8://字段值
                     string linkString = step.Behavior.ValueField;
                     if (!linkString.IsNullOrEmpty() && !instanceid.IsNullOrEmpty() && wfInstalled.DataBases.Count() > 0)
                     {
-                        defaultMember = new RoadFlow.Platform.DBConnection().GetFieldValue(linkString, wfInstalled.DataBases.First().PrimaryKey, instanceid);
+                        defaultMember = new MyCreek.Platform.DBConnection().GetFieldValue(linkString, wfInstalled.DataBases.First().PrimaryKey, instanceid);
                     }
                     break;
                 case 9://发起者主管
                     Guid firstSenderID = btask.GetFirstSnderID(wfInstalled.ID, groupid.ToGuid());
                     if (firstSenderID.IsEmptyGuid() && currentStep.ID == wfInstalled.FirstStepID)//如果是第一步则发起者为当前人员
                     {
-                        firstSenderID = RoadFlow.Platform.Users.CurrentUserID;
+                        firstSenderID = MyCreek.Platform.Users.CurrentUserID;
                     }
                     if (!firstSenderID.IsEmptyGuid())
                     {
@@ -250,7 +250,7 @@
                     Guid firstSenderID1 = btask.GetFirstSnderID(wfInstalled.ID, groupid.ToGuid());
                     if (firstSenderID1.IsEmptyGuid() && currentStep.ID == wfInstalled.FirstStepID)//如果是第一步则发起者为当前人员
                     {
-                        firstSenderID1 = RoadFlow.Platform.Users.CurrentUserID;
+                        firstSenderID1 = MyCreek.Platform.Users.CurrentUserID;
                     }
                     if (!firstSenderID1.IsEmptyGuid())
                     {
@@ -258,10 +258,10 @@
                     }
                     break;
                 case 11://当前处理者主管
-                    defaultMember = busers.GetLeader(RoadFlow.Platform.Users.CurrentUserID);
+                    defaultMember = busers.GetLeader(MyCreek.Platform.Users.CurrentUserID);
                     break;
                 case 12://当前处理者分管领导
-                    defaultMember = busers.GetChargeLeader(RoadFlow.Platform.Users.CurrentUserID);
+                    defaultMember = busers.GetChargeLeader(MyCreek.Platform.Users.CurrentUserID);
                     break;
             }
         }

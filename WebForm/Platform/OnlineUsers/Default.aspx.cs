@@ -9,10 +9,10 @@ namespace WebForm.Platform.OnlineUsers
 {
     public partial class Default : Common.BasePage
     {
-        protected List<RoadFlow.Data.Model.OnlineUsers> UserList = new List<RoadFlow.Data.Model.OnlineUsers>();
+        protected List<MyCreek.Data.Model.OnlineUsers> UserList = new List<MyCreek.Data.Model.OnlineUsers>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            RoadFlow.Platform.OnlineUsers bou = new RoadFlow.Platform.OnlineUsers();
+            MyCreek.Platform.OnlineUsers bou = new MyCreek.Platform.OnlineUsers();
             string name = string.Empty;
             if (IsPostBack)
             {

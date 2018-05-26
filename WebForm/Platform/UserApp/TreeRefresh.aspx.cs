@@ -19,8 +19,8 @@ namespace WebForm.Platform.UserApp
                 Response.Write("[]");
                 Response.End();
             }
-            RoadFlow.Platform.RoleApp BRoleApp = new RoadFlow.Platform.RoleApp();
-            RoadFlow.Platform.UsersApp BUsersApp = new RoadFlow.Platform.UsersApp();
+            MyCreek.Platform.RoleApp BRoleApp = new MyCreek.Platform.RoleApp();
+            MyCreek.Platform.UsersApp BUsersApp = new MyCreek.Platform.UsersApp();
             var childs = BRoleApp.GetChild(rid);
 
             //加载个人应用

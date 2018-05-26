@@ -20,13 +20,13 @@ namespace WebForm.Platform.WorkFlowTasks
                     string user = Request.Form["user"];
                     string openerid = Request.QueryString["openerid"];
 
-                    RoadFlow.Platform.WorkFlowTask btask = new RoadFlow.Platform.WorkFlowTask();
-                    var users = new RoadFlow.Platform.Organize().GetAllUsers(user);
+                    MyCreek.Platform.WorkFlowTask btask = new MyCreek.Platform.WorkFlowTask();
+                    var users = new MyCreek.Platform.Organize().GetAllUsers(user);
                     System.Text.StringBuilder sb = new System.Text.StringBuilder();
                     foreach (var user1 in users)
                     {
                         btask.DesignateTask(taskID, user1);
-                        RoadFlow.Platform.Log.Add("管理员指派了流程任务", "将任务" + taskID + "指派给了：" + user1.Name + user1.ID, RoadFlow.Platform.Log.Types.流程相关);
+                        MyCreek.Platform.Log.Add("管理员指派了流程任务", "将任务" + taskID + "指派给了：" + user1.Name + user1.ID, MyCreek.Platform.Log.Types.流程相关);
 
                         sb.Append(user1.Name);
                         sb.Append(",");

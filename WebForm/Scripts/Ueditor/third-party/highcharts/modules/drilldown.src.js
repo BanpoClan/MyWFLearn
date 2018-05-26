@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Highcharts Drilldown plugin
  * 
  * Author: Torstein Honsi

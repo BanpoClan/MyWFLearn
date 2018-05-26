@@ -1,4 +1,4 @@
-(function (Highcharts) {
+﻿(function (Highcharts) {
 	var seriesTypes = Highcharts.seriesTypes,
 		each = Highcharts.each;
 	

@@ -20,7 +20,7 @@ namespace WebForm.Platform.RoleApp
                 context.Response.Write("[]");
                 return;
             }
-            RoadFlow.Platform.RoleApp BRoleApp = new RoadFlow.Platform.RoleApp();
+            MyCreek.Platform.RoleApp BRoleApp = new MyCreek.Platform.RoleApp();
             var childs = BRoleApp.GetChild(id.ToGuid());
             System.Text.StringBuilder json = new System.Text.StringBuilder("[", childs.Count * 50);
             int count = childs.Count;

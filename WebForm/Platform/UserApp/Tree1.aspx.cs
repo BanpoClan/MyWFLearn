@@ -19,7 +19,7 @@ namespace WebForm.Platform.UserApp
                 Response.End();
             }
 
-            RoadFlow.Platform.RoleApp BRoleApp = new RoadFlow.Platform.RoleApp();
+            MyCreek.Platform.RoleApp BRoleApp = new MyCreek.Platform.RoleApp();
             var appDt = BRoleApp.GetAllDataTableByRoleID(roleGuid);
             if (appDt.Rows.Count == 0)
             {

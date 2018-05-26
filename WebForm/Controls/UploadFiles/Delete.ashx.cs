@@ -18,7 +18,7 @@ namespace WebForm.Controls.UploadFiles
             context.Response.ContentType = "text/plain";
             string str1 = context.Request.QueryString["str1"];
             string str2 = context.Request.QueryString["str2"];
-            var obj = RoadFlow.Cache.IO.Opation.Get(str1 ?? "");
+            var obj = MyCreek.Cache.IO.Opation.Get(str1 ?? "");
             if (str1.IsNullOrEmpty() || str2.IsNullOrEmpty() || obj == null || obj.ToString() != str2)
             {
                 context.Response.Write("var json = {\"success\":0,\"message\":\"您不能删除文件\"}");

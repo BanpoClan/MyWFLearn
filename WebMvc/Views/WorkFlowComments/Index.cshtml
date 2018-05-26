@@ -2,9 +2,9 @@
     ViewBag.Title = "Index";
     string query1 = string.Format("&appid={0}&tabid={1}&isoneself={2}", Request.QueryString["appid"], Request.QueryString["tabid"], Request.QueryString["isoneself"]);
     bool isOneSelf = "1" == Request.QueryString["isoneself"];
-    RoadFlow.Platform.Organize borganize = new RoadFlow.Platform.Organize();
+    MyCreek.Platform.Organize borganize = new MyCreek.Platform.Organize();
 }
-@model IEnumerable<RoadFlow.Data.Model.WorkFlowComment>
+@model IEnumerable<MyCreek.Data.Model.WorkFlowComment>
 <form action="" method="post" >
 @Html.AntiForgeryToken()
 <div class="toolbar" style="margin-top:0; border-top:0;">

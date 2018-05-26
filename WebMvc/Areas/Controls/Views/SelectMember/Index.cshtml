@@ -1,9 +1,9 @@
 ﻿@{
     ViewBag.Title = "Index";
     Page.CheckApp = false;
-    RoadFlow.Platform.Organize borganizename = new RoadFlow.Platform.Organize();
-    string userPrefix = RoadFlow.Platform.Users.PREFIX;
-    string workgroupPrefix = RoadFlow.Platform.WorkGroup.PREFIX;
+    MyCreek.Platform.Organize borganizename = new MyCreek.Platform.Organize();
+    string userPrefix = MyCreek.Platform.Users.PREFIX;
+    string workgroupPrefix = MyCreek.Platform.WorkGroup.PREFIX;
     string values = Request.QueryString["values"];
     string rootid = Request.QueryString["rootid"];
     string defaultValuesString = "";

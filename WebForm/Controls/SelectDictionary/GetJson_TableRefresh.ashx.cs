@@ -24,7 +24,7 @@ namespace WebForm.Controls.SelectDictionary
             string where = context.Request.QueryString["where"];
             string id = context.Request.QueryString["refreshid"];
 
-            RoadFlow.Platform.DBConnection bdbconn = new RoadFlow.Platform.DBConnection();
+            MyCreek.Platform.DBConnection bdbconn = new MyCreek.Platform.DBConnection();
             var conn = bdbconn.Get(dbconn.ToGuid());
             string sql = "select " + valuefield + "," + titlefield + " from " + dbtable + " where " + parentfield + "='" + id + "'";
             DataTable dt = bdbconn.GetDataTable(conn, sql.ReplaceSelectSql());

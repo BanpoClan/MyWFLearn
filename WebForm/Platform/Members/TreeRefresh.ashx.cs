@@ -21,7 +21,7 @@ namespace WebForm.Platform.Members
 
             if ("1" == showtype)//显示工作组
             {
-                RoadFlow.Platform.WorkGroup BWorkGroup = new RoadFlow.Platform.WorkGroup();
+                MyCreek.Platform.WorkGroup BWorkGroup = new MyCreek.Platform.WorkGroup();
                 var workGroups = BWorkGroup.GetAll();
 
                 int countwg = workGroups.Count;
@@ -59,7 +59,7 @@ namespace WebForm.Platform.Members
                 context.Response.Write(json.ToString());
             }
 
-            RoadFlow.Platform.Organize BOrganize = new RoadFlow.Platform.Organize();
+            MyCreek.Platform.Organize BOrganize = new MyCreek.Platform.Organize();
             var childOrgs = BOrganize.GetChilds(orgID);
 
             int count = childOrgs.Count;
@@ -83,8 +83,8 @@ namespace WebForm.Platform.Members
                 }
             }
 
-            var userRelations = new RoadFlow.Platform.UsersRelation().GetAllByOrganizeID(orgID);
-            var users = new RoadFlow.Platform.Users().GetAllByOrganizeID(orgID);
+            var userRelations = new MyCreek.Platform.UsersRelation().GetAllByOrganizeID(orgID);
+            var users = new MyCreek.Platform.Users().GetAllByOrganizeID(orgID);
             int count1 = users.Count;
             if (count1 > 0 && count > 0)
             {

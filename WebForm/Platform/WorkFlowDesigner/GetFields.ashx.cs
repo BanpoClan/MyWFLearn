@@ -21,7 +21,7 @@ namespace WebForm.Platform.WorkFlowDesigner
             {
                 context.Response.Write("[]");
             }
-            Dictionary<string, string> fields = new RoadFlow.Platform.DBConnection().GetFields(connid.ToGuid(), table);
+            Dictionary<string, string> fields = new MyCreek.Platform.DBConnection().GetFields(connid.ToGuid(), table);
             System.Text.StringBuilder sb = new System.Text.StringBuilder("[", 1000);
 
             foreach (var field in fields)

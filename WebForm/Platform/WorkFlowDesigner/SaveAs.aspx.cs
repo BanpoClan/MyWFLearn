@@ -18,7 +18,7 @@ namespace WebForm.Platform.WorkFlowDesigner
             {
                 string newName = Request.Form["NewFlowName"];
                 saveOpen = Request.Form["SaveOpen"];
-                var wf = new RoadFlow.Platform.WorkFlow().SaveAs(flowid.ToGuid(), newName);
+                var wf = new MyCreek.Platform.WorkFlow().SaveAs(flowid.ToGuid(), newName);
                 if(wf!=null)
                 {
                     newid=wf.ID.ToString();

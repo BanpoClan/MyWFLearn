@@ -9,7 +9,7 @@ namespace WebForm.Common
 {
     public class CustomFormSave
     {
-        public static string QianShi(RoadFlow.Data.Model.WorkFlowCustomEventParams eventParams)
+        public static string QianShi(MyCreek.Data.Model.WorkFlowCustomEventParams eventParams)
         {
             string title = System.Web.HttpContext.Current.Request.Form["Title"];
             string Contents = System.Web.HttpContext.Current.Request.Form["Contents"];
@@ -22,7 +22,7 @@ namespace WebForm.Common
                              new SqlParameter("@Contents", Contents),
                              new SqlParameter("@ID", eventParams.InstanceID.ToString())
                              };
-                new RoadFlow.Data.MSSQL.DBHelper().Execute(sql, parArray);
+                new MyCreek.Data.MSSQL.DBHelper().Execute(sql, parArray);
                 return eventParams.InstanceID.ToString();
             }
             else
@@ -33,13 +33,13 @@ namespace WebForm.Common
                              new SqlParameter("@Contents", Contents),
                              new SqlParameter("@FlowCompleted", "0")
                              };
-                return new RoadFlow.Data.MSSQL.DBHelper().ExecuteScalar(sql, parArray);
+                return new MyCreek.Data.MSSQL.DBHelper().ExecuteScalar(sql, parArray);
             }
         }
 
-        public static string Test(RoadFlow.Data.Model.WorkFlowCustomEventParams eventParams)
+        public static string Test(MyCreek.Data.Model.WorkFlowCustomEventParams eventParams)
         {
-            RoadFlow.Platform.Log.Add("执行了提交后事件", eventParams.Serialize(), RoadFlow.Platform.Log.Types.流程相关);
+            MyCreek.Platform.Log.Add("执行了提交后事件", eventParams.Serialize(), MyCreek.Platform.Log.Types.流程相关);
             return "1";
         }
 
@@ -48,13 +48,13 @@ namespace WebForm.Common
         /// </summary>
         /// <param name="eventParams"></param>
         /// <returns></returns>
-        public static RoadFlow.Data.Model.WorkFlowExecute.Execute SubFlowActivationBefore(RoadFlow.Data.Model.WorkFlowCustomEventParams eventParams)
+        public static MyCreek.Data.Model.WorkFlowExecute.Execute SubFlowActivationBefore(MyCreek.Data.Model.WorkFlowCustomEventParams eventParams)
         {
-            RoadFlow.Data.Model.WorkFlowExecute.Execute execute = new RoadFlow.Data.Model.WorkFlowExecute.Execute();
+            MyCreek.Data.Model.WorkFlowExecute.Execute execute = new MyCreek.Data.Model.WorkFlowExecute.Execute();
 
             //在这里添加插入子流程业务数据代码
 
-            RoadFlow.Platform.Log.Add("执行了子流程激活前事件", "", RoadFlow.Platform.Log.Types.其它分类);
+            MyCreek.Platform.Log.Add("执行了子流程激活前事件", "", MyCreek.Platform.Log.Types.其它分类);
 
             return execute;
         }
@@ -64,12 +64,12 @@ namespace WebForm.Common
         /// </summary>
         /// <param name="eventParams"></param>
         /// <returns></returns>
-        public static void SubFlowCompletedBefore(RoadFlow.Data.Model.WorkFlowCustomEventParams eventParams)
+        public static void SubFlowCompletedBefore(MyCreek.Data.Model.WorkFlowCustomEventParams eventParams)
         {
 
             //在这里添加子流程结束后代码
 
-            RoadFlow.Platform.Log.Add("执行了子流程结束后事件", "", RoadFlow.Platform.Log.Types.其它分类);
+            MyCreek.Platform.Log.Add("执行了子流程结束后事件", "", MyCreek.Platform.Log.Types.其它分类);
         }
     }
 }

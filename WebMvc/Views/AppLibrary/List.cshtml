@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RoadFlow.Data.Model.AppLibrary>
+﻿@model IEnumerable<MyCreek.Data.Model.AppLibrary>
 @{
     ViewBag.Title = "List";
 }
@@ -28,7 +28,7 @@
     </thead>
     <tbody>
     @{
-    RoadFlow.Platform.Dictionary bdict = new RoadFlow.Platform.Dictionary();
+    MyCreek.Platform.Dictionary bdict = new MyCreek.Platform.Dictionary();
     foreach (var app in Model)
     {
         <tr>

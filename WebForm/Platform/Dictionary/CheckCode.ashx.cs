@@ -16,7 +16,7 @@ namespace WebForm.Platform.Dictionary
             context.Response.ContentType = "text/plain";
             string code = context.Request.Form["value"];
             string id = context.Request["id"];
-            context.Response.Write(new RoadFlow.Platform.Dictionary().HasCode(code, id) ? "唯一代码重复" : "1");
+            context.Response.Write(new MyCreek.Platform.Dictionary().HasCode(code, id) ? "唯一代码重复" : "1");
         }
 
         public bool IsReusable

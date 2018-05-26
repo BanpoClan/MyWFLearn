@@ -27,9 +27,9 @@ namespace WebForm.Platform.WorkFlowFormDesigner
                 context.Response.Write("参数错误!");
                 return;
             }
-            RoadFlow.Platform.WorkFlowForm WFF = new RoadFlow.Platform.WorkFlowForm();
+            MyCreek.Platform.WorkFlowForm WFF = new MyCreek.Platform.WorkFlowForm();
 
-            RoadFlow.Data.Model.WorkFlowForm wff = WFF.Get(gid);
+            MyCreek.Data.Model.WorkFlowForm wff = WFF.Get(gid);
             if (wff == null)
             {
                 context.Response.Write("未找到表单!");
@@ -52,9 +52,9 @@ namespace WebForm.Platform.WorkFlowFormDesigner
             serverScript.AppendFormat("\tstring DBTableTitle = \"{0}\";\r\n", attrJSON["dbtabletitle"].ToString());
             serverScript.Append("if(InstanceID.IsNullOrEmpty()){InstanceID = Request.QueryString[\"instanceid1\"];}");
 
-            serverScript.Append("\tRoadFlow.Platform.Dictionary BDictionary = new RoadFlow.Platform.Dictionary();\r\n");
-            serverScript.Append("\tRoadFlow.Platform.WorkFlow BWorkFlow = new RoadFlow.Platform.WorkFlow();\r\n");
-            serverScript.Append("\tRoadFlow.Platform.WorkFlowTask BWorkFlowTask = new RoadFlow.Platform.WorkFlowTask();\r\n");
+            serverScript.Append("\tMyCreek.Platform.Dictionary BDictionary = new MyCreek.Platform.Dictionary();\r\n");
+            serverScript.Append("\tMyCreek.Platform.WorkFlow BWorkFlow = new MyCreek.Platform.WorkFlow();\r\n");
+            serverScript.Append("\tMyCreek.Platform.WorkFlowTask BWorkFlowTask = new MyCreek.Platform.WorkFlowTask();\r\n");
             serverScript.Append("\tstring fieldStatus = BWorkFlow.GetFieldStatus(FlowID, StepID);\r\n");
             serverScript.Append("\tLitJson.JsonData initData = BWorkFlow.GetFormData(DBConnID, DBTable, DBTablePK, InstanceID, fieldStatus);\r\n");
             serverScript.Append("\tstring TaskTitle = BWorkFlow.GetFromFieldData(initData, DBTable, DBTableTitle);\r\n");
@@ -110,12 +110,12 @@ namespace WebForm.Platform.WorkFlowFormDesigner
 
             string attr = wff.Attribute;
             string appType = LitJson.JsonMapper.ToObject(attr)["apptype"].ToString();
-            RoadFlow.Platform.AppLibrary App = new RoadFlow.Platform.AppLibrary();
+            MyCreek.Platform.AppLibrary App = new MyCreek.Platform.AppLibrary();
             var app = App.GetByCode(id);
             bool isAdd = false;
             if (app == null)
             {
-                app = new RoadFlow.Data.Model.AppLibrary();
+                app = new MyCreek.Data.Model.AppLibrary();
                 app.ID = Guid.NewGuid();
                 app.Code = id;
                 isAdd = true;
@@ -125,7 +125,7 @@ namespace WebForm.Platform.WorkFlowFormDesigner
             app.OpenMode = 0;
             app.Params = "";
             app.Title = name.Trim();
-            app.Type = appType.IsGuid() ? appType.ToGuid() : new RoadFlow.Platform.Dictionary().GetIDByCode("FormTypes");
+            app.Type = appType.IsGuid() ? appType.ToGuid() : new MyCreek.Platform.Dictionary().GetIDByCode("FormTypes");
             if (isAdd)
             {
                 App.Add(app);
@@ -135,7 +135,7 @@ namespace WebForm.Platform.WorkFlowFormDesigner
                 App.Update(app);
             }
 
-            RoadFlow.Platform.Log.Add("发布了流程表单", app.Serialize() + "内容：" + html, RoadFlow.Platform.Log.Types.流程相关);
+            MyCreek.Platform.Log.Add("发布了流程表单", app.Serialize() + "内容：" + html, MyCreek.Platform.Log.Types.流程相关);
             wff.Status = 1;
             WFF.Update(wff);
             context.Response.Write("发布成功!");

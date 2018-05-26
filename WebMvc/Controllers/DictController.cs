@@ -18,7 +18,7 @@ namespace WebMvc.Controllers
 
         public string Tree1()
         {
-            RoadFlow.Platform.Dictionary BDict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary BDict = new MyCreek.Platform.Dictionary();
 
             string rootid = Request.QueryString["root"];
             bool ischild = "1" == Request.QueryString["ischild"];//是否要加载下级节点
@@ -84,7 +84,7 @@ namespace WebMvc.Controllers
                 Response.Write("[]");
             }
             System.Text.StringBuilder json = new System.Text.StringBuilder("[", 1000);
-            RoadFlow.Platform.Dictionary BDict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary BDict = new MyCreek.Platform.Dictionary();
             var childs = BDict.GetChilds(gid).OrderBy(p => p.Sort);
             int i = 0;
             int count = childs.Count();
@@ -125,8 +125,8 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Body(FormCollection collection)
         {
-            RoadFlow.Platform.Dictionary bdict = new RoadFlow.Platform.Dictionary();
-            RoadFlow.Data.Model.Dictionary dict = null;
+            MyCreek.Platform.Dictionary bdict = new MyCreek.Platform.Dictionary();
+            MyCreek.Data.Model.Dictionary dict = null;
             string id = Request.QueryString["id"];
             if (id.IsGuid())
             {
@@ -145,7 +145,7 @@ namespace WebMvc.Controllers
                 {
                     int i = bdict.DeleteAndAllChilds(dict.ID);
                     bdict.RefreshCache();
-                    RoadFlow.Platform.Log.Add("删除了数据字典及其下级共" + i.ToString() + "项", dict.Serialize(), RoadFlow.Platform.Log.Types.数据字典);
+                    MyCreek.Platform.Log.Add("删除了数据字典及其下级共" + i.ToString() + "项", dict.Serialize(), MyCreek.Platform.Log.Types.数据字典);
                     ViewBag.Script = "alert('删除成功!');parent.frames[0].reLoad('" + refreshID + "');window.location='Body?id=" + dict.ParentID.ToString() + "&appid=" + Request.QueryString["appid"] + "';";
                     return View(dict);
                 }
@@ -165,7 +165,7 @@ namespace WebMvc.Controllers
 
                 bdict.Update(dict);
                 bdict.RefreshCache();
-                RoadFlow.Platform.Log.Add("修改了数据字典项", "", RoadFlow.Platform.Log.Types.数据字典, oldXML, dict.Serialize());
+                MyCreek.Platform.Log.Add("修改了数据字典项", "", MyCreek.Platform.Log.Types.数据字典, oldXML, dict.Serialize());
                 ViewBag.Script = "alert('保存成功!');parent.frames[0].reLoad('" + refreshID + "');";
             }
 
@@ -176,7 +176,7 @@ namespace WebMvc.Controllers
         { 
             string code = Request.Form["value"];
             string id = Request["id"];
-            return new RoadFlow.Platform.Dictionary().HasCode(code, id) ? "唯一代码重复" : "1";
+            return new MyCreek.Platform.Dictionary().HasCode(code, id) ? "唯一代码重复" : "1";
         }
 
         public ActionResult Add()
@@ -193,8 +193,8 @@ namespace WebMvc.Controllers
 
         public ActionResult add1(FormCollection collection)
         {
-            RoadFlow.Data.Model.Dictionary dict = new RoadFlow.Data.Model.Dictionary();
-            RoadFlow.Platform.Dictionary bdict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Data.Model.Dictionary dict = new MyCreek.Data.Model.Dictionary();
+            MyCreek.Platform.Dictionary bdict = new MyCreek.Platform.Dictionary();
             string id = Request.QueryString["id"];
             if (!id.IsGuid())
             {
@@ -225,7 +225,7 @@ namespace WebMvc.Controllers
 
                 bdict.Add(dict);
                 bdict.RefreshCache();
-                RoadFlow.Platform.Log.Add("添加了数据字典项", dict.Serialize(), RoadFlow.Platform.Log.Types.数据字典);
+                MyCreek.Platform.Log.Add("添加了数据字典项", dict.Serialize(), MyCreek.Platform.Log.Types.数据字典);
                 ViewBag.Script = "alert('添加成功!');parent.frames[0].reLoad('" + id + "');";
             }
 
@@ -241,11 +241,11 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Sort(FormCollection collection)
         {
-            RoadFlow.Platform.Dictionary BDict = new RoadFlow.Platform.Dictionary();
+            MyCreek.Platform.Dictionary BDict = new MyCreek.Platform.Dictionary();
             string id = Request.QueryString["id"];
             string refreshID = "";
             Guid dictid;
-            List<RoadFlow.Data.Model.Dictionary> dicts = new List<RoadFlow.Data.Model.Dictionary>();
+            List<MyCreek.Data.Model.Dictionary> dicts = new List<MyCreek.Data.Model.Dictionary>();
             if (id.IsGuid(out dictid))
             {
                 var dict = BDict.Get(dictid);
@@ -276,7 +276,7 @@ namespace WebMvc.Controllers
                 }
                 BDict.RefreshCache();
 
-                RoadFlow.Platform.Log.Add("保存了数据字典排序", "保存了ID为：" + id + "的同级排序", RoadFlow.Platform.Log.Types.数据字典);
+                MyCreek.Platform.Log.Add("保存了数据字典排序", "保存了ID为：" + id + "的同级排序", MyCreek.Platform.Log.Types.数据字典);
                 ViewBag.Script = "parent.frames[0].reLoad('" + refreshID + "');";
                 dicts = BDict.GetChilds(refreshID.ToGuid());
             }
